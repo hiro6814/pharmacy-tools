@@ -1,0 +1,11 @@
+[build]
+  publish = "."
+
+# ルートへのアクセスは crushing-checker にリダイレクト
+[[redirects]]
+  from = "/"
+  to = "/crushing-checker/"
+  status = 302
+
+# SPAフォールバック不要（静的ファイルのみ）
+# renal の旧URL移行用リダイレクトは Step 7 で追記

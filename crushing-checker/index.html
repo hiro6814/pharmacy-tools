@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>粉砕・簡易懸濁法チェッカー</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --ok: #059669;
+  --ok-dim: #d1fae5;
+  --ng: #e11d48;
+  --ng-dim: #ffe4e6;
+  --cond: #d97706;
+  --cond-dim: #fef3c7;
+  --unk: #94a3b8;
+  --unk-dim: #f1f5f9;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --surface: #ffffff;
+  --bg: #f4f6fb;
+  --border: #e8ecf4;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 4px 16px rgba(15,23,42,0.08), 0 2px 6px rgba(15,23,42,0.05);
+  --shadow-lg: 0 12px 40px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.07);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── Header ─────────────────────────────── */
+header {
+  background: #0c1445;
+  background-image: radial-gradient(ellipse at 20% 50%, #1e3a8a44 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 20%, #4f46e530 0%, transparent 50%);
+  color: #fff;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.header-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.4);
+  flex-shrink: 0;
+}
+
+.header-text h1 {
+  font-size: 16px; font-weight: 700; letter-spacing: 0.01em;
+  color: #f8fafc;
+}
+.header-text p {
+  font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.02em;
+}
+
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.header-chip {
+  font-size: 11px; font-weight: 500;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 4px 10px;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ─── Layout ──────────────────────────────── */
+.layout {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ─── Card ────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+/* カード内の角丸はheaderとbodyで個別に制御（overflow:hiddenを避けdropdownを見えるようにする） */
+.card > *:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+.card > *:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
+.card > *:only-child  { border-radius: var(--radius); }
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.card-title {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex; align-items: center; gap: 7px;
+}
+
+.card-title-icon {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  background: var(--accent);
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+}
+
+.card-body { padding: 20px; }
+
+/* ─── Legend ──────────────────────────────── */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 14px 20px;
+}
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--text-muted); }
+
+/* ─── Badge ───────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 3px 11px;
+  border-radius: 20px;
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.badge-ok   { color: var(--ok);   background: var(--ok-dim);   }
+.badge-ng   { color: var(--ng);   background: var(--ng-dim);   }
+.badge-cond { color: var(--cond); background: var(--cond-dim); }
+.badge-unknown { color: var(--unk); background: var(--unk-dim); }
+
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  display: inline-block; margin-right: 4px; flex-shrink: 0;
+}
+.badge-dot-ok   { background: var(--ok); }
+.badge-dot-ng   { background: var(--ng); }
+.badge-dot-cond { background: var(--cond); }
+.badge-dot-unknown { background: var(--unk); }
+
+/* ─── Search ──────────────────────────────── */
+.search-wrap { position: relative; }
+#searchInput {
+  width: 100%;
+  padding: 11px 16px 11px 40px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px; font-family: inherit;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+#searchInput::placeholder { color: var(--text-faint); }
+#searchInput:focus {
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+.search-icon {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  color: var(--text-faint); font-size: 15px; pointer-events: none;
+  line-height: 1;
+}
+
+#dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: 300;
+  max-height: 300px; overflow-y: auto;
+  display: none;
+}
+
+.dd-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f8fafc;
+  transition: background .12s;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.dd-item:last-child { border-bottom: none; }
+.dd-item:hover { background: #f5f7ff; }
+.dd-item .dd-main { font-weight: 600; color: var(--text); font-size: 13px; }
+.dd-item .dd-sub  { font-size: 11px; color: var(--text-muted); }
+.dd-item .dd-badges { display: flex; gap: 4px; margin-top: 4px; }
+.no-result { padding: 14px 16px; color: var(--text-faint); font-size: 12.5px; }
+
+/* ─── Tags (checklist) ────────────────────── */
+.tags-area {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  min-height: 32px;
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 20px;
+  padding: 5px 12px 5px 14px;
+  font-size: 12.5px; font-weight: 500; color: #4338ca;
+  transition: background .15s;
+}
+.tag:hover { background: #e0e7ff; }
+.tag-remove {
+  background: none; border: none; cursor: pointer;
+  color: #a5b4fc; font-size: 15px; line-height: 1;
+  padding: 0; display: flex; align-items: center;
+  transition: color .15s;
+}
+.tag-remove:hover { color: var(--ng); }
+
+.count-pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent); color: white;
+  border-radius: 20px; padding: 1px 8px;
+  font-size: 11px; font-weight: 700; margin-left: 4px;
+}
+
+.empty-hint {
+  color: var(--text-faint); font-size: 12.5px;
+  padding: 4px 0;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ─── Buttons ─────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 8px 16px;
+  border: none; border-radius: var(--radius-sm);
+  font-size: 12.5px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all .15s;
+  white-space: nowrap;
+}
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(79,70,229,0.3);
+}
+.btn-accent:hover { background: var(--accent-hover); box-shadow: 0 4px 12px rgba(79,70,229,0.35); }
+.btn-ghost {
+  background: transparent; color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--bg); color: var(--text); }
+.btn-sm { padding: 5px 11px; font-size: 11.5px; border-radius: 8px; }
+.btn-danger-ghost {
+  background: transparent; color: var(--ng);
+  border: 1px solid var(--ng-dim);
+}
+.btn-danger-ghost:hover { background: var(--ng-dim); }
+
+/* ─── Alerts ──────────────────────────────── */
+.alert-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.alert {
+  display: flex; gap: 10px;
+  padding: 12px 16px; border-radius: var(--radius-sm);
+  border-left: 3px solid;
+}
+.alert-warn {
+  background: #fffbeb;
+  border-left-color: var(--cond);
+}
+.alert-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.alert-body { font-size: 12.5px; color: var(--text); line-height: 1.55; }
+.alert-body strong { color: #92400e; }
+
+/* ─── Result Table ────────────────────────── */
+.result-wrap { overflow-x: auto; }
+.result-table {
+  width: 100%; border-collapse: collapse;
+  min-width: 680px;
+}
+.result-table thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--text-faint);
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.result-table thead th:first-child { border-radius: 0; }
+.result-table tbody tr {
+  transition: background .1s;
+  border-bottom: 1px solid #f1f5f9;
+}
+.result-table tbody tr:last-child { border-bottom: none; }
+.result-table tbody tr:hover td { background: #fafbff; }
+.result-table td { padding: 14px 14px; vertical-align: top; }
+
+.drug-name .main { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.drug-name .brand { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.drug-name .cat-tag {
+  display: inline-block; margin-top: 5px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1px 7px;
+  font-size: 10.5px; color: var(--text-muted);
+}
+
+.note {
+  font-size: 12px; color: var(--text-muted);
+  line-height: 1.55; max-width: 220px;
+}
+.note.warn { color: #92400e; }
+.note-dash { color: var(--text-faint); }
+
+.src { font-size: 10.5px; color: var(--text-faint); }
+
+.src-unverified {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 10px; font-weight: 600;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+.alert-unverified { background: #fffbeb; border-color: #fde68a; }
+.alert-unverified .alert-icon { color: #d97706; }
+
+.row-remove {
+  background: none; border: none; cursor: pointer;
+  color: var(--border); font-size: 18px;
+  padding: 0; line-height: 1; transition: color .15s;
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 6px;
+}
+.row-remove:hover { color: var(--ng); background: var(--ng-dim); }
+
+.results-empty {
+  text-align: center; padding: 48px 20px;
+  color: var(--text-faint); font-size: 13px;
+}
+.results-empty .big { font-size: 32px; margin-bottom: 10px; opacity: 0.4; }
+
+/* ─── Admin Modal ─────────────────────────── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,15,40,0.55);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  align-items: center; justify-content: center;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border-radius: 20px;
+  width: 580px; max-width: 95vw; max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+.modal-head {
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-head h2 { font-size: 16px; font-weight: 700; }
+.modal-close {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  cursor: pointer; font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: all .15s;
+}
+.modal-close:hover { background: var(--ng-dim); color: var(--ng); border-color: var(--ng-dim); }
+.modal-body { padding: 22px 24px; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 11.5px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
+.req { color: var(--ng); }
+input[type="text"], select, textarea {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px; font-family: inherit;
+  background: var(--bg); color: var(--text);
+  outline: none; transition: border-color .2s, background .2s;
+  width: 100%;
+}
+input[type="text"]:focus, select:focus, textarea:focus {
+  border-color: var(--accent); background: #fff;
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+}
+textarea { resize: vertical; min-height: 68px; }
+select { cursor: pointer; }
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+
+/* ─── DB List ─────────────────────────────── */
+.db-section { padding: 0 24px 24px; }
+.db-section h3 {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.db-table { width: 100%; border-collapse: collapse; }
+.db-table th {
+  text-align: left; padding: 7px 10px;
+  font-size: 10.5px; font-weight: 600;
+  color: var(--text-faint); letter-spacing: 0.05em;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+}
+.db-table td { padding: 8px 10px; border-bottom: 1px solid #f8fafc; font-size: 12px; }
+.db-table tr:hover td { background: #f8fafc; }
+.built-in-label { font-size: 10.5px; color: var(--text-faint); }
+
+/* ─── Right column header ─────────────────── */
+.right-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.right-title {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-muted);
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ─── Divider ─────────────────────────────── */
+.divider {
+  height: 1px; background: var(--border); margin: 16px 0;
+}
+
+/* ─── Scrollbar ───────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ─── Print ───────────────────────────────── */
+@media print {
+  header, .layout > :first-child, .right-header .btn, .row-remove, .alert-list { display: none !important; }
+  .layout { display: block; padding: 0; }
+  .card { box-shadow: none; border: 1px solid #e5e7eb; }
+  body { background: white; }
+}
+
+/* ─── Responsive ──────────────────────────── */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .layout { padding: 16px 12px; gap: 14px; }
+  header { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-logo">💊</div>
+  <div class="header-text">
+    <h1>粉砕・簡易懸濁法チェッカー</h1>
+    <p>経管投与・嚥下困難患者 薬剤投与方法確認ツール</p>
+  </div>
+  <div class="header-right">
+    <span class="header-chip" id="dbCountChip">—</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ── Left column ── -->
+  <div style="display:flex;flex-direction:column;gap:16px;">
+
+    <!-- Legend -->
+    <div class="card">
+      <div class="legend">
+        <div class="legend-item"><span class="badge badge-ok"><span class="badge-dot badge-dot-ok"></span>可</span> 実施可能</div>
+        <div class="legend-item"><span class="badge badge-ng"><span class="badge-dot badge-dot-ng"></span>不可</span> 実施不可</div>
+        <div class="legend-item"><span class="badge badge-cond"><span class="badge-dot badge-dot-cond"></span>条件付</span> 条件付きで可</div>
+        <div class="legend-item"><span class="badge badge-unknown">不明</span> 情報なし</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-title-icon">🔍</div>
+          薬剤検索・追加
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="openAdminModal()">＋ 薬剤登録</button>
+      </div>
+      <div class="card-body">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="searchInput" placeholder="薬剤名を入力（一般名・商品名）" autocomplete="off">
+          <div id="dropdown"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-title-icon">📋</div>
+          チェックリスト
+          <span class="count-pill" id="selectedCount">0</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="clearAll()">すべて削除</button>
+      </div>
+      <div class="card-body">
+        <div class="tags-area" id="selectedTags">
+          <span class="empty-hint">← 薬剤を検索して追加</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Right column ── -->
+  <div>
+    <!-- Alerts -->
+    <div class="alert-list" id="alertsArea"></div>
+
+    <!-- Results -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-title-icon">📊</div>
+          確認結果
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="window.print()">🖨 印刷</button>
+      </div>
+
+      <div id="resultsArea">
+        <div class="results-empty">
+          <div class="big">💊</div>
+          チェックリストに薬剤を追加すると<br>ここに結果が表示されます
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Admin Modal -->
+<div class="overlay" id="adminModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>薬剤データ管理</h2>
+      <button class="modal-close" onclick="closeAdminModal()">✕</button>
+    </div>
+    <div id="adminContent"></div>
+  </div>
+</div>
+
+<script src="../shared/drugs-master.js"></script>
+<script src="crush-data.js"></script>
+<script>
+// =============================================
+// 薬剤データベース（統合マスターから生成）
+// =============================================
+let drugDB = DRUG_MASTER
+  .filter(d => d.features.includes('crush'))
+  .map(d => ({ ...d, ...(CRUSH_DATA[d.id] || {}) }));
+
+// LocalStorageからカスタム薬剤を読み込む
+function loadCustomDrugs() {
+  try {
+    const stored = localStorage.getItem('customDrugs_v2');
+    if (stored) {
+      const custom = JSON.parse(stored);
+      drugDB = [...drugDB, ...custom];
+    }
+  } catch(e) {}
+}
+function saveCustomDrugs() {
+  const custom = drugDB.filter(d => d.id >= 10000);
+  localStorage.setItem('customDrugs_v2', JSON.stringify(custom));
+}
+
+let selected = [];
+let nextCustomId = 10000;
+
+// Update header chip
+function updateDBChip() {
+  document.getElementById('dbCountChip').textContent = drugDB.length + '剤収載';
+}
+
+// ─── Search ───────────────────────────────
+const searchInput = document.getElementById('searchInput');
+const dropdown = document.getElementById('dropdown');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim();
+  if (!q) { hideDD(); return; }
+  const hits = drugDB.filter(d =>
+    d.generic.includes(q) || d.brand.includes(q) || d.category.includes(q)
+  ).slice(0, 10);
+  renderDD(hits, q);
+});
+
+searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') hideDD(); });
+document.addEventListener('click', e => { if (!e.target.closest('.search-wrap')) hideDD(); });
+
+function renderDD(hits, q) {
+  if (!hits.length) {
+    dropdown.innerHTML = `<div class="no-result">「${esc(q)}」は見つかりません。「＋ 薬剤登録」から追加できます。</div>`;
+  } else {
+    dropdown.innerHTML = hits.map(d => `
+      <div class="dd-item" onclick="addDrug(${d.id})">
+        <div class="dd-main">${hl(d.generic, q)}</div>
+        <div class="dd-sub">${hl(d.brand, q)} &nbsp;·&nbsp; ${esc(d.category)} &nbsp;·&nbsp; ${esc(d.form)}</div>
+        <div class="dd-badges">${miniBadge(d.crush,'粉砕')} ${miniBadge(d.susp,'懸濁')}</div>
+      </div>
+    `).join('');
+  }
+  dropdown.style.display = 'block';
+}
+function hideDD() { dropdown.style.display = 'none'; }
+
+function miniBadge(val, label) {
+  const cls = { ok:'ok', ng:'ng', cond:'cond', unknown:'unknown' }[val] || 'unknown';
+  const txt = { ok:'可', ng:'不可', cond:'条件付', unknown:'不明' }[val] || '不明';
+  return `<span class="badge badge-${cls}" style="font-size:10.5px;padding:2px 8px;">${label}:${txt}</span>`;
+}
+
+// ─── Checklist ────────────────────────────
+function addDrug(id) {
+  if (selected.includes(id)) { hideDD(); return; }
+  selected.push(id);
+  searchInput.value = '';
+  hideDD();
+  render();
+}
+function removeDrug(id) { selected = selected.filter(x => x !== id); render(); }
+function clearAll() { selected = []; render(); }
+
+// ─── Main render ──────────────────────────
+function render() {
+  document.getElementById('selectedCount').textContent = selected.length;
+
+  // tags
+  const tagsEl = document.getElementById('selectedTags');
+  if (!selected.length) {
+    tagsEl.innerHTML = '<span class="empty-hint">← 薬剤を検索して追加</span>';
+  } else {
+    tagsEl.innerHTML = selected.map(id => {
+      const d = drugDB.find(x => x.id === id);
+      if (!d) return '';
+      return `<span class="tag">${esc(d.generic)}<button class="tag-remove" onclick="removeDrug(${id})">×</button></span>`;
+    }).join('');
+  }
+
+  renderAlerts();
+  renderResults();
+}
+
+function badge(val) {
+  const cls = { ok:'ok', ng:'ng', cond:'cond', unknown:'unknown' }[val] || 'unknown';
+  const txt = { ok:'可', ng:'不可', cond:'条件付', unknown:'不明' }[val] || '不明';
+  return `<span class="badge badge-${cls}"><span class="badge-dot badge-dot-${cls}"></span>${txt}</span>`;
+}
+
+function renderResults() {
+  const area = document.getElementById('resultsArea');
+  if (!selected.length) {
+    area.innerHTML = `<div class="results-empty"><div class="big">💊</div>チェックリストに薬剤を追加すると<br>ここに結果が表示されます</div>`;
+    return;
+  }
+
+  let rows = selected.map(id => {
+    const d = drugDB.find(x => x.id === id);
+    if (!d) return '';
+    const crushNote = d.crushNote ? `<span class="${d.crush==='cond'?'note warn':'note'}">${esc(d.crushNote)}</span>` : '<span class="note-dash">—</span>';
+    const suspNote  = d.suspNote  ? `<span class="${d.susp==='cond'?'note warn':'note'}">${esc(d.suspNote)}</span>`  : '<span class="note-dash">—</span>';
+    return `<tr>
+      <td><div class="drug-name">
+        <div class="main">${esc(d.generic)}</div>
+        <div class="brand">${esc(d.brand)}</div>
+        <span class="cat-tag">${esc(d.category)}</span>
+      </div></td>
+      <td style="text-align:center">${badge(d.crush)}</td>
+      <td style="text-align:center">${badge(d.susp)}</td>
+      <td>${crushNote}</td>
+      <td>${suspNote}</td>
+      <td class="src">${d.source && d.source.includes('要確認')
+        ? '<span class="src-unverified">⚠ 要確認</span>'
+        : esc(d.source||'—')}</td>
+      <td><button class="row-remove" onclick="removeDrug(${id})" title="削除">×</button></td>
+    </tr>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="result-wrap">
+      <table class="result-table">
+        <thead><tr>
+          <th style="width:180px">薬剤名</th>
+          <th style="width:72px;text-align:center">粉砕</th>
+          <th style="width:72px;text-align:center">簡易懸濁</th>
+          <th>粉砕時の注意</th>
+          <th>簡易懸濁時の注意</th>
+          <th style="width:80px">情報源</th>
+          <th style="width:36px"></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderAlerts() {
+  const area = document.getElementById('alertsArea');
+  area.innerHTML = '';
+  if (!selected.length) return;
+
+  const warns = [];
+  selected.forEach(id => {
+    const d = drugDB.find(x => x.id === id);
+    if (!d) return;
+    if (d.crush === 'ng' && d.susp === 'ng') {
+      warns.push(`<strong>${esc(d.generic)}</strong>：粉砕・簡易懸濁ともに不可。代替薬・剤形変更を主治医と検討してください。`);
+    } else if (d.crush === 'ng') {
+      warns.push(`<strong>${esc(d.generic)}</strong>：粉砕は不可です。簡易懸濁法または代替製剤を検討してください。`);
+    } else if (d.susp === 'ng') {
+      warns.push(`<strong>${esc(d.generic)}</strong>：簡易懸濁法は不可です。他の投与方法を検討してください。`);
+    }
+    if (d.crushNote && (d.crushNote.includes('手袋') || d.crushNote.includes('暴露'))) {
+      warns.push(`<strong>${esc(d.generic)}</strong>：取り扱い時は手袋着用・粉塵吸入防止が必要です（職業暴露リスク）。`);
+    }
+  });
+
+  // 未確認薬剤アラート
+  const unverified = selected
+    .map(id => drugDB.find(x => x.id === id))
+    .filter(d => d && d.source && d.source.includes('要確認'))
+    .map(d => d.generic);
+
+  const unverifiedAlert = unverified.length > 0 ? `
+    <div class="alert alert-unverified">
+      <div class="alert-icon">📋</div>
+      <div class="alert-body">
+        <strong>根拠未確認の薬剤が含まれています（${unverified.length}件）</strong>：
+        ${unverified.map(g => `<strong>${esc(g)}</strong>`).join('、')}。
+        PMDA添付文書・インタビューフォームで実際の可否を確認してから使用してください。
+      </div>
+    </div>` : '';
+
+  area.innerHTML = unverifiedAlert + warns.map(w => `
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body">${w}</div>
+    </div>`).join('');
+}
+
+// ─── Admin Modal ──────────────────────────
+function openAdminModal() {
+  document.getElementById('adminContent').innerHTML = buildAdminContent();
+  document.getElementById('adminModal').classList.add('open');
+}
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.remove('open');
+}
+document.getElementById('adminModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('adminModal')) closeAdminModal();
+});
+
+function buildAdminContent() {
+  const dbRows = drugDB.slice().sort((a,b) => a.category.localeCompare(b.category,'ja')).map(d => `
+    <tr>
+      <td>${esc(d.generic)}</td>
+      <td style="color:var(--text-muted)">${esc(d.brand)}</td>
+      <td>${badge(d.crush)}</td>
+      <td>${badge(d.susp)}</td>
+      <td>${d.id >= 10000
+        ? `<button class="btn btn-danger-ghost btn-sm" onclick="deleteCustomDrug(${d.id})">削除</button>`
+        : '<span class="built-in-label">内蔵</span>'}</td>
+    </tr>`).join('');
+
+  return `
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>一般名 <span class="req">*</span></label>
+          <input type="text" id="f_generic" placeholder="例: アムロジピンベシル酸塩">
+        </div>
+        <div class="form-group">
+          <label>商品名</label>
+          <input type="text" id="f_brand" placeholder="例: ノルバスク / アムロジン">
+        </div>
+        <div class="form-group">
+          <label>薬効分類</label>
+          <input type="text" id="f_category" placeholder="例: Ca拮抗薬">
+        </div>
+        <div class="form-group">
+          <label>剤形</label>
+          <input type="text" id="f_form" placeholder="例: 錠、カプセル、OD錠">
+        </div>
+        <div class="form-group">
+          <label>情報源</label>
+          <input type="text" id="f_source" placeholder="例: IF、メーカーQ&A">
+        </div>
+        <div class="form-group">
+          <label>粉砕可否 <span class="req">*</span></label>
+          <select id="f_crush">
+            <option value="ok">可</option>
+            <option value="ng">不可</option>
+            <option value="cond">条件付き</option>
+            <option value="unknown">不明</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>粉砕時の注意点</label>
+          <textarea id="f_crushNote" placeholder="粉砕不可の理由、注意事項など"></textarea>
+        </div>
+        <div class="form-group">
+          <label>簡易懸濁可否 <span class="req">*</span></label>
+          <select id="f_susp">
+            <option value="ok">可</option>
+            <option value="ng">不可</option>
+            <option value="cond">条件付き</option>
+            <option value="unknown">不明</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>簡易懸濁時の注意点</label>
+          <textarea id="f_suspNote" placeholder="懸濁条件（温度・時間）、注意事項など"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAdminModal()">キャンセル</button>
+      <button class="btn btn-accent" onclick="saveDrug()">登録する</button>
+    </div>
+    <div class="db-section">
+      <h3>登録済み薬剤 <span class="count-pill">${drugDB.length}</span></h3>
+      <table class="db-table">
+        <thead><tr><th>一般名</th><th>商品名</th><th>粉砕</th><th>懸濁</th><th></th></tr></thead>
+        <tbody>${dbRows}</tbody>
+      </table>
+    </div>`;
+}
+
+function saveDrug() {
+  const generic = document.getElementById('f_generic').value.trim();
+  if (!generic) { alert('一般名を入力してください。'); return; }
+  const d = {
+    id: nextCustomId++,
+    generic,
+    brand: document.getElementById('f_brand').value.trim(),
+    category: document.getElementById('f_category').value.trim() || 'その他',
+    form: document.getElementById('f_form').value.trim() || '—',
+    crush: document.getElementById('f_crush').value,
+    crushNote: document.getElementById('f_crushNote').value.trim(),
+    susp: document.getElementById('f_susp').value,
+    suspNote: document.getElementById('f_suspNote').value.trim(),
+    source: document.getElementById('f_source').value.trim() || '施設追加',
+  };
+  drugDB.push(d);
+  saveCustomDrugs();
+  updateDBChip();
+  document.getElementById('adminContent').innerHTML = buildAdminContent();
+}
+
+function deleteCustomDrug(id) {
+  if (!confirm('この薬剤を削除しますか？')) return;
+  drugDB = drugDB.filter(d => d.id !== id);
+  selected = selected.filter(x => x !== id);
+  saveCustomDrugs();
+  updateDBChip();
+  document.getElementById('adminContent').innerHTML = buildAdminContent();
+  render();
+}
+
+// ─── Helpers ──────────────────────────────
+function esc(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function hl(text, q) {
+  if (!q) return esc(text);
+  const i = text.toLowerCase().indexOf(q.toLowerCase());
+  if (i === -1) return esc(text);
+  return esc(text.slice(0,i)) + '<mark style="background:#e0e7ff;color:#3730a3;border-radius:2px;padding:0 1px">' + esc(text.slice(i,i+q.length)) + '</mark>' + esc(text.slice(i+q.length));
+}
+
+// ─── Init ─────────────────────────────────
+loadCustomDrugs();
+updateDBChip();
+render();
+</script>
+</body>
+</html>

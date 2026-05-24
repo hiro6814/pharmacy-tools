@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>腎機能・用量調整計算</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e3a5f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="腎機能計算">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI',sans-serif;background:#eef2f7;color:#1e293b;font-size:16px;line-height:1.5;padding-bottom:40px}
+.container{max-width:600px;margin:0 auto;padding:12px 14px}
+h1{font-size:19px;font-weight:700;color:#1e3a5f;letter-spacing:-0.3px}
+.subtitle{font-size:12px;color:#64748b;margin-bottom:14px}
+.card{background:#fff;border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card-title{font-size:13px;font-weight:700;color:#475569;margin-bottom:11px;padding-bottom:8px;border-bottom:1px solid #f1f5f9;text-transform:uppercase;letter-spacing:.5px}
+.form-row{display:flex;gap:10px;margin-bottom:11px}
+.form-group{flex:1}
+label{display:block;font-size:12px;color:#64748b;margin-bottom:4px;font-weight:600}
+.opt{font-size:10px;color:#94a3b8;font-weight:400;margin-left:3px}
+input[type=number],input[type=text]{width:100%;padding:10px 11px;border:1.5px solid #e2e8f0;border-radius:9px;font-size:16px;color:#0f172a;transition:border .15s;-webkit-appearance:none;appearance:none}
+input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.unit{font-size:11px;color:#94a3b8;margin-top:3px}
+.radio-group{display:flex;gap:14px;margin-top:8px}
+.rl{display:flex;align-items:center;gap:5px;font-size:15px;cursor:pointer}
+.rl input[type=radio]{width:18px;height:18px;accent-color:#3b82f6}
+.dial-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:7px}
+.db{padding:9px 2px;border:1.5px solid #e2e8f0;border-radius:9px;background:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s;color:#475569}
+.db.active{border-color:#6366f1;background:#eef2ff;color:#4338ca}
+.weight-note{font-size:12px;padding:7px 10px;background:#f8fafc;border-radius:7px;margin-top:-4px;margin-bottom:8px;color:#64748b;border-left:3px solid #cbd5e1}
+.weight-note.warn{border-left-color:#f59e0b;color:#92400e;background:#fffbeb}
+.weight-note.info{border-left-color:#3b82f6;color:#1e40af;background:#eff6ff}
+.btn-calc{width:100%;padding:15px;background:#1e3a5f;color:#fff;border:none;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:background .15s;margin-bottom:4px}
+.btn-calc:active{background:#0f2444}
+.btn-clear{width:100%;padding:10px;background:transparent;color:#94a3b8;border:1.5px solid #e2e8f0;border-radius:10px;font-size:14px;cursor:pointer;margin-top:6px}
+.result-main{background:linear-gradient(135deg,#1e3a5f,#2563eb);border-radius:12px;padding:16px;color:#fff;margin-bottom:10px}
+.ccr-val{font-size:42px;font-weight:800;letter-spacing:-1px;line-height:1}
+.ccr-u{font-size:14px;font-weight:500;opacity:.8;margin-left:3px}
+.stage-badge{display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-top:8px;letter-spacing:.3px}
+.s-g1,.s-g2{background:rgba(134,239,172,.25);color:#bbf7d0;border:1px solid rgba(134,239,172,.4)}
+.s-g3a{background:rgba(253,224,71,.2);color:#fde047;border:1px solid rgba(253,224,71,.35)}
+.s-g3b{background:rgba(251,191,36,.2);color:#fcd34d;border:1px solid rgba(251,191,36,.35)}
+.s-g4{background:rgba(251,146,60,.2);color:#fdba74;border:1px solid rgba(251,146,60,.35)}
+.s-g5{background:rgba(252,165,165,.2);color:#fca5a5;border:1px solid rgba(252,165,165,.35)}
+.s-gd{background:rgba(196,181,253,.2);color:#c4b5fd;border:1px solid rgba(196,181,253,.35)}
+.calc-detail{font-size:11px;opacity:.7;margin-top:6px;line-height:1.6}
+.search-wrap{position:relative}
+.search-row{display:flex;gap:8px}
+.search-row input{flex:1}
+.suggest-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:100;max-height:260px;overflow-y:auto}
+.suggest-item{padding:10px 13px;cursor:pointer;font-size:14px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:8px}
+.suggest-item:last-child{border-bottom:none}
+.suggest-item:hover,.suggest-item.focused{background:#f0f9ff}
+.suggest-cls{font-size:11px;color:#94a3b8;margin-left:auto;flex-shrink:0}
+.suggest-en{font-size:11px;color:#64748b}
+.no-result{padding:12px 13px;color:#94a3b8;font-size:14px}
+.hidden{display:none!important}
+.dname{font-size:20px;font-weight:800;color:#0f172a;margin-bottom:2px;margin-top:12px}
+.dname-sub{font-size:12px;color:#64748b;margin-bottom:10px}
+.section-label{font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;margin-top:14px}
+.norm-dose{background:#f0fdf4;border-left:3px solid #22c55e;padding:8px 11px;border-radius:0 8px 8px 0;font-size:13px;color:#14532d;margin-bottom:4px}
+table.adj{width:100%;border-collapse:collapse;font-size:13px;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0}
+table.adj th{background:#f8fafc;padding:8px 10px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px}
+table.adj td{padding:9px 10px;border-top:1px solid #f1f5f9;vertical-align:top;color:#1e293b;line-height:1.4}
+table.adj tr.hl td{background:#eff6ff;font-weight:700}
+table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
+.hl-now{font-size:11px;color:#2563eb;margin-left:5px;font-weight:800}
+.dial-table{border:1px solid #e2e8f0;border-radius:10px;overflow:hidden}
+.dial-row{display:flex;padding:10px 12px;font-size:13px;line-height:1.4}
+.dial-row:not(:last-child){border-bottom:1px solid #f1f5f9}
+.dial-row.active-dial{background:#f5f3ff}
+.dial-type{font-weight:800;color:#6d28d9;min-width:58px;font-size:13px;flex-shrink:0}
+.dial-content{flex:1;color:#334155}
+.dial-sub{font-size:11px;color:#64748b;margin-top:3px}
+.caution-box{background:#fff7ed;border-left:3px solid #f97316;padding:9px 12px;border-radius:0 8px 8px 0;font-size:13px;color:#9a3412;margin-top:10px;line-height:1.5}
+.evidence-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:11px 13px;margin-top:10px;font-size:12px;color:#475569;line-height:1.6}
+.ev-title{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;color:#334155}
+.no-adj{background:#f1f5f9;border-radius:8px;padding:10px 12px;font-size:13px;color:#64748b;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div style="padding-top:8px;margin-bottom:4px">
+  <h1>腎機能・用量調整計算</h1>
+  <div class="subtitle">Cockcroft-Gault 法｜オフライン対応・APIキー不要</div>
+</div>
+
+<!-- 患者情報 -->
+<div class="card">
+  <div class="card-title">患者情報</div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>年齢</label>
+      <input type="number" id="age" placeholder="65" min="15" max="120" inputmode="numeric">
+      <div class="unit">歳</div>
+    </div>
+    <div class="form-group">
+      <label>性別</label>
+      <div class="radio-group">
+        <label class="rl"><input type="radio" name="sex" value="male" checked> 男性</label>
+        <label class="rl"><input type="radio" name="sex" value="female"> 女性</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>身長<span class="opt">標準体重計算用</span></label>
+      <input type="number" id="height" placeholder="165" min="100" max="220" inputmode="decimal" oninput="onHW()">
+      <div class="unit">cm</div>
+    </div>
+    <div class="form-group">
+      <label>体重<span class="opt">未入力→標準体重</span></label>
+      <input type="number" id="weight" placeholder="65.0" min="20" max="300" step="0.1" inputmode="decimal" oninput="onHW()">
+      <div class="unit">kg</div>
+    </div>
+  </div>
+  <div id="wNote" class="weight-note hidden"></div>
+  <div class="form-group" style="margin-bottom:11px">
+    <label>血清クレアチニン (sCr)</label>
+    <input type="number" id="scr" placeholder="1.00" min="0.01" max="30" step="0.01" inputmode="decimal">
+    <div class="unit">mg/dL</div>
+  </div>
+  <div class="form-group">
+    <label>透析</label>
+    <div class="dial-grid">
+      <button class="db active" onclick="selDial('none',this)">なし</button>
+      <button class="db" onclick="selDial('HD',this)">HD</button>
+      <button class="db" onclick="selDial('CAPD',this)">CAPD</button>
+      <button class="db" onclick="selDial('HDF',this)">HDF</button>
+      <button class="db" onclick="selDial('CHDF',this)">CHDF</button>
+    </div>
+  </div>
+</div>
+
+<button class="btn-calc" onclick="calculate()">CCr を計算する</button>
+<button class="btn-clear" onclick="clearAll()">クリア</button>
+
+<!-- 計算結果 -->
+<div id="resultSection" class="card hidden" style="margin-top:12px">
+  <div class="card-title">計算結果</div>
+  <div class="result-main">
+    <div><span class="ccr-val" id="ccrVal">—</span><span class="ccr-u">mL/min</span></div>
+    <div id="stageBadge"></div>
+    <div class="calc-detail" id="calcDetail"></div>
+  </div>
+  <div id="stageDesc" style="font-size:13px;color:#64748b;padding:2px 0"></div>
+</div>
+
+<!-- 薬剤検索 -->
+<div id="searchSection" class="card hidden">
+  <div class="card-title">薬剤検索</div>
+  <div class="search-wrap">
+    <div class="search-row">
+      <input type="text" id="drugInput" placeholder="薬剤名（日本語・英語可）"
+        autocomplete="off"
+        oninput="onDrugInput()"
+        onkeydown="onDrugKey(event)">
+    </div>
+    <div id="suggestList" class="suggest-list hidden"></div>
+  </div>
+  <div id="drugResult"></div>
+</div>
+
+</div>
+
+<script src="../shared/drugs-master.js"></script>
+<script src="renal-data.js"></script>
+<script>
+// RENAL_DRUGS / RENAL_DATA は renal-data.js で定義
+// 既存コードとの互換性のため DRUGS エイリアスを設定
+const DRUGS = RENAL_DRUGS;
+
+// ═══════════════════════════════════════════════════════
+// 状態管理
+// ═══════════════════════════════════════════════════════
+let dialysis = 'none';
+let currentCCr = null;
+let suggestIdx = -1;
+
+// ─── 体重・身長 ───
+function ibw(h){ return 22*(h/100)**2; }
+function getUsedWeight(){
+  const h=parseFloat(document.getElementById('height').value)||null;
+  const w=parseFloat(document.getElementById('weight').value)||null;
+  if(!h&&!w) return null;
+  if(!w&&h) return{w:ibw(h),type:'標準体重',ibw:ibw(h),bmi:null};
+  if(!h) return{w:w,type:'実測体重',ibw:null,bmi:null};
+  const bmi=w/(h/100)**2, ideal=ibw(h);
+  if(bmi>=30||w>ideal*1.2){
+    const adj=ideal+0.4*(w-ideal);
+    return{w:adj,type:'補正体重(肥満)',ibw:ideal,actualW:w,bmi};
+  }
+  return{w:w,type:'実測体重',ibw:ideal,bmi};
+}
+function onHW(){
+  const note=document.getElementById('wNote'), info=getUsedWeight();
+  if(!info){note.classList.add('hidden');return;}
+  note.classList.remove('hidden');
+  note.className='weight-note';
+  if(info.type==='標準体重'){note.classList.add('info');note.textContent=`体重未入力 → 標準体重 ${info.w.toFixed(1)} kg を使用`;}
+  else if(info.type==='補正体重(肥満)'){note.classList.add('warn');note.textContent=`肥満 (BMI ${info.bmi.toFixed(1)}) → 補正体重 ${info.w.toFixed(1)} kg 使用（実測 ${info.actualW} kg、IBW ${info.ibw.toFixed(1)} kg）`;}
+  else{note.textContent=`使用体重: ${info.w} kg${info.bmi?` (BMI ${info.bmi.toFixed(1)})`:''}`;}}
+
+// ─── 透析選択 ───
+function selDial(type,btn){
+  dialysis=type;
+  document.querySelectorAll('.db').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── CKDステージ ───
+function getStage(ccr){
+  if(dialysis!=='none') return{lbl:`透析 (${dialysis})`,cls:'s-gd',desc:`透析療法中 — 参考CCr ${ccr.toFixed(1)} mL/min`};
+  if(ccr>=90) return{lbl:'G1（正常〜高値）',cls:'s-g1',desc:'CCr ≥ 90 mL/min'};
+  if(ccr>=60) return{lbl:'G2（軽度低下）',cls:'s-g2',desc:'CCr 60〜89 mL/min'};
+  if(ccr>=45) return{lbl:'G3a（軽度〜中等度）',cls:'s-g3a',desc:'CCr 45〜59 mL/min'};
+  if(ccr>=30) return{lbl:'G3b（中等度〜高度）',cls:'s-g3b',desc:'CCr 30〜44 mL/min'};
+  if(ccr>=15) return{lbl:'G4（高度低下）',cls:'s-g4',desc:'CCr 15〜29 mL/min'};
+  return{lbl:'G5（末期腎不全）',cls:'s-g5',desc:'CCr < 15 mL/min'};
+}
+
+// ─── CCr計算 ───
+function calculate(){
+  const age=parseFloat(document.getElementById('age').value);
+  const sex=document.querySelector('input[name=sex]:checked').value;
+  const scr=parseFloat(document.getElementById('scr').value);
+  const wi=getUsedWeight();
+  if(!age||age<15||age>120){alert('年齢を正しく入力してください（15〜120歳）');return;}
+  if(!scr||scr<0.01){alert('血清クレアチニンを入力してください');return;}
+  if(!wi){alert('体重または身長のいずれかを入力してください');return;}
+  const sf=sex==='female'?0.85:1.0;
+  const ccr=((140-age)*wi.w*sf)/(72*scr);
+  currentCCr=Math.round(ccr*10)/10;
+  const stage=getStage(currentCCr);
+  document.getElementById('ccrVal').textContent=currentCCr.toFixed(1);
+  document.getElementById('stageBadge').innerHTML=`<span class="stage-badge ${stage.cls}">${stage.lbl}</span>`;
+  document.getElementById('stageDesc').textContent=stage.desc;
+  document.getElementById('calcDetail').textContent=
+    `(140−${age}) × ${wi.w.toFixed(1)} × ${sf.toFixed(2)} ÷ (72 × ${scr}) = ${currentCCr.toFixed(1)} mL/min　[${wi.type}]`;
+  document.getElementById('resultSection').classList.remove('hidden');
+  document.getElementById('searchSection').classList.remove('hidden');
+  document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ─── クリア ───
+function clearAll(){
+  ['age','height','weight','scr','drugInput'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.querySelector('input[name=sex][value=male]').checked=true;
+  selDial('none',document.querySelector('.dial-grid .db'));
+  ['resultSection','searchSection'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  document.getElementById('drugResult').innerHTML='';
+  document.getElementById('wNote').classList.add('hidden');
+  document.getElementById('suggestList').classList.add('hidden');
+  currentCCr=null;
+}
+
+// ─── 薬剤検索 ───
+function normQ(s){return s.toLowerCase().replace(/\s+/g,'').replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));}
+function matchDrug(d,q){
+  const nq=normQ(q);
+  return d.ja.some(n=>normQ(n).includes(nq))||d.en.some(n=>normQ(n).includes(nq));
+}
+function onDrugInput(){
+  const q=document.getElementById('drugInput').value.trim();
+  const sl=document.getElementById('suggestList');
+  suggestIdx=-1;
+  if(q.length<1){sl.classList.add('hidden');return;}
+  const hits=DRUGS.filter(d=>matchDrug(d,q)).slice(0,15);
+  if(!hits.length){sl.innerHTML='<div class="no-result">該当薬剤なし</div>';sl.classList.remove('hidden');return;}
+  sl.innerHTML=hits.map((d,i)=>`<div class="suggest-item" data-id="${d.id}" onmousedown="pickDrug('${d.id}')">
+    <div><span style="font-weight:600">${d.ja[0]}</span><span class="suggest-en"> ${d.en[0]}</span></div>
+    <span class="suggest-cls">${d.cls}</span>
+  </div>`).join('');
+  sl.classList.remove('hidden');
+}
+function onDrugKey(e){
+  const sl=document.getElementById('suggestList');
+  const items=sl.querySelectorAll('.suggest-item');
+  if(e.key==='ArrowDown'){e.preventDefault();suggestIdx=Math.min(suggestIdx+1,items.length-1);highlight(items);}
+  else if(e.key==='ArrowUp'){e.preventDefault();suggestIdx=Math.max(suggestIdx-1,0);highlight(items);}
+  else if(e.key==='Enter'){
+    e.preventDefault();
+    if(suggestIdx>=0&&items[suggestIdx]){pickDrug(items[suggestIdx].dataset.id);}
+    else{const q=document.getElementById('drugInput').value.trim();const h=DRUGS.filter(d=>matchDrug(d,q));if(h.length)pickDrug(h[0].id);}
+  }
+  else if(e.key==='Escape'){sl.classList.add('hidden');}
+}
+function highlight(items){
+  items.forEach((it,i)=>{it.classList.toggle('focused',i===suggestIdx);});
+  if(suggestIdx>=0&&items[suggestIdx])items[suggestIdx].scrollIntoView({block:'nearest'});
+}
+function pickDrug(id){
+  const d=DRUGS.find(x=>x.id===id);
+  if(!d)return;
+  document.getElementById('drugInput').value=d.ja[0];
+  document.getElementById('suggestList').classList.add('hidden');
+  renderDrug(d);
+}
+
+// ─── 薬剤表示 ───
+function isHL(adj){
+  if(currentCCr===null||dialysis!=='none') return false;
+  return currentCCr>=adj.lo && currentCCr<=adj.hi;
+}
+function noData(v){return!v||v.trim()===''||v==='—';}
+
+function renderDrug(d){
+  let h=`<div class="dname">${d.ja[0]}</div>
+  <div class="dname-sub">${d.en.join(' / ')} ｜ ${d.cls}</div>`;
+
+  if(!noData(d.norm)){
+    h+=`<div class="norm-dose">通常用量: ${d.norm}</div>`;
+  }
+
+  // 腎機能別調整
+  h+=`<div class="section-label">腎機能別用量調整</div>
+  <table class="adj"><tr><th style="width:36%">CCr (mL/min)</th><th>推奨用量（1日量）</th></tr>`;
+  d.adj.forEach(a=>{
+    const hl=isHL(a);
+    h+=`<tr${hl?' class="hl"':''}>
+      <td>${a.r}${hl?'<span class="hl-now">◀ 現在</span>':''}</td>
+      <td>${a.d}${a.n?`<div class="dial-sub">${a.n}</div>`:''}</td>
+    </tr>`;
+  });
+  h+='</table>';
+
+  // 透析別用量
+  h+=`<div class="section-label">透析別用量</div><div class="dial-table">`;
+  const dmodes=[
+    {key:'hd',lbl:'HD',
+     content:(m)=>m.dd===m.nd||noData(m.nd)?
+       (noData(m.dd)?'情報なし・添付文書確認':m.dd):
+       `<div>透析日: ${m.dd}</div><div>非透析日: ${m.nd}</div>`,
+     extra:(m)=>[m.t&&!noData(m.t)?`投与タイミング: ${m.t}`:'',m.n&&!noData(m.n)?m.n:''].filter(Boolean).join('<br>')},
+    {key:'capd',lbl:'CAPD',content:(m)=>noData(m.d)?'情報なし・添付文書確認':m.d,extra:(m)=>m.n&&!noData(m.n)?m.n:''},
+    {key:'hdf', lbl:'HDF', content:(m)=>noData(m.d)?'情報なし・添付文書確認':m.d,extra:(m)=>m.n&&!noData(m.n)?m.n:''},
+    {key:'chdf',lbl:'CHDF',content:(m)=>noData(m.d)?'情報なし・添付文書確認':m.d,extra:(m)=>m.n&&!noData(m.n)?m.n:''},
+  ];
+  dmodes.forEach((dm,i)=>{
+    const md=d[dm.key];
+    const active=dialysis===dm.lbl;
+    const body=md?dm.content(md):'情報なし・添付文書確認';
+    const ex=md?dm.extra(md):'';
+    h+=`<div class="dial-row${active?' active-dial':''}">
+      <div class="dial-type">${dm.lbl}${active?' ✓':''}</div>
+      <div class="dial-content">${body}${ex?`<div class="dial-sub">${ex}</div>`:''}</div>
+    </div>`;
+  });
+  h+='</div>';
+
+  // 注意事項
+  if(d.caut&&!noData(d.caut)){
+    h+=`<div class="caution-box">⚠ ${d.caut}</div>`;
+  }
+
+  // 根拠文献
+  const hasEv=(d.pi&&!noData(d.pi))||(d.jsnp&&!noData(d.jsnp));
+  if(hasEv){
+    h+=`<div class="evidence-box"><div class="ev-title">根拠文献</div>`;
+    if(d.pi&&!noData(d.pi)) h+=`<div>📋 添付文書: ${d.pi}</div>`;
+    if(d.jsnp&&!noData(d.jsnp)) h+=`<div>📚 JSNP: ${d.jsnp}</div>`;
+    h+=`</div>`;
+  }
+
+  document.getElementById('drugResult').innerHTML=h;
+}
+
+// サジェスト外クリックで閉じる
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.search-wrap'))
+    document.getElementById('suggestList').classList.add('hidden');
+});
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
