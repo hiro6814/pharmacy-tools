@@ -1,11 +1,14 @@
 [build]
   publish = "."
 
-# ルートへのアクセスは crushing-checker にリダイレクト
+# 旧 renal-pwa（ルート直下）へのアクセスを新URLに移行
 [[redirects]]
   from = "/"
-  to = "/crushing-checker/"
-  status = 302
+  to = "/renal/"
+  status = 301
 
-# SPAフォールバック不要（静的ファイルのみ）
-# renal の旧URL移行用リダイレクトは Step 7 で追記
+# 旧ルート配下の全パスも renal にフォールバック（念のため）
+[[redirects]]
+  from = "/index.html"
+  to = "/renal/"
+  status = 301
