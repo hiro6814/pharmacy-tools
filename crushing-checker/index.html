@@ -639,7 +639,7 @@ function renderDD(hits, q) {
     dropdown.innerHTML = `<div class="no-result">「${esc(q)}」は見つかりません。「＋ 薬剤登録」から追加できます。</div>`;
   } else {
     dropdown.innerHTML = hits.map(d => `
-      <div class="dd-item" onclick="addDrug(${d.id})">
+      <div class="dd-item" onclick="addDrug('${d.id}')">
         <div class="dd-main">${hl(d.generic, q)}</div>
         <div class="dd-sub">${hl(d.brand, q)} &nbsp;·&nbsp; ${esc(d.category)} &nbsp;·&nbsp; ${esc(d.form)}</div>
         <div class="dd-badges">${miniBadge(d.crush,'粉砕')} ${miniBadge(d.susp,'懸濁')}</div>
@@ -679,7 +679,7 @@ function render() {
     tagsEl.innerHTML = selected.map(id => {
       const d = drugDB.find(x => x.id === id);
       if (!d) return '';
-      return `<span class="tag">${esc(d.generic)}<button class="tag-remove" onclick="removeDrug(${id})">×</button></span>`;
+      return `<span class="tag">${esc(d.generic)}<button class="tag-remove" onclick="removeDrug('${id}')">×</button></span>`;
     }).join('');
   }
 
@@ -718,7 +718,7 @@ function renderResults() {
       <td class="src">${d.source && d.source.includes('要確認')
         ? '<span class="src-unverified">⚠ 要確認</span>'
         : esc(d.source||'—')}</td>
-      <td><button class="row-remove" onclick="removeDrug(${id})" title="削除">×</button></td>
+      <td><button class="row-remove" onclick="removeDrug('${id}')" title="削除">×</button></td>
     </tr>`;
   }).join('');
 
