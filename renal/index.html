@@ -169,11 +169,9 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
 </div>
 
 <script src="../shared/drugs-master.js"></script>
-<script src="renal-data.js"></script>
 <script>
-// RENAL_DRUGS / RENAL_DATA は renal-data.js で定義
-// 既存コードとの互換性のため DRUGS エイリアスを設定
-const DRUGS = RENAL_DRUGS;
+// 統合マスターから腎機能データを直接参照
+const DRUGS = DRUG_MASTER.filter(d => d.features.includes('renal'));
 
 // ═══════════════════════════════════════════════════════
 // 状態管理

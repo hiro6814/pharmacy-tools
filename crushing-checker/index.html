@@ -586,14 +586,11 @@ select { cursor: pointer; }
 </div>
 
 <script src="../shared/drugs-master.js"></script>
-<script src="crush-data.js"></script>
 <script>
 // =============================================
-// 薬剤データベース（統合マスターから生成）
+// 薬剤データベース（統合マスターから直接参照）
 // =============================================
-let drugDB = DRUG_MASTER
-  .filter(d => d.features.includes('crush'))
-  .map(d => ({ ...d, ...(CRUSH_DATA[d.id] || {}) }));
+let drugDB = DRUG_MASTER.filter(d => d.features.includes('crush'));
 
 // LocalStorageからカスタム薬剤を読み込む
 function loadCustomDrugs() {
