@@ -14,34 +14,54 @@ const { RENAL_DRUGS } = require(path.join(root, 'renal/renal-data.js'));
 // renal データを id → entry でインデックス
 const renalMap = Object.fromEntries(RENAL_DRUGS.map(d => [d.id, d]));
 
-// マージ
-const merged = DRUG_MASTER.map(entry => {
-  const e = { ...entry };
-  if (e.features.includes('crush') && CRUSH_DATA[e.id]) {
-    const c = CRUSH_DATA[e.id];
-    e.crush     = c.crush;
-    e.crushNote = c.crushNote;
-    e.susp      = c.susp;
-    e.suspNote  = c.suspNote;
-    e.source    = c.source;
-  }
-  if (e.features.includes('renal') && renalMap[e.id]) {
-    const r = renalMap[e.id];
-    e.ja   = r.ja;
-    e.en   = r.en;
-    e.cls  = r.cls;
-    e.norm = r.norm;
-    e.adj  = r.adj;
-    e.hd   = r.hd;
-    e.capd = r.capd;
-    e.hdf  = r.hdf;
-    e.chdf = r.chdf;
-    e.pi   = r.pi;
-    e.jsnp = r.jsnp;
-    e.caut = r.caut;
-  }
-  return e;
+// crush エントリをマージ
+const crushEntries = DRUG_MASTER
+  .filter(d => d.features.includes('crush'))
+  .map(entry => {
+    const e = { ...entry };
+    if (CRUSH_DATA[e.id]) {
+      const c = CRUSH_DATA[e.id];
+      e.crush     = c.crush;
+      e.crushNote = c.crushNote;
+      e.susp      = c.susp;
+      e.suspNote  = c.suspNote;
+      e.source    = c.source;
+    }
+    return e;
+  });
+
+// renal エントリ: RENAL_DRUGS を正規ソースとして全件使用
+// （drugs-master.js に未登録だった薬剤も包含）
+const masterRenalMap = Object.fromEntries(
+  DRUG_MASTER.filter(d => d.features.includes('renal')).map(d => [d.id, d])
+);
+const renalEntries = RENAL_DRUGS.map(r => {
+  const base = masterRenalMap[r.id] || {
+    id:       r.id,
+    generic:  r.ja[0],
+    brand:    r.ja.slice(1).join(' / '),
+    category: r.cls,
+    form:     '注射',
+    features: ['renal'],
+  };
+  return {
+    ...base,
+    ja:   r.ja,
+    en:   r.en,
+    cls:  r.cls,
+    norm: r.norm,
+    adj:  r.adj,
+    hd:   r.hd,
+    capd: r.capd,
+    hdf:  r.hdf,
+    chdf: r.chdf,
+    pi:   r.pi,
+    jsnp: r.jsnp,
+    caut: r.caut,
+  };
 });
+
+const merged = [...crushEntries, ...renalEntries];
 
 // 統計
 const crushCount = merged.filter(d => d.features.includes('crush')).length;
