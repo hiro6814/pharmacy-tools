@@ -1,0 +1,5 @@
+name = "pharmacy-tools"
+compatibility_date = "2026-06-02"
+
+[assets]
+directory = "."
