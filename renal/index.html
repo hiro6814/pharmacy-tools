@@ -80,6 +80,10 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
 .evidence-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:11px 13px;margin-top:10px;font-size:12px;color:#475569;line-height:1.6}
 .ev-title{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;color:#334155}
 .no-adj{background:#f1f5f9;border-radius:8px;padding:10px 12px;font-size:13px;color:#64748b;margin-top:8px}
+.vbadge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;border-radius:4px;padding:2px 7px;letter-spacing:.02em;white-space:nowrap;margin-bottom:4px}
+.vbadge-confirmed{color:#065f46;background:#d1fae5;border:1px solid #6ee7b7}
+.vbadge-inferred{color:#78350f;background:#fef3c7;border:1px solid #fcd34d}
+.vbadge-unverified{color:#7f1d1d;background:#fee2e2;border:1px solid #fca5a5}
 </style>
 </head>
 <body>
@@ -180,6 +184,41 @@ let dialysis = 'none';
 let currentCCr = null;
 let suggestIdx = -1;
 
+// ─── localStorage 保存・復元 ─────────────────
+const LS_KEY = 'renalCalc_v1';
+function saveState() {
+  const state = {
+    age: document.getElementById('age').value,
+    sex: document.querySelector('input[name=sex]:checked')?.value || 'male',
+    height: document.getElementById('height').value,
+    weight: document.getElementById('weight').value,
+    scr: document.getElementById('scr').value,
+    dialysis,
+  };
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {}
+}
+function restoreState() {
+  try {
+    const s = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if (!s) return;
+    if (s.age)    document.getElementById('age').value = s.age;
+    if (s.height) document.getElementById('height').value = s.height;
+    if (s.weight) document.getElementById('weight').value = s.weight;
+    if (s.scr)    document.getElementById('scr').value = s.scr;
+    if (s.sex) {
+      const radio = document.querySelector(`input[name=sex][value=${s.sex}]`);
+      if (radio) radio.checked = true;
+    }
+    if (s.dialysis && s.dialysis !== 'none') {
+      const btns = document.querySelectorAll('.dial-grid .db');
+      const dialMap = { HD: 1, CAPD: 2, HDF: 3, CHDF: 4 };
+      const idx = dialMap[s.dialysis];
+      if (idx !== undefined) selDial(s.dialysis, btns[idx]);
+    }
+    onHW();
+  } catch(e) {}
+}
+
 // ─── 体重・身長 ───
 function ibw(h){ return 22*(h/100)**2; }
 function getUsedWeight(){
@@ -234,6 +273,7 @@ function calculate(){
   const sf=sex==='female'?0.85:1.0;
   const ccr=((140-age)*wi.w*sf)/(72*scr);
   currentCCr=Math.round(ccr*10)/10;
+  saveState();
   const stage=getStage(currentCCr);
   document.getElementById('ccrVal').textContent=currentCCr.toFixed(1);
   document.getElementById('stageBadge').innerHTML=`<span class="stage-badge ${stage.cls}">${stage.lbl}</span>`;
@@ -255,10 +295,11 @@ function clearAll(){
   document.getElementById('wNote').classList.add('hidden');
   document.getElementById('suggestList').classList.add('hidden');
   currentCCr=null;
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
 }
 
 // ─── 薬剤検索 ───
-function normQ(s){return s.toLowerCase().replace(/\s+/g,'').replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));}
+function normQ(s){return s.toLowerCase().replace(/\s+/g,'').replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));}
 function matchDrug(d,q){
   const nq=normQ(q);
   return d.ja.some(n=>normQ(n).includes(nq))||d.en.some(n=>normQ(n).includes(nq));
@@ -307,9 +348,17 @@ function isHL(adj){
 }
 function noData(v){return!v||v.trim()===''||v==='—';}
 
+function verifiedBadge(d){
+  const v=d.verified||'confirmed';
+  const map={confirmed:['vbadge-confirmed','✓ 確認済'],inferred:['vbadge-inferred','~ 推定'],unverified:['vbadge-unverified','? 要確認']};
+  const [cls,txt]=map[v]||map.confirmed;
+  return `<span class="vbadge ${cls}">${txt}</span>`;
+}
+
 function renderDrug(d){
   let h=`<div class="dname">${d.ja[0]}</div>
-  <div class="dname-sub">${d.en.join(' / ')} ｜ ${d.cls}</div>`;
+  <div class="dname-sub">${d.en.join(' / ')} ｜ ${d.cls}</div>
+  <div>${verifiedBadge(d)}</div>`;
 
   if(!noData(d.norm)){
     h+=`<div class="norm-dose">通常用量: ${d.norm}</div>`;
@@ -373,6 +422,9 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('.search-wrap'))
     document.getElementById('suggestList').classList.add('hidden');
 });
+
+// ─── 初期化：保存済み状態を復元 ───
+restoreState();
 </script>
 <script>
 if('serviceWorker' in navigator){

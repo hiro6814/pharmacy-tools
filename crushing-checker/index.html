@@ -349,6 +349,41 @@ header {
 .alert-unverified { background: #fffbeb; border-color: #fde68a; }
 .alert-unverified .alert-icon { color: #d97706; }
 
+/* ─── Verified / HighAlert badges ────────── */
+.vbadge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 9.5px; font-weight: 700;
+  border-radius: 4px; padding: 2px 7px;
+  letter-spacing: 0.03em; white-space: nowrap;
+}
+.vbadge-confirmed  { color: #065f46; background: #d1fae5; border: 1px solid #6ee7b7; }
+.vbadge-inferred   { color: #78350f; background: #fef3c7; border: 1px solid #fcd34d; }
+.vbadge-unverified { color: #7f1d1d; background: #fee2e2; border: 1px solid #fca5a5; }
+
+.ha-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 9.5px; font-weight: 700;
+  background: #fde8e8; color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 4px; padding: 2px 6px;
+  white-space: nowrap; margin-top: 3px;
+}
+
+/* ─── Filter bar ──────────────────────────── */
+.filter-bar {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.filter-btn {
+  font-size: 11px; font-weight: 600; padding: 5px 12px;
+  border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--text-muted);
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-btn.active-danger { background: #fde8e8; color: #b91c1c; border-color: #fca5a5; }
+
 .row-remove {
   background: none; border: none; cursor: pointer;
   color: var(--border); font-size: 18px;
@@ -553,6 +588,13 @@ select { cursor: pointer; }
     <!-- Alerts -->
     <div class="alert-list" id="alertsArea"></div>
 
+    <!-- Filter bar -->
+    <div class="filter-bar" id="filterBar" style="display:none">
+      <button class="filter-btn active" id="fAll" onclick="setFilter('all')">すべて</button>
+      <button class="filter-btn" id="fHighAlert" onclick="setFilter('highAlert')">⚠️ 高アラートのみ</button>
+      <button class="filter-btn" id="fUnverified" onclick="setFilter('unverified')">🔴 要確認のみ</button>
+    </div>
+
     <!-- Results -->
     <div class="card">
       <div class="card-header">
@@ -590,6 +632,7 @@ select { cursor: pointer; }
 // =============================================
 // 薬剤データベース（統合マスターから直接参照）
 // =============================================
+function normQ(s){return s.toLowerCase().replace(/\s+/g,'').replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));}
 let drugDB = DRUG_MASTER.filter(d => d.features.includes('crush'));
 
 // LocalStorageからカスタム薬剤を読み込む
@@ -609,6 +652,17 @@ function saveCustomDrugs() {
 
 let selected = [];
 let nextCustomId = 10000;
+let activeFilter = 'all'; // 'all' | 'highAlert' | 'unverified'
+
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.remove('active', 'active-danger');
+  });
+  const btn = document.getElementById(f === 'all' ? 'fAll' : f === 'highAlert' ? 'fHighAlert' : 'fUnverified');
+  if (btn) btn.classList.add(f === 'unverified' ? 'active-danger' : 'active');
+  renderResults();
+}
 
 // Update header chip
 function updateDBChip() {
@@ -622,8 +676,9 @@ const dropdown = document.getElementById('dropdown');
 searchInput.addEventListener('input', function() {
   const q = this.value.trim();
   if (!q) { hideDD(); return; }
+  const nq = normQ(q);
   const hits = drugDB.filter(d =>
-    d.generic.includes(q) || d.brand.includes(q) || d.category.includes(q)
+    normQ(d.generic).includes(nq) || normQ(d.brand).includes(nq) || normQ(d.category).includes(nq)
   ).slice(0, 10);
   renderDD(hits, q);
 });
@@ -664,6 +719,23 @@ function addDrug(id) {
 function removeDrug(id) { selected = selected.filter(x => x !== id); render(); }
 function clearAll() { selected = []; render(); }
 
+// ─── Verified / HighAlert helpers ─────────
+function verifiedBadge(d) {
+  const v = d.verified || 'unverified';
+  const map = {
+    confirmed:  ['vbadge-confirmed',  '✓ 確認済'],
+    inferred:   ['vbadge-inferred',   '~ 推定'],
+    unverified: ['vbadge-unverified', '? 要確認'],
+  };
+  const [cls, txt] = map[v] || map.unverified;
+  return `<span class="vbadge ${cls}">${txt}</span>`;
+}
+
+function highAlertBadge(d) {
+  if (!d.highAlert) return '';
+  return `<span class="ha-badge">⚠ 高アラート</span>`;
+}
+
 // ─── Main render ──────────────────────────
 function render() {
   document.getElementById('selectedCount').textContent = selected.length;
@@ -680,6 +752,7 @@ function render() {
     }).join('');
   }
 
+  document.getElementById('filterBar').style.display = selected.length ? 'flex' : 'none';
   renderAlerts();
   renderResults();
 }
@@ -697,24 +770,38 @@ function renderResults() {
     return;
   }
 
-  let rows = selected.map(id => {
+  // フィルター適用
+  let visibleIds = selected;
+  if (activeFilter === 'highAlert') {
+    visibleIds = selected.filter(id => { const d = drugDB.find(x => x.id === id); return d && d.highAlert; });
+  } else if (activeFilter === 'unverified') {
+    visibleIds = selected.filter(id => { const d = drugDB.find(x => x.id === id); return d && (d.verified === 'unverified' || (!d.verified && (d.source||'').includes('要確認'))); });
+  }
+
+  if (!visibleIds.length) {
+    area.innerHTML = `<div class="results-empty"><div class="big">🔍</div>このフィルターに該当する薬剤はありません</div>`;
+    return;
+  }
+
+  let rows = visibleIds.map(id => {
     const d = drugDB.find(x => x.id === id);
     if (!d) return '';
     const crushNote = d.crushNote ? `<span class="${d.crush==='cond'?'note warn':'note'}">${esc(d.crushNote)}</span>` : '<span class="note-dash">—</span>';
     const suspNote  = d.suspNote  ? `<span class="${d.susp==='cond'?'note warn':'note'}">${esc(d.suspNote)}</span>`  : '<span class="note-dash">—</span>';
+    const vbadge = verifiedBadge(d);
+    const habadge = highAlertBadge(d);
     return `<tr>
       <td><div class="drug-name">
         <div class="main">${esc(d.generic)}</div>
         <div class="brand">${esc(d.brand)}</div>
         <span class="cat-tag">${esc(d.category)}</span>
+        ${habadge}
       </div></td>
       <td style="text-align:center">${badge(d.crush)}</td>
       <td style="text-align:center">${badge(d.susp)}</td>
       <td>${crushNote}</td>
       <td>${suspNote}</td>
-      <td class="src">${d.source && d.source.includes('要確認')
-        ? '<span class="src-unverified">⚠ 要確認</span>'
-        : esc(d.source||'—')}</td>
+      <td class="src" style="white-space:nowrap">${vbadge}</td>
       <td><button class="row-remove" onclick="removeDrug('${id}')" title="削除">×</button></td>
     </tr>`;
   }).join('');
@@ -728,7 +815,7 @@ function renderResults() {
           <th style="width:72px;text-align:center">簡易懸濁</th>
           <th>粉砕時の注意</th>
           <th>簡易懸濁時の注意</th>
-          <th style="width:80px">情報源</th>
+          <th style="width:72px">確認度</th>
           <th style="width:36px"></th>
         </tr></thead>
         <tbody>${rows}</tbody>
@@ -757,10 +844,18 @@ function renderAlerts() {
     }
   });
 
+  // 高アラート薬剤の警告
+  selected.forEach(id => {
+    const d = drugDB.find(x => x.id === id);
+    if (d && d.highAlert) {
+      warns.unshift(`<strong>${esc(d.generic)}</strong>：<span style="color:#b91c1c;font-weight:700">高アラート薬</span>です。投与量・投与経路を複数人で確認してください。`);
+    }
+  });
+
   // 未確認薬剤アラート
   const unverified = selected
     .map(id => drugDB.find(x => x.id === id))
-    .filter(d => d && d.source && d.source.includes('要確認'))
+    .filter(d => d && (d.verified === 'unverified' || (!d.verified && (d.source||'').includes('要確認'))))
     .map(d => d.generic);
 
   const unverifiedAlert = unverified.length > 0 ? `
@@ -906,7 +1001,7 @@ function esc(s) {
 }
 function hl(text, q) {
   if (!q) return esc(text);
-  const i = text.toLowerCase().indexOf(q.toLowerCase());
+  const i = normQ(text).indexOf(normQ(q));
   if (i === -1) return esc(text);
   return esc(text.slice(0,i)) + '<mark style="background:#e0e7ff;color:#3730a3;border-radius:2px;padding:0 1px">' + esc(text.slice(i,i+q.length)) + '</mark>' + esc(text.slice(i+q.length));
 }

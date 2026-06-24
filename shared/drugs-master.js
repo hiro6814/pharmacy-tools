@@ -12,6 +12,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "55℃10分で崩壊・分散。pH非依存性のため胃内崩壊に問題なし。",
     source: "IF・メーカー確認",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ca002",
@@ -23,6 +25,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放性製剤のため粉砕不可。大量急速吸収のリスクあり。",
     susp: "ng", suspNote: "徐放性製剤のため懸濁不可。速放性製剤（普通錠・カプセル）への変更を検討。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ca003",
@@ -34,6 +38,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "光・空気で分解しやすい。粉砕後は遮光・速やかに投与。",
     susp: "ok", suspNote: "55℃10分で崩壊。遮光容器使用推奨。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ca004",
@@ -45,6 +51,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "cond", suspNote: "懸濁性はあるが溶解度が低いため均一分散を確認後投与。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ca005",
@@ -56,6 +64,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "55℃10分で崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ca006",
@@ -67,6 +77,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。フィルムコートは剥がれるが有効成分に影響なし。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb001",
@@ -78,6 +90,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "吸湿性あり。粉砕後は速やかに投与。",
     susp: "ok", suspNote: "55℃10分で崩壊・分散。懸濁後は速やかに投与。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb002",
@@ -89,6 +103,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。水に分散させ投与可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb003",
@@ -100,6 +116,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "粉砕可だが水に溶けにくい。",
     susp: "cond", suspNote: "水への溶解性が低い。懸濁後は均一に分散させ速やかに投与。チューブ閉塞注意。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb004",
@@ -111,6 +129,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb005",
@@ -122,6 +142,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb006",
@@ -133,6 +155,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "arb007",
@@ -144,6 +168,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ace001",
@@ -155,6 +181,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ace002",
@@ -166,6 +194,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ace003",
@@ -177,6 +207,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bb001",
@@ -188,6 +220,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。フィルムコーティングは問題なし。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bb002",
@@ -199,6 +233,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bb003",
@@ -210,6 +246,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "diu001",
@@ -221,6 +259,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "光に不安定。粉砕後は遮光保存。",
     susp: "ok", suspNote: "崩壊・懸濁良好。遮光容器使用推奨。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "diu002",
@@ -232,6 +272,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "cond", suspNote: "懸濁性あり。水への溶解度が低いため均一分散させて投与。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "diu003",
@@ -243,6 +285,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "diu004",
@@ -254,6 +298,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aplt001",
@@ -265,6 +311,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶錠のため粉砕不可。胃障害リスク増大。普通錠への変更検討。",
     susp: "ng", suspNote: "腸溶錠のため懸濁不可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aplt002",
@@ -276,6 +324,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが吸湿性あり。粉砕後は速やかに使用。職業暴露（皮膚・粉塵）に注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。55℃10分処理推奨。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aplt003",
@@ -287,6 +337,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "粉砕可。粉塵は避けること。",
     susp: "ok", suspNote: "水に分散させて投与可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aplt004",
@@ -298,6 +350,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが取り扱い注意（職業暴露）。",
     susp: "ok", suspNote: "懸濁・投与可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aplt005",
@@ -309,6 +363,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "cond", suspNote: "水に不溶。懸濁後均一分散させて速やかに投与。チューブ詰まりに注意。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ac001",
@@ -320,6 +376,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが粉塵吸入・皮膚暴露に注意（催奇形性）。手袋着用必須。",
     susp: "ok", suspNote: "崩壊・懸濁良好。薬剤師管理のもとで実施。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: true,
   },
   {
     id: "doac001",
@@ -331,6 +389,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "粉砕後は速やかに使用（安定性のため）。",
     susp: "ok", suspNote: "水100mLに懸濁後30分以内に投与。胃管投与後は水でフラッシュ。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "doac002",
@@ -342,6 +402,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "水60mLに懸濁後4時間以内に投与可能。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "doac003",
@@ -353,6 +415,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "水に懸濁後速やかに投与。崩壊性良好。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "doac004",
@@ -364,6 +428,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "カプセルを開封・内容物を取り出しての投与は禁忌。生物学的利用率が急増する。",
     susp: "ng", suspNote: "懸濁不可。他のDOACへの変更を主治医と検討。",
     source: "IF・添付文書",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "stat001",
@@ -375,6 +441,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "stat002",
@@ -386,6 +454,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "stat003",
@@ -397,6 +467,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "stat004",
@@ -408,6 +480,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ppi001",
@@ -419,6 +493,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶性製剤のため粉砕不可。酸で分解する。",
     susp: "ng", suspNote: "腸溶性製剤のため懸濁不可。ランソプラゾールOD錠や顆粒製剤など代替薬を検討。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ppi002",
@@ -430,6 +506,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶性コーティングペレットを含むため粉砕不可。",
     susp: "ok", suspNote: "OD錠をそのまま水に懸濁後速やかに投与可。55℃より低い温水使用。チューブ径8Fr以上推奨。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ppi003",
@@ -441,6 +519,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶性製剤のため粉砕不可。",
     susp: "ng", suspNote: "腸溶錠のため懸濁不可。顆粒製剤（パリエット顆粒）は懸濁可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ppi004",
@@ -452,6 +532,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "顆粒のため粉砕不可（コーティング破壊）。",
     susp: "ok", suspNote: "顆粒をそのまま水に懸濁して投与可能。酸性飲料は使用しない。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ppi005",
@@ -463,6 +545,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶性ペレットのため粉砕不可。",
     susp: "cond", suspNote: "カプセルを開封し中のペレットを水に懸濁して投与可（ペレットは粉砕しない）。顆粒剤は懸濁可。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "pcab001",
@@ -474,6 +558,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "酸安定性が高いため腸溶性製剤ではない。",
     susp: "ok", suspNote: "崩壊・懸濁良好。55℃10分処理後投与可。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "h2b001",
@@ -485,6 +571,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。OD錠はそのまま懸濁可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bgu001",
@@ -496,6 +584,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "su001",
@@ -507,6 +597,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠は懸濁しやすい。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: true,
   },
   {
     id: "dpp4001",
@@ -518,6 +610,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "dpp4002",
@@ -529,6 +623,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "sglt2001",
@@ -540,6 +636,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "sglt2002",
@@ -551,6 +649,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "cai001",
@@ -562,6 +662,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "thyr001",
@@ -573,6 +675,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "吸湿性・光分解性あり。遮光保存。",
     susp: "cond", suspNote: "崩壊・懸濁可能だが吸着しやすい。PVC製チューブへの吸着に注意。シリコン製チューブ推奨。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "atg001",
@@ -584,6 +688,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが皮膚暴露・粉塵吸入に注意。手袋着用。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "pd001",
@@ -595,6 +701,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "光・空気で酸化変色。粉砕後は遮光・速やかに使用。",
     susp: "ok", suspNote: "崩壊・懸濁可能。酸性飲料（ビタミンC水など）への溶解で安定性向上の報告あり。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "dem001",
@@ -606,6 +714,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。OD錠はそのまま懸濁可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "dem002",
@@ -617,6 +727,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "nrp001",
@@ -628,6 +740,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセルを開封し中身を取り出して使用可。",
     susp: "ok", suspNote: "カプセルを開封し内容物を水に懸濁して投与可。",
     source: "IF・メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "nrp002",
@@ -639,6 +753,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "tap001",
@@ -650,6 +766,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aap001",
@@ -661,6 +779,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠は懸濁しやすい。55℃10分で崩壊。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aap002",
@@ -672,6 +792,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠を水に懸濁して投与可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aap003",
@@ -683,6 +805,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "aap004",
@@ -694,6 +818,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠は懸濁しやすい。内用液製剤も利用可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ssri001",
@@ -705,6 +831,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ssri002",
@@ -716,6 +844,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "snri001",
@@ -727,6 +857,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶性ペレットのためカプセル開封・内容物粉砕不可。",
     susp: "cond", suspNote: "カプセルを開封しペレットを水に懸濁して投与可（ペレットは破砕しない）。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "snri002",
@@ -738,6 +870,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bz001",
@@ -749,6 +883,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠は懸濁しやすい。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "orx001",
@@ -760,6 +896,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが崩壊性が低い。",
     susp: "cond", suspNote: "水への溶解性が低い。懸濁後均一分散させ速やかに投与。チューブ詰まり注意。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "orx002",
@@ -771,6 +909,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "nbz001",
@@ -782,6 +922,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "pcn001",
@@ -793,6 +935,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "崩壊・懸濁良好。ドライシロップへの変更も可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ceph001",
@@ -804,6 +948,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "懸濁可。ドライシロップへの変更も可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "mac001",
@@ -815,6 +961,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "粉砕すると非常に苦味が強く投与困難。フィルムコーティングは苦味マスキング目的。",
     susp: "ng", suspNote: "懸濁後は著しい苦味で投与困難。ドライシロップ（苦味マスキング済み）への変更を推奨。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "mac002",
@@ -826,6 +974,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "ドライシロップのため粉砕不要。",
     susp: "ok", suspNote: "水に溶解して懸濁投与可。苦味マスキング済み。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "mac003",
@@ -837,6 +987,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "錠は粉砕可だが苦味あり。",
     susp: "cond", suspNote: "懸濁可だが苦味が強い。ドライシロップへの変更を推奨。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "fq001",
@@ -848,6 +1000,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。金属イオン含有製剤（制酸薬等）との同時投与で吸収低下に注意。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "fq002",
@@ -859,6 +1013,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。金属イオン含有製剤との同時投与に注意。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bpn001",
@@ -870,6 +1026,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "粉砕すると食道・口腔粘膜障害リスクが高まる。",
     susp: "ng", suspNote: "懸濁不可。経口ゼリー製剤（ボナロンゼリー）への変更が可能。注射製剤も検討。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "bpn002",
@@ -881,6 +1039,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "粉砕は粘膜障害リスクのため不可。",
     susp: "ng", suspNote: "懸濁不可。注射製剤（ベネット注）への切り替えを検討。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "vitd001",
@@ -892,6 +1052,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封し内用液として使用可。内用液製剤も存在。",
     susp: "ok", suspNote: "内用液製剤を利用するか、カプセル開封後に懸濁投与可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "pbca001",
@@ -903,6 +1065,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。水に懸濁後すぐに投与。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "laxac001",
@@ -914,6 +1078,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "水に懸濁して投与可。沈殿しやすいため均一分散させて投与。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "lax001",
@@ -925,6 +1091,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "pamr001",
@@ -936,6 +1104,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "ibs001",
@@ -947,6 +1117,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。食前30分に投与。",
     source: "メーカーQ&A",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "digi001",
@@ -958,6 +1130,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "治療域が狭い。粉砕後は均一分散を確認し過量投与に注意。",
     susp: "ok", suspNote: "崩壊・懸濁良好。投与量は厳格に管理。内用液製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: true,
   },
   {
     id: "arr001",
@@ -969,6 +1143,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが粉塵・皮膚暴露に注意（肺毒性・光感受性成分）。手袋・マスク着用推奨。",
     susp: "ok", suspNote: "崩壊・懸濁可能。光線過敏症リスクがあるため遮光容器使用。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "cand001",
@@ -980,6 +1156,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "cand002",
@@ -991,6 +1169,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。急速吸収による過降圧・徐脈リスク。普通錠への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。普通錠への剤形変更を主治医に相談。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "ca007",
@@ -1002,6 +1183,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "光に不安定。粉砕後は遮光・速やかに投与。",
     susp: "ok", suspNote: "崩壊・懸濁可能。遮光容器使用推奨。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "cand003",
@@ -1013,6 +1196,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "angn001",
@@ -1024,6 +1209,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "arr002",
@@ -1035,6 +1222,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "治療域が比較的狭い。粉砕後は均一分散に注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "arr003",
@@ -1046,6 +1235,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "chf001",
@@ -1057,6 +1249,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "arni001",
@@ -1068,6 +1262,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "粉砕可だが職業暴露（催奇形性）に注意。手袋着用。",
     susp: "ok", suspNote: "崩壊・懸濁可能。妊婦・妊娠可能女性への職業暴露防止措置をとること。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ace004",
@@ -1079,6 +1275,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ace005",
@@ -1090,6 +1288,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "吸湿性あり。硫黄臭に注意。粉砕後は速やかに投与。",
     susp: "ok", suspNote: "崩壊・懸濁可能。速やかに投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ace006",
@@ -1101,6 +1301,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ace007",
@@ -1112,6 +1314,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ace008",
@@ -1123,6 +1327,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "bb004",
@@ -1134,6 +1341,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bb005",
@@ -1145,6 +1354,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。内用液製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bb006",
@@ -1156,6 +1367,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bb007",
@@ -1167,6 +1380,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bb008",
@@ -1178,6 +1393,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "mra001",
@@ -1189,6 +1406,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "avp001",
@@ -1200,6 +1419,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "フィルムコート錠。粉砕可。",
     susp: "cond", suspNote: "水への溶解性が低い。均一分散させて速やかに投与。チューブ閉塞注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "diul001",
@@ -1211,6 +1432,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "diuts001",
@@ -1222,6 +1445,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "diutz001",
@@ -1233,6 +1458,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "tzd001",
@@ -1244,6 +1471,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。OD錠は懸濁しやすい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "agi001",
@@ -1255,6 +1484,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。食直前に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "agi002",
@@ -1266,6 +1498,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。食直前に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "dpp4003",
@@ -1277,6 +1511,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "dpp4004",
@@ -1288,6 +1524,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "dpp4005",
@@ -1299,6 +1537,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "dpp4006",
@@ -1310,6 +1550,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "sglt2003",
@@ -1321,6 +1563,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "sglt2004",
@@ -1332,6 +1576,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "sglt2005",
@@ -1343,6 +1589,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "su002",
@@ -1354,6 +1602,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。低血糖リスクに注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: true,
   },
   {
     id: "su003",
@@ -1365,6 +1615,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。低血糖リスクに注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: true,
   },
   {
     id: "prok001",
@@ -1376,6 +1628,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "prok002",
@@ -1387,6 +1641,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。OD錠・ドライシロップへの変更も可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "prok003",
@@ -1398,6 +1655,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。内用液製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "gmp001",
@@ -1409,6 +1668,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "苦味あり。",
     susp: "cond", suspNote: "水に溶けにくいが懸濁は可能。均一分散させて速やかに投与。DS製剤への変更も検討。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "gmp002",
@@ -1420,6 +1681,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル内は油性内容物。開封し内容物使用は可能だが取り扱い注意。",
     susp: "cond", suspNote: "油性内容物のためそのままでは懸濁困難。メーカーに個別確認推奨。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "h2b002",
@@ -1431,6 +1695,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠はそのまま懸濁可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "h2b003",
@@ -1442,6 +1709,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。注射製剤・内用液も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "h2b004",
@@ -1453,6 +1722,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "gmp003",
@@ -1464,6 +1736,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "水に懸濁して投与可。内用液製剤もある。チューブ内沈殿に注意し均一分散させて投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "antid001",
@@ -1475,6 +1749,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "bile_seq001",
@@ -1486,6 +1763,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "細粒は水に懸濁してそのまま投与可。他の薬剤の吸収を妨げるため単独投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "粉末剤は元から粉砕済みに相当",
+    highAlert: false,
   },
   {
     id: "apn001",
@@ -1497,6 +1777,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。DS製剤・シロップも存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "nsaid001",
@@ -1508,6 +1790,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。空腹時投与を避け食直後に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "NSAIDs通常錠は粉砕可〜条件付が多い",
+    highAlert: false,
   },
   {
     id: "cox2001",
@@ -1519,6 +1804,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封し内容物を使用可だが水への溶解性が低い。均一分散に注意。",
     susp: "cond", suspNote: "水への溶解性が低い。均一分散後速やかに投与。チューブ詰まり注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "nsaid002",
@@ -1530,6 +1818,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "腸溶性製剤のため粉砕不可。胃障害・食道潰瘍リスク増大。坐剤・テープ剤・注射剤への変更を検討。",
     susp: "ng", suspNote: "腸溶錠のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "腸溶製剤は粉砕不可（胃で分解/刺激リスク）",
+    highAlert: false,
   },
   {
     id: "nsaid003",
@@ -1541,6 +1832,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。坐剤・テープ剤への変更を検討。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "cox2002",
@@ -1552,6 +1846,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "NSAIDs通常錠は粉砕可〜条件付が多い",
+    highAlert: false,
   },
   {
     id: "nsaid004",
@@ -1563,6 +1860,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "NSAIDs通常錠は粉砕可〜条件付が多い",
+    highAlert: false,
   },
   {
     id: "wopi001",
@@ -1574,6 +1874,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封・内容物使用可。悪心・嘔吐リスクあり。職業暴露注意。",
     susp: "cond", suspNote: "内容物を水に懸濁して投与可。速やかに使用。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: true,
   },
   {
     id: "wopi002",
@@ -1585,6 +1888,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕禁忌。急速吸収による呼吸抑制リスク。トラマールカプセルへの変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: true,
   },
   {
     id: "sopi001",
@@ -1596,6 +1902,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "粉砕は禁忌。急速吸収により致死的呼吸抑制を起こす危険性あり。オキノーム散や注射製剤への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁禁忌。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: true,
   },
   {
     id: "sopi002",
@@ -1607,6 +1916,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "粉砕は禁忌。急速吸収により致死的呼吸抑制の危険性あり。モルヒネ散・内用液や注射製剤への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁禁忌。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: true,
   },
   {
     id: "nrp003",
@@ -1618,6 +1930,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "a1b001",
@@ -1629,6 +1943,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠を水に懸濁して投与可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "a1b002",
@@ -1640,6 +1957,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封・内容物使用可だが苦味あり。",
     susp: "cond", suspNote: "内容物を水に懸濁可。溶解度が低いため均一分散後速やかに投与。OD錠への変更が望ましい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "a1b003",
@@ -1651,6 +1971,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "a5r001",
@@ -1662,6 +1984,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "フィルムコートは妊婦・小児への催奇形性成分暴露防止目的。粉砕不可。経皮吸収で胎児に影響。妊娠可能な女性が取り扱わないこと。",
     susp: "ng", suspNote: "懸濁不可。妊婦は服用患者の尿にも触れないよう指導。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "a5r002",
@@ -1673,6 +1997,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "カプセル開封・内容物への暴露は禁忌（催奇形性）。皮膚・粘膜からも吸収される。",
     susp: "ng", suspNote: "懸濁不可。妊娠可能な女性への暴露を厳重に避けること。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "oabac001",
@@ -1684,6 +2011,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "oabac002",
@@ -1695,6 +2024,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "b3ag001",
@@ -1706,6 +2037,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。ビベグロンへの変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "b3ag002",
@@ -1717,6 +2051,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。ミラベグロン徐放錠の代替として検討可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aed001",
@@ -1728,6 +2064,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "吸湿性あり。光・熱に不安定。粉砕後は遮光・速やかに使用。フィルムコートは保護目的。",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤も存在。吸湿防止のため遮光容器使用推奨。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aed002",
@@ -1739,6 +2077,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "苦味・刺激臭あり。",
     susp: "ok", suspNote: "崩壊・懸濁可能。シロップ製剤への変更も可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aed003",
@@ -1750,6 +2090,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。普通錠への変更（投与回数が増える）を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。普通錠・シロップへの変更を検討。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "aed004",
@@ -1761,6 +2104,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。内用液製剤も存在（経管投与に使いやすい）。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aed005",
@@ -1772,6 +2117,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aed006",
@@ -1783,6 +2130,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "aed007",
@@ -1794,6 +2144,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aed008",
@@ -1805,6 +2157,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "aed009",
@@ -1816,6 +2171,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "治療域が狭い。粉砕後均一分散が重要。",
     susp: "cond", suspNote: "懸濁可だが水への溶解性が低く沈殿しやすい。均一分散後速やかに投与。チューブへの吸着に注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pd002",
@@ -1827,6 +2184,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pd003",
@@ -1838,6 +2197,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。普通錠（ビ・シフロール）への変更（投与回数変更）を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "pd004",
@@ -1849,6 +2211,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pd005",
@@ -1860,6 +2224,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。普通錠への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "pdcomt001",
@@ -1871,6 +2238,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "尿・汗が橙赤色に変色することがある（副作用ではない）。粉砕時も着色注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。尿の変色が起こることを患者・介護者に事前説明。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pd006",
@@ -1882,6 +2251,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ssri003",
@@ -1893,6 +2264,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "フィルムコートは苦味マスキング目的。粉砕すると非常に苦味が出る。粉砕後は速やかに投与。",
     susp: "ok", suspNote: "崩壊・懸濁可能だが苦味が強い。DS製剤への変更推奨。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ssri004",
@@ -1904,6 +2277,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。普通錠への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "ssri005",
@@ -1915,6 +2291,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "nassa001",
@@ -1926,6 +2304,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠は懸濁しやすい。崩壊・懸濁良好。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "tca001",
@@ -1937,6 +2318,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "tca002",
@@ -1948,6 +2331,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "smod001",
@@ -1959,6 +2344,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "aap005",
@@ -1970,6 +2357,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。コアは不溶性マトリックス構造。注射剤（ゼプリオン）への変更を主治医と検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "aap006",
@@ -1981,6 +2371,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。テープ剤への変更も選択肢。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "tap002",
@@ -1992,6 +2384,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "光感受性あり。粉砕後は遮光・速やかに使用。皮膚接触で光線過敏症反応の可能性。",
     susp: "ok", suspNote: "崩壊・懸濁可能。遮光容器使用推奨。内用液・注射剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "tap003",
@@ -2003,6 +2397,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "崩壊・懸濁可能。細粒・内用液製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "bzs001",
@@ -2014,6 +2411,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bzs002",
@@ -2025,6 +2424,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "劇薬。粉砕時の取り扱い注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bzs003",
@@ -2036,6 +2437,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。注射製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "mlt001",
@@ -2047,6 +2450,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが苦味が非常に強くなる。",
     susp: "cond", suspNote: "水への溶解性が低い。均一分散後速やかに投与。苦味が強いため投与困難なことがある。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "nbzs001",
@@ -2058,6 +2463,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "苦味あり。",
     susp: "ok", suspNote: "崩壊・懸濁可能。金属味・苦味を感じることがある。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "tet001",
@@ -2069,6 +2476,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封可だが非常に苦味が強い。食道・口腔内残留で潰瘍リスクあり。DS製剤への変更推奨。",
     susp: "cond", suspNote: "DS製剤を懸濁して投与推奨。カプセル内容物懸濁は苦味が強く投与困難なことが多い。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "nitr001",
@@ -2080,6 +2490,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "苦味あり。",
     susp: "ok", suspNote: "崩壊・懸濁可能。苦味が強い。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "azl001",
@@ -2091,6 +2503,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。DS製剤もある。",
     susp: "ok", suspNote: "DS製剤を懸濁して投与推奨。カプセル内容物を懸濁してもよい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "azl002",
@@ -2102,6 +2517,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが職業暴露（粉塵吸入）に注意。手袋・マスク着用。DS製剤もある。",
     susp: "ok", suspNote: "DS製剤を懸濁して投与推奨。錠粉砕懸濁も可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "sulfa001",
@@ -2113,6 +2530,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "苦味あり。",
     susp: "ok", suspNote: "崩壊・懸濁可能。苦味が強い。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "tet002",
@@ -2124,6 +2543,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "食道・口腔内残留で潰瘍形成のリスク。粉砕後は十分な水とともに投与。",
     susp: "cond", suspNote: "崩壊・懸濁可能。食道残留防止のため十分な水でフラッシュ。臥位での投与は避ける。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "exp001",
@@ -2135,6 +2556,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。シロップ・DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "exp002",
@@ -2146,6 +2569,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "exp003",
@@ -2157,6 +2582,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。普通錠への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "xan001",
@@ -2168,6 +2596,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。治療域が狭く急速吸収で中毒のリスク。内用液（テオフィリン内服液）への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: true,
   },
   {
     id: "ltra001",
@@ -2179,6 +2610,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "OD錠は懸濁しやすい。崩壊・懸濁良好。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "粉末剤は元から粉砕済みに相当",
+    highAlert: false,
   },
   {
     id: "ltra002",
@@ -2190,6 +2624,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "cond", suspNote: "内容物を水に懸濁可だが溶解度が低い。均一分散後速やかに投与。DS製剤への変更が望ましい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "xoi001",
@@ -2201,6 +2638,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "xoi002",
@@ -2212,6 +2651,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "xoi003",
@@ -2223,6 +2664,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "gout001",
@@ -2234,6 +2677,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "劇薬。粉砕は粉塵・皮膚暴露に注意。手袋・マスク着用。ごく少量が有効量であり計量を厳密に。",
     susp: "ok", suspNote: "崩壊・懸濁可能。過量投与（消化器毒性・骨髄抑制）に注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "cs001",
@@ -2245,6 +2690,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "苦味あり。",
     susp: "ok", suspNote: "崩壊・懸濁可能。苦味が出る。内用液製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "cs002",
@@ -2256,6 +2703,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "cs003",
@@ -2267,6 +2716,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。エリキシル剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "imm001",
@@ -2278,6 +2729,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封・内容物使用は可能だが職業暴露（催奇形性）に注意。手袋・マスク着用。TDMで血中濃度管理継続。",
     susp: "cond", suspNote: "内容物を水に懸濁可能。チューブへの吸着注意。投与前後に水でフラッシュ。TDMで血中濃度確認必須。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: true,
   },
   {
     id: "tb001",
@@ -2289,6 +2743,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封可だが赤橙色色素による皮膚・衣類・粘膜着色に注意。手袋着用。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。尿・汗・涙液が赤橙色に変色することを患者・介護者に事前説明。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "ibd001",
@@ -2300,6 +2757,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放性・腸溶性製剤のため粉砕不可。結腸への薬剤送達ができなくなる。顆粒製剤への変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。ペンタサ顆粒・注腸製剤への変更を検討。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "ibd002",
@@ -2311,6 +2771,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "顆粒のため粉砕不要（コーティングを破壊しないこと）。",
     susp: "ok", suspNote: "顆粒をそのまま水に懸濁して投与可。コーティングを破砕しないよう注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "dem003",
@@ -2322,6 +2784,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠は懸濁しやすい。内用液製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "ceph2001",
@@ -2333,6 +2798,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。苦味あり。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。DS製剤（ケフラールDS）への変更が望ましい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "pcnc001",
@@ -2344,6 +2812,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "粉砕可。クラブラン酸の安定性に注意し粉砕後は速やかに投与。",
     susp: "ok", suspNote: "崩壊・懸濁可能。速やかに投与。DS製剤（クラバモックスDS）への変更も検討。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ceph3001",
@@ -2355,6 +2825,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。DS製剤への変更が望ましい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "ceph3002",
@@ -2366,6 +2839,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "フィルムコート錠。粉砕可。",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤への変更が望ましい（小児用製剤あり）。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pnm001",
@@ -2377,6 +2852,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "フィルムコート錠。粉砕可。",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ceph3003",
@@ -2388,6 +2865,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "フィルムコート錠。粉砕可。",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤への変更が望ましい。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ceph2002",
@@ -2399,6 +2878,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "フィルムコート錠。粉砕可。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "linc001",
@@ -2410,6 +2891,9 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "カプセル開封可だが非常に苦味が強い。皮膚・食道への刺激性あり。取り扱い注意。",
     susp: "cond", suspNote: "内容物を水に懸濁可だが苦味が強く投与困難なことが多い。注射製剤への変更を検討。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "ah2001",
@@ -2421,6 +2905,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁良好。OD錠は懸濁しやすい。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "ah2002",
@@ -2432,6 +2919,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤・シロップも存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ah2003",
@@ -2443,6 +2932,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠はそのまま懸濁可。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "ah2004",
@@ -2454,6 +2946,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠はそのまま懸濁可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "ah2005",
@@ -2465,6 +2960,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠はそのまま懸濁可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "ah1001",
@@ -2476,6 +2974,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "ah2006",
@@ -2487,6 +2987,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。OD錠はそのまま懸濁可。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "OD錠は崩壊性良好のため粉砕・懸濁は通常可〜条件付",
+    highAlert: false,
   },
   {
     id: "tbz001",
@@ -2498,6 +3001,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "向精神薬。粉砕時の取り扱い（職業暴露・依存性薬物）に注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bz002",
@@ -2509,6 +3014,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "向精神薬。",
     susp: "ok", suspNote: "崩壊・懸濁可能。内用液・注射剤も存在。坐剤への変更も選択肢。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bz003",
@@ -2520,6 +3027,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "向精神薬。",
     susp: "ok", suspNote: "崩壊・懸濁可能。注射製剤への変更も可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bz004",
@@ -2531,6 +3040,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "向精神薬。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "barb001",
@@ -2542,6 +3053,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "向精神薬。治療域が狭い。粉砕後は均一分散に注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。エリキシル製剤も存在。TDMで血中濃度管理推奨。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bz005",
@@ -2553,6 +3066,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "向精神薬。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "5ht1a001",
@@ -2564,6 +3079,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pba001",
@@ -2575,6 +3092,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "チュアブル錠は本来咀嚼して服用するが粉砕可。OD錠は水に溶かして投与。",
     susp: "ok", suspNote: "OD錠または顆粒を水に懸濁して投与可。チュアブル錠粉砕懸濁も可能。食直後に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "粉末剤は元から粉砕済みに相当",
+    highAlert: false,
   },
   {
     id: "pba002",
@@ -2586,6 +3106,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "錠は粉砕可。粉砕すると吸湿しやすい。",
     susp: "ok", suspNote: "顆粒製剤を水に懸濁して投与可。錠粉砕懸濁も可能。均一分散させて投与。食直前に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "粉末剤は元から粉砕済みに相当",
+    highAlert: false,
   },
   {
     id: "pba003",
@@ -2597,6 +3120,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "粉砕可。鉄による着色・歯の着色に注意。",
     susp: "ok", suspNote: "崩壊・懸濁可能。食直後に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pba004",
@@ -2608,6 +3133,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。顆粒状内容物。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。食直前に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "pba005",
@@ -2619,6 +3147,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "チュアブル錠は粉砕可。歯の着色注意。",
     susp: "ok", suspNote: "顆粒製剤またはチュアブル錠粉砕を水に懸濁して投与可。食直前に投与。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "粉末剤は元から粉砕済みに相当",
+    highAlert: false,
   },
   {
     id: "gmpz001",
@@ -2630,6 +3161,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "顆粒製剤のため粉砕不要（破砕でコーティング破壊のリスク）。",
     susp: "ok", suspNote: "顆粒をそのまま水に懸濁して投与可。亜鉛による味覚変化の可能性。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "bile001",
@@ -2641,6 +3174,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pi001",
@@ -2652,6 +3187,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "giac001",
@@ -2663,6 +3200,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。注射製剤・坐剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pge1001",
@@ -2674,6 +3213,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "妊婦・妊娠可能女性への暴露は禁忌（子宮収縮作用）。手袋・マスク着用必須。",
     susp: "cond", suspNote: "懸濁可だが妊婦・妊娠可能女性への暴露厳禁。取り扱い要注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pdac001",
@@ -2685,6 +3226,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pdne001",
@@ -2696,6 +3239,9 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "カプセル開封可。光に不安定。粉砕後は遮光・速やかに投与。",
     susp: "ok", suspNote: "内容物を水に懸濁して投与可。遮光容器使用推奨。DS製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "カプセル剤は個別評価",
+    highAlert: false,
   },
   {
     id: "pd007",
@@ -2707,6 +3253,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。抗てんかん用（エクセグラン）と用量が異なる（25mg）ことに注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "pdac002",
@@ -2718,6 +3266,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。注射製剤も存在。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "atg002",
@@ -2729,6 +3279,8 @@ const DRUG_MASTER = [
     crush: "cond", crushNote: "粉砕可だが皮膚・粉塵暴露に注意（催奇形性）。チアマゾールと同様に手袋着用。",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "carz001",
@@ -2740,6 +3292,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "oabac003",
@@ -2751,6 +3305,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。テープ剤（ネオキシテープ）は粉砕・懸濁不可のため混同に注意。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "oabac004",
@@ -2762,6 +3318,9 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "徐放製剤のため粉砕不可。イミダフェナシンやビベグロンへの変更を検討。",
     susp: "ng", suspNote: "徐放製剤のため懸濁不可。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "inferred",
+    verifiedNote: "徐放製剤は粉砕・懸濁不可（速放性リスク）",
+    highAlert: false,
   },
   {
     id: "vert001",
@@ -2773,6 +3332,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "csext001",
@@ -2784,6 +3345,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "外用製剤のため粉砕不可。",
     susp: "ng", suspNote: "外用製剤のため懸濁不可。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "azl003",
@@ -2795,6 +3358,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "カプセル内のペレットはpH依存性溶解コーティング。粉砕不可。内用液（酸性）への変更を検討。",
     susp: "ng", suspNote: "ペレットを破砕すると吸収が著しく低下。カプセルをそのまま水に入れてもペレットを破砕しなければ投与は可能だが製剤設計上推奨しない。内用液（コーラに溶解）への変更が確実。",
     source: "IF・添付文書",
+    verified: "confirmed",
+    highAlert: false,
   },
   {
     id: "digi002",
@@ -2806,6 +3371,8 @@ const DRUG_MASTER = [
     crush: "ng", crushNote: "散剤のため粉砕不要。",
     susp: "ok", suspNote: "散剤を水に懸濁して投与可。治療域が狭いため投与量を厳格に管理。",
     source: "IF",
+    verified: "confirmed",
+    highAlert: true,
   },
   {
     id: "mrel001",
@@ -2817,6 +3384,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "mrel002",
@@ -2828,6 +3397,8 @@ const DRUG_MASTER = [
     crush: "ok", crushNote: "",
     susp: "ok", suspNote: "崩壊・懸濁可能。",
     source: "要確認（IF・添付文書での検証が必要）",
+    verified: "unverified",
+    highAlert: false,
   },
   {
     id: "vcm",
@@ -2836,6 +3407,7 @@ const DRUG_MASTER = [
     category: "抗MRSA薬・グリコペプチド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["バンコマイシン","塩酸バンコマイシン"],
     en: ["Vancomycin","VCM"],
     cls: "抗MRSA薬・グリコペプチド系",
@@ -2853,6 +3425,7 @@ const DRUG_MASTER = [
     pi:"塩酸バンコマイシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎毒性・耳毒性あり。TDMによるトラフ値管理必須（目標AUC400〜600 μg·h/mL）",
+    verified: "confirmed",
   },
   {
     id: "teic",
@@ -2861,6 +3434,7 @@ const DRUG_MASTER = [
     category: "抗MRSA薬・グリコペプチド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["テイコプラニン","タルゴシッド"],
     en: ["Teicoplanin","TEIC"],
     cls: "抗MRSA薬・グリコペプチド系",
@@ -2877,6 +3451,7 @@ const DRUG_MASTER = [
     pi:"タルゴシッド添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"TDMによる血中濃度管理必須",
+    verified: "confirmed",
   },
   {
     id: "gm",
@@ -2885,6 +3460,7 @@ const DRUG_MASTER = [
     category: "アミノグリコシド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ゲンタマイシン","ゲンタシン"],
     en: ["Gentamicin","GM"],
     cls: "アミノグリコシド系",
@@ -2902,6 +3478,7 @@ const DRUG_MASTER = [
     pi:"ゲンタシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎毒性・耳毒性。TDM必須。可能な限り短期間使用",
+    verified: "confirmed",
   },
   {
     id: "amk",
@@ -2910,6 +3487,7 @@ const DRUG_MASTER = [
     category: "アミノグリコシド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アミカシン","アミカシン硫酸塩"],
     en: ["Amikacin","AMK"],
     cls: "アミノグリコシド系",
@@ -2927,6 +3505,7 @@ const DRUG_MASTER = [
     pi:"アミカシン硫酸塩添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎毒性・耳毒性。TDM必須",
+    verified: "confirmed",
   },
   {
     id: "abk",
@@ -2935,6 +3514,7 @@ const DRUG_MASTER = [
     category: "アミノグリコシド系（国内特有）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アルベカシン","ハベカシン"],
     en: ["Arbekacin","ABK"],
     cls: "アミノグリコシド系（国内特有）",
@@ -2951,6 +3531,7 @@ const DRUG_MASTER = [
     pi:"ハベカシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎毒性・耳毒性。MRSA感染症にVCMとの併用で使用",
+    verified: "confirmed",
   },
   {
     id: "mepm",
@@ -2959,6 +3540,7 @@ const DRUG_MASTER = [
     category: "カルバペネム系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["メロペネム","メロペン"],
     en: ["Meropenem","MEPM"],
     cls: "カルバペネム系",
@@ -2976,6 +3558,7 @@ const DRUG_MASTER = [
     pi:"メロペン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"痙攣リスク（腎機能低下で蓄積）。バルプロ酸との相互作用に注意",
+    verified: "confirmed",
   },
   {
     id: "ipm",
@@ -2984,6 +3567,7 @@ const DRUG_MASTER = [
     category: "カルバペネム系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["イミペネム/シラスタチン","チエナム"],
     en: ["Imipenem/Cilastatin","IPM/CS"],
     cls: "カルバペネム系",
@@ -3002,6 +3586,7 @@ const DRUG_MASTER = [
     pi:"チエナム添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"痙攣リスク。シラスタチンの蓄積に注意",
+    verified: "confirmed",
   },
   {
     id: "drpm",
@@ -3010,6 +3595,7 @@ const DRUG_MASTER = [
     category: "カルバペネム系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ドリペネム","フィニバックス"],
     en: ["Doripenem","DRPM"],
     cls: "カルバペネム系",
@@ -3026,6 +3612,7 @@ const DRUG_MASTER = [
     pi:"フィニバックス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"バルプロ酸との相互作用",
+    verified: "confirmed",
   },
   {
     id: "pipc_taz",
@@ -3034,6 +3621,7 @@ const DRUG_MASTER = [
     category: "ペニシリン系（βラクタマーゼ阻害薬配合）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ピペラシリン/タゾバクタム","タゾシン","ゾシン"],
     en: ["Piperacillin/Tazobactam","PIPC/TAZ"],
     cls: "ペニシリン系（βラクタマーゼ阻害薬配合）",
@@ -3049,7 +3637,7 @@ const DRUG_MASTER = [
     chdf:{d:"4.5 g 8時間毎",n:""},
     pi:"タゾシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "abpc_sbt",
@@ -3058,6 +3646,7 @@ const DRUG_MASTER = [
     category: "ペニシリン系（βラクタマーゼ阻害薬配合）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アンピシリン/スルバクタム","スルバシリン","ユナシン"],
     en: ["Ampicillin/Sulbactam","ABPC/SBT"],
     cls: "ペニシリン系（βラクタマーゼ阻害薬配合）",
@@ -3074,7 +3663,7 @@ const DRUG_MASTER = [
     chdf:{d:"3 g 8〜12時間毎",n:""},
     pi:"スルバシリン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "ampc",
@@ -3083,6 +3672,7 @@ const DRUG_MASTER = [
     category: "ペニシリン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アモキシシリン","アモキシシリン水和物","サワシリン","パセトシン"],
     en: ["Amoxicillin","AMPC"],
     cls: "ペニシリン系",
@@ -3098,7 +3688,7 @@ const DRUG_MASTER = [
     chdf:{d:"通常量に準ずる",n:""},
     pi:"サワシリン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "cez",
@@ -3107,6 +3697,7 @@ const DRUG_MASTER = [
     category: "第1世代セフェム",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セファゾリン","セファゾリンナトリウム","セファメジン"],
     en: ["Cefazolin","CEZ"],
     cls: "第1世代セフェム",
@@ -3123,7 +3714,7 @@ const DRUG_MASTER = [
     chdf:{d:"1 g 12時間毎",n:""},
     pi:"セファメジン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "cmz",
@@ -3132,6 +3723,7 @@ const DRUG_MASTER = [
     category: "セファマイシン系（第2世代相当）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフメタゾール","セフメタゾンナトリウム","セフメタゾン"],
     en: ["Cefmetazole","CMZ"],
     cls: "セファマイシン系（第2世代相当）",
@@ -3148,7 +3740,7 @@ const DRUG_MASTER = [
     chdf:{d:"1 g 12時間毎",n:""},
     pi:"セフメタゾン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "ctrx",
@@ -3157,6 +3749,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフトリアキソン","ロセフィン"],
     en: ["Ceftriaxone","CTRX"],
     cls: "第3世代セフェム",
@@ -3171,6 +3764,7 @@ const DRUG_MASTER = [
     pi:"ロセフィン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"胆汁排泄のため腎機能単独での減量は原則不要。Ca含有輸液との混合禁忌",
+    verified: "confirmed",
   },
   {
     id: "caz",
@@ -3179,6 +3773,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム（緑膿菌活性）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフタジジム","モダシン"],
     en: ["Ceftazidime","CAZ"],
     cls: "第3世代セフェム（緑膿菌活性）",
@@ -3196,7 +3791,7 @@ const DRUG_MASTER = [
     chdf:{d:"2 g 12時間毎",n:""},
     pi:"モダシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "cfpm",
@@ -3205,6 +3800,7 @@ const DRUG_MASTER = [
     category: "第4世代セフェム",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフェピム","マキシピーム"],
     en: ["Cefepime","CFPM"],
     cls: "第4世代セフェム",
@@ -3222,6 +3818,7 @@ const DRUG_MASTER = [
     pi:"マキシピーム添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎機能低下時の神経毒性（意識障害・痙攣）に注意",
+    verified: "confirmed",
   },
   {
     id: "lzd",
@@ -3230,6 +3827,7 @@ const DRUG_MASTER = [
     category: "オキサゾリジノン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["リネゾリド","ザイボックス"],
     en: ["Linezolid","LZD"],
     cls: "オキサゾリジノン系",
@@ -3244,6 +3842,7 @@ const DRUG_MASTER = [
     pi:"ザイボックス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎機能低下で代謝産物蓄積→血小板減少リスク増加。2週間を超える投与で血球減少モニタリング必須",
+    verified: "confirmed",
   },
   {
     id: "dap",
@@ -3252,6 +3851,7 @@ const DRUG_MASTER = [
     category: "環状リポペプチド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ダプトマイシン","キュビシン"],
     en: ["Daptomycin","DAP"],
     cls: "環状リポペプチド系",
@@ -3267,6 +3867,7 @@ const DRUG_MASTER = [
     pi:"キュビシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"CPK上昇に注意。スタチンとの併用でミオパチーリスク増加",
+    verified: "confirmed",
   },
   {
     id: "lvfx",
@@ -3275,6 +3876,7 @@ const DRUG_MASTER = [
     category: "フルオロキノロン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["レボフロキサシン","クラビット"],
     en: ["Levofloxacin","LVFX"],
     cls: "フルオロキノロン系",
@@ -3291,6 +3893,7 @@ const DRUG_MASTER = [
     pi:"クラビット添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長。光線過敏症。テオフィリン・NSAIDs との相互作用",
+    verified: "confirmed",
   },
   {
     id: "cpfx",
@@ -3299,6 +3902,7 @@ const DRUG_MASTER = [
     category: "フルオロキノロン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["シプロフロキサシン","シプロキサン"],
     en: ["Ciprofloxacin","CPFX"],
     cls: "フルオロキノロン系",
@@ -3314,6 +3918,7 @@ const DRUG_MASTER = [
     pi:"シプロキサン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長。テオフィリン・ワルファリン・NSAIDs との相互作用。金属カチオンとのキレート形成",
+    verified: "confirmed",
   },
   {
     id: "st",
@@ -3322,6 +3927,7 @@ const DRUG_MASTER = [
     category: "サルファ剤/葉酸代謝拮抗薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ST合剤","トリメトプリム/スルファメトキサゾール","バクタ","バクトラミン"],
     en: ["TMP/SMX","Co-trimoxazole","ST"],
     cls: "サルファ剤/葉酸代謝拮抗薬",
@@ -3338,6 +3944,7 @@ const DRUG_MASTER = [
     pi:"バクタ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"高K血症・血清Cr上昇（尿細管分泌阻害）。骨髄抑制。葉酸欠乏",
+    verified: "confirmed",
   },
   {
     id: "mino",
@@ -3346,6 +3953,7 @@ const DRUG_MASTER = [
     category: "テトラサイクリン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ミノサイクリン","ミノマイシン"],
     en: ["Minocycline","MINO"],
     cls: "テトラサイクリン系",
@@ -3360,6 +3968,7 @@ const DRUG_MASTER = [
     pi:"ミノマイシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"光線過敏症。めまい。妊婦・小児禁忌",
+    verified: "confirmed",
   },
   {
     id: "azm",
@@ -3368,6 +3977,7 @@ const DRUG_MASTER = [
     category: "マクロライド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アジスロマイシン","ジスロマック"],
     en: ["Azithromycin","AZM"],
     cls: "マクロライド系",
@@ -3382,6 +3992,7 @@ const DRUG_MASTER = [
     pi:"ジスロマック添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長。肝代謝（CYP3A4）",
+    verified: "confirmed",
   },
   {
     id: "cam",
@@ -3390,6 +4001,7 @@ const DRUG_MASTER = [
     category: "マクロライド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["クラリスロマイシン","クラリス","クラリシッド"],
     en: ["Clarithromycin","CAM"],
     cls: "マクロライド系",
@@ -3405,6 +4017,7 @@ const DRUG_MASTER = [
     pi:"クラリス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"多数のCYP3A4相互作用あり（CYP3A4阻害薬）。QT延長",
+    verified: "confirmed",
   },
   {
     id: "mnz",
@@ -3413,6 +4026,7 @@ const DRUG_MASTER = [
     category: "ニトロイミダゾール系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["メトロニダゾール","フラジール","アネメトロ"],
     en: ["Metronidazole","MNZ"],
     cls: "ニトロイミダゾール系",
@@ -3427,6 +4041,7 @@ const DRUG_MASTER = [
     pi:"フラジール添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"末梢神経障害。アルコール禁忌（ジスルフィラム様反応）。CYP2C9阻害",
+    verified: "confirmed",
   },
   {
     id: "abpc",
@@ -3435,6 +4050,7 @@ const DRUG_MASTER = [
     category: "アミノペニシリン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アンピシリン","ビクシリン"],
     en: ["Ampicillin","ABPC"],
     cls: "アミノペニシリン系",
@@ -3451,6 +4067,7 @@ const DRUG_MASTER = [
     pi:"ビクシリン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"皮疹（ペニシリン系アレルギー）。高用量・腎機能低下での痙攣リスク",
+    verified: "confirmed",
   },
   {
     id: "pcg",
@@ -3459,6 +4076,7 @@ const DRUG_MASTER = [
     category: "天然ペニシリン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ベンジルペニシリン","ペニシリンG","PCG"],
     en: ["Benzylpenicillin","Penicillin G","PCG"],
     cls: "天然ペニシリン系",
@@ -3475,6 +4093,7 @@ const DRUG_MASTER = [
     pi:"ペニシリンG添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"高用量・腎機能低下で神経毒性（痙攣・ミオクローヌス）。電解質（Na/K）負荷に注意",
+    verified: "confirmed",
   },
   {
     id: "ampc_cvk",
@@ -3483,6 +4102,7 @@ const DRUG_MASTER = [
     category: "ペニシリン系（βラクタマーゼ阻害薬配合）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アモキシシリン/クラブラン酸","オーグメンチン","クラバモックス"],
     en: ["Amoxicillin/Clavulanate","AMPC/CVK"],
     cls: "ペニシリン系（βラクタマーゼ阻害薬配合）",
@@ -3499,6 +4119,7 @@ const DRUG_MASTER = [
     pi:"オーグメンチン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"下痢・軟便（クラブラン酸成分）。CVK成分はCCr < 30で蓄積",
+    verified: "confirmed",
   },
   {
     id: "ctm",
@@ -3507,6 +4128,7 @@ const DRUG_MASTER = [
     category: "第2世代セフェム",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフォチアム","パンスポリン"],
     en: ["Cefotiam","CTM"],
     cls: "第2世代セフェム",
@@ -3522,7 +4144,7 @@ const DRUG_MASTER = [
     chdf:{d:"1 g 12時間毎",n:""},
     pi:"パンスポリン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "ctx",
@@ -3531,6 +4153,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフォタキシム","クラフォラン"],
     en: ["Cefotaxime","CTX"],
     cls: "第3世代セフェム",
@@ -3546,6 +4169,7 @@ const DRUG_MASTER = [
     pi:"クラフォラン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"活性代謝産物（desacetyl体）も一部腎排泄",
+    verified: "confirmed",
   },
   {
     id: "cpz_sbt",
@@ -3554,6 +4178,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム（βラクタマーゼ阻害薬配合）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフォペラゾン/スルバクタム","スルペラゾン"],
     en: ["Cefoperazone/Sulbactam","CPZ/SBT"],
     cls: "第3世代セフェム（βラクタマーゼ阻害薬配合）",
@@ -3569,6 +4194,7 @@ const DRUG_MASTER = [
     pi:"スルペラゾン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"VKD拮抗（ビタミンK依存性凝固因子合成阻害）→ 出血リスク。アルコール禁忌（ジスルフィラム様反応）",
+    verified: "confirmed",
   },
   {
     id: "cxm_ax",
@@ -3577,6 +4203,7 @@ const DRUG_MASTER = [
     category: "第2世代セフェム（経口）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフロキシムアキセチル","オラセフ"],
     en: ["Cefuroxime axetil","CXM-AX"],
     cls: "第2世代セフェム（経口）",
@@ -3592,6 +4219,7 @@ const DRUG_MASTER = [
     pi:"オラセフ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"食後投与で吸収改善",
+    verified: "confirmed",
   },
   {
     id: "cfpn_pi",
@@ -3600,6 +4228,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム（経口）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフカペンピボキシル","フロモックス"],
     en: ["Cefcapene pivoxil","CFPN-PI"],
     cls: "第3世代セフェム（経口）",
@@ -3615,6 +4244,7 @@ const DRUG_MASTER = [
     pi:"フロモックス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"ピボキシル基によるカルニチン欠乏（乳幼児・長期使用で注意）",
+    verified: "confirmed",
   },
   {
     id: "cdtr_pi",
@@ -3623,6 +4253,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム（経口）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフジトレンピボキシル","メイアクト"],
     en: ["Cefditoren pivoxil","CDTR-PI"],
     cls: "第3世代セフェム（経口）",
@@ -3638,6 +4269,7 @@ const DRUG_MASTER = [
     pi:"メイアクト添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"ピボキシル基によるカルニチン欠乏（乳幼児・長期使用で注意）",
+    verified: "confirmed",
   },
   {
     id: "cfdn",
@@ -3646,6 +4278,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム（経口）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフジニル","セフゾン"],
     en: ["Cefdinir","CFDN"],
     cls: "第3世代セフェム（経口）",
@@ -3661,6 +4294,7 @@ const DRUG_MASTER = [
     pi:"セフゾン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"鉄剤との同時服用で吸収低下（2時間空ける）",
+    verified: "confirmed",
   },
   {
     id: "cfix",
@@ -3669,6 +4303,7 @@ const DRUG_MASTER = [
     category: "第3世代セフェム（経口）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["セフィキシム","セフスパン"],
     en: ["Cefixime","CFIX"],
     cls: "第3世代セフェム（経口）",
@@ -3683,7 +4318,7 @@ const DRUG_MASTER = [
     chdf:{d:"200 mg/日",n:""},
     pi:"セフスパン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "azt",
@@ -3692,6 +4327,7 @@ const DRUG_MASTER = [
     category: "モノバクタム系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アズトレオナム","アザクタム"],
     en: ["Aztreonam","AZT"],
     cls: "モノバクタム系",
@@ -3708,6 +4344,7 @@ const DRUG_MASTER = [
     pi:"アザクタム添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"グラム陰性菌のみ（グラム陽性・嫌気性菌には無効）。ペニシリンアレルギー患者にも比較的安全",
+    verified: "confirmed",
   },
   {
     id: "erta",
@@ -3716,6 +4353,7 @@ const DRUG_MASTER = [
     category: "カルバペネム系（1日1回投与）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["エルタペネム","インバンツ"],
     en: ["Ertapenem","ERTA"],
     cls: "カルバペネム系（1日1回投与）",
@@ -3731,6 +4369,7 @@ const DRUG_MASTER = [
     pi:"インバンツ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"緑膿菌・アシネトバクターには無効。バルプロ酸との相互作用",
+    verified: "confirmed",
   },
   {
     id: "papm_bp",
@@ -3739,6 +4378,7 @@ const DRUG_MASTER = [
     category: "カルバペネム系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["パニペネム/ベタミプロン","カルベニン"],
     en: ["Panipenem/Betamipron","PAPM/BP"],
     cls: "カルバペネム系",
@@ -3755,6 +4395,7 @@ const DRUG_MASTER = [
     pi:"カルベニン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"痙攣リスク（腎機能低下で蓄積）。バルプロ酸との相互作用",
+    verified: "confirmed",
   },
   {
     id: "bipm",
@@ -3763,6 +4404,7 @@ const DRUG_MASTER = [
     category: "カルバペネム系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ビアペネム","オメガシン"],
     en: ["Biapenem","BIPM"],
     cls: "カルバペネム系",
@@ -3779,6 +4421,7 @@ const DRUG_MASTER = [
     pi:"オメガシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"痙攣リスク。バルプロ酸との相互作用",
+    verified: "confirmed",
   },
   {
     id: "cldm",
@@ -3787,6 +4430,7 @@ const DRUG_MASTER = [
     category: "リンコサミド系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["クリンダマイシン","クリンダマイシン塩酸塩","ダラシン"],
     en: ["Clindamycin","CLDM"],
     cls: "リンコサミド系",
@@ -3801,6 +4445,7 @@ const DRUG_MASTER = [
     pi:"ダラシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"Clostridioides difficile腸炎リスク（使用中止で改善）。グラム陰性桿菌には無効",
+    verified: "confirmed",
   },
   {
     id: "tig",
@@ -3809,6 +4454,7 @@ const DRUG_MASTER = [
     category: "グリシルサイクリン系（テトラサイクリン誘導体）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["チゲサイクリン","タイガシル"],
     en: ["Tigecycline","TIG"],
     cls: "グリシルサイクリン系（テトラサイクリン誘導体）",
@@ -3823,6 +4469,7 @@ const DRUG_MASTER = [
     pi:"タイガシル添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"悪心・嘔吐（高頻度）。緑膿菌・プロテウス属には無効。肺炎への単独使用は死亡率増加の報告あり",
+    verified: "confirmed",
   },
   {
     id: "col",
@@ -3831,6 +4478,7 @@ const DRUG_MASTER = [
     category: "ポリミキシン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["コリスチン","コリマイシン","オルドレブ"],
     en: ["Colistin","Colistimethate","COL"],
     cls: "ポリミキシン系",
@@ -3848,6 +4496,7 @@ const DRUG_MASTER = [
     pi:"オルドレブ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎毒性が主要副作用（濃度依存性）。TDM必須。最後の手段（MDR・XDR菌）",
+    verified: "confirmed",
   },
   {
     id: "fom",
@@ -3856,6 +4505,7 @@ const DRUG_MASTER = [
     category: "ホスホン酸系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ホスホマイシン","ホスミシン"],
     en: ["Fosfomycin","FOM"],
     cls: "ホスホン酸系",
@@ -3872,6 +4522,7 @@ const DRUG_MASTER = [
     pi:"ホスミシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"Na負荷（注射製剤）。緑膿菌・腸球菌への単独耐性化が早い→ 他剤との併用推奨",
+    verified: "confirmed",
   },
   {
     id: "rfp",
@@ -3880,6 +4531,7 @@ const DRUG_MASTER = [
     category: "リファマイシン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["リファンピシン","リファジン","アプテシン"],
     en: ["Rifampicin","RFP"],
     cls: "リファマイシン系",
@@ -3894,6 +4546,7 @@ const DRUG_MASTER = [
     pi:"リファジン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"強力なCYP3A4・CYP2C9誘導薬（多数の薬物相互作用）。体液のオレンジ色変色。肝毒性。単独投与で耐性化→ 必ず他剤と併用",
+    verified: "confirmed",
   },
   {
     id: "mfxc",
@@ -3902,6 +4555,7 @@ const DRUG_MASTER = [
     category: "フルオロキノロン系（呼吸器キノロン）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["モキシフロキサシン","アベロックス"],
     en: ["Moxifloxacin","MFXC"],
     cls: "フルオロキノロン系（呼吸器キノロン）",
@@ -3916,6 +4570,7 @@ const DRUG_MASTER = [
     pi:"アベロックス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長（慎重）。嫌気性菌への活性。肝毒性。NSAIDs・テオフィリン相互作用",
+    verified: "confirmed",
   },
   {
     id: "stfx",
@@ -3924,6 +4579,7 @@ const DRUG_MASTER = [
     category: "フルオロキノロン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["シタフロキサシン","グレースビット"],
     en: ["Sitafloxacin","STFX"],
     cls: "フルオロキノロン系",
@@ -3939,6 +4595,7 @@ const DRUG_MASTER = [
     pi:"グレースビット添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長。光線過敏症。MRSA・嫌気性菌を含む広域スペクトル",
+    verified: "confirmed",
   },
   {
     id: "gpfx",
@@ -3947,6 +4604,7 @@ const DRUG_MASTER = [
     category: "フルオロキノロン系（des-F(6)キノロン）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ガレノキサシン","ジェニナック"],
     en: ["Garenoxacin","GPFX"],
     cls: "フルオロキノロン系（des-F(6)キノロン）",
@@ -3962,6 +4620,7 @@ const DRUG_MASTER = [
     pi:"ジェニナック添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長。注射剤なし（経口のみ）。光線過敏症",
+    verified: "confirmed",
   },
   {
     id: "doxy",
@@ -3970,6 +4629,7 @@ const DRUG_MASTER = [
     category: "テトラサイクリン系",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ドキシサイクリン","ビブラマイシン"],
     en: ["Doxycycline","DOXY"],
     cls: "テトラサイクリン系",
@@ -3984,6 +4644,7 @@ const DRUG_MASTER = [
     pi:"ビブラマイシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"光線過敏症。妊婦・8歳未満禁忌。食道潰瘍（十分な水で服用、臥位を避ける）。Ca/Mg/Fe製剤で吸収低下",
+    verified: "confirmed",
   },
   {
     id: "flcz",
@@ -3992,6 +4653,7 @@ const DRUG_MASTER = [
     category: "トリアゾール系抗真菌薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["フルコナゾール","ジフルカン"],
     en: ["Fluconazole","FLCZ"],
     cls: "トリアゾール系抗真菌薬",
@@ -4007,6 +4669,7 @@ const DRUG_MASTER = [
     pi:"ジフルカン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"多数のCYP相互作用（CYP2C9・CYP3A4阻害）。QT延長",
+    verified: "confirmed",
   },
   {
     id: "vrcz",
@@ -4015,6 +4678,7 @@ const DRUG_MASTER = [
     category: "トリアゾール系抗真菌薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ボリコナゾール","ブイフェンド"],
     en: ["Voriconazole","VRCZ"],
     cls: "トリアゾール系抗真菌薬",
@@ -4030,6 +4694,7 @@ const DRUG_MASTER = [
     pi:"ブイフェンド添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"TDM必須。多数のCYP相互作用。視覚障害。肝毒性",
+    verified: "confirmed",
   },
   {
     id: "mcfg",
@@ -4038,6 +4703,7 @@ const DRUG_MASTER = [
     category: "キャンディン系抗真菌薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ミカファンギン","ファンガード"],
     en: ["Micafungin","MCFG"],
     cls: "キャンディン系抗真菌薬",
@@ -4052,6 +4718,7 @@ const DRUG_MASTER = [
     pi:"ファンガード添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"肝毒性モニタリング",
+    verified: "confirmed",
   },
   {
     id: "acv",
@@ -4060,6 +4727,7 @@ const DRUG_MASTER = [
     category: "抗ヘルペス薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アシクロビル","アシクロビル点滴静注","ゾビラックス"],
     en: ["Aciclovir","Acyclovir","ACV"],
     cls: "抗ヘルペス薬",
@@ -4077,6 +4745,7 @@ const DRUG_MASTER = [
     pi:"ゾビラックス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"急速静注で腎毒性・結晶析出。十分な補液を行い緩徐に投与",
+    verified: "confirmed",
   },
   {
     id: "vacv",
@@ -4085,6 +4754,7 @@ const DRUG_MASTER = [
     category: "抗ヘルペス薬（アシクロビルプロドラッグ）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["バラシクロビル","バルトレックス"],
     en: ["Valaciclovir","Valacyclovir","VACV"],
     cls: "抗ヘルペス薬（アシクロビルプロドラッグ）",
@@ -4102,6 +4772,7 @@ const DRUG_MASTER = [
     pi:"バルトレックス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"血栓性血小板減少性紫斑病（TTP/HUS）—免疫不全患者で注意",
+    verified: "confirmed",
   },
   {
     id: "gcv",
@@ -4110,6 +4781,7 @@ const DRUG_MASTER = [
     category: "抗CMV薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ガンシクロビル","デノシン"],
     en: ["Ganciclovir","GCV"],
     cls: "抗CMV薬",
@@ -4128,6 +4800,7 @@ const DRUG_MASTER = [
     pi:"デノシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"骨髄抑制（好中球減少・血小板減少）。催奇形性。G-CSF考慮",
+    verified: "confirmed",
   },
   {
     id: "vgcv",
@@ -4136,6 +4809,7 @@ const DRUG_MASTER = [
     category: "抗CMV薬（ガンシクロビルプロドラッグ）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["バルガンシクロビル","バリキサ"],
     en: ["Valganciclovir","VGCV"],
     cls: "抗CMV薬（ガンシクロビルプロドラッグ）",
@@ -4154,6 +4828,7 @@ const DRUG_MASTER = [
     pi:"バリキサ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"骨髄抑制。催奇形性。腎機能低下で用量調整必須",
+    verified: "confirmed",
   },
   {
     id: "otv",
@@ -4162,6 +4837,7 @@ const DRUG_MASTER = [
     category: "抗インフルエンザ薬（ノイラミニダーゼ阻害薬）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["オセルタミビル","タミフル"],
     en: ["Oseltamivir","OTV"],
     cls: "抗インフルエンザ薬（ノイラミニダーゼ阻害薬）",
@@ -4178,6 +4854,7 @@ const DRUG_MASTER = [
     pi:"タミフル添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"異常行動（小児・未成年者）。嘔吐時は投与を考慮",
+    verified: "confirmed",
   },
   {
     id: "dgx",
@@ -4186,6 +4863,7 @@ const DRUG_MASTER = [
     category: "強心配糖体",
     form: "注射",
     features: ["renal"],
+    highAlert: true,
     ja: ["ジゴキシン","ジゴシン","ラニラピッド"],
     en: ["Digoxin","DGX"],
     cls: "強心配糖体",
@@ -4202,6 +4880,7 @@ const DRUG_MASTER = [
     pi:"ジゴシン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"中毒域と治療域が近接。低K血症で毒性増強。TDM必須（目標0.5〜1.0 ng/mL）",
+    verified: "confirmed",
   },
   {
     id: "aten",
@@ -4210,6 +4889,7 @@ const DRUG_MASTER = [
     category: "β1選択的遮断薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アテノロール","テノーミン"],
     en: ["Atenolol"],
     cls: "β1選択的遮断薬",
@@ -4226,6 +4906,7 @@ const DRUG_MASTER = [
     pi:"テノーミン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"急激な中止を避ける（狭心症悪化リスク）",
+    verified: "confirmed",
   },
   {
     id: "biso",
@@ -4234,6 +4915,7 @@ const DRUG_MASTER = [
     category: "β1選択的遮断薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ビソプロロール","メインテート"],
     en: ["Bisoprolol"],
     cls: "β1選択的遮断薬",
@@ -4249,6 +4931,7 @@ const DRUG_MASTER = [
     pi:"メインテート添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"急激な中止を避ける",
+    verified: "confirmed",
   },
   {
     id: "enp",
@@ -4257,6 +4940,7 @@ const DRUG_MASTER = [
     category: "ACE阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["エナラプリル","レニベース"],
     en: ["Enalapril"],
     cls: "ACE阻害薬",
@@ -4272,6 +4956,7 @@ const DRUG_MASTER = [
     pi:"レニベース添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"高K血症・腎機能悪化・血管浮腫リスク。RASi重複禁忌",
+    verified: "confirmed",
   },
   {
     id: "sotal",
@@ -4280,6 +4965,7 @@ const DRUG_MASTER = [
     category: "クラスIII抗不整脈薬・β遮断薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ソタロール","ソタコール"],
     en: ["Sotalol"],
     cls: "クラスIII抗不整脈薬・β遮断薬",
@@ -4297,6 +4983,7 @@ const DRUG_MASTER = [
     pi:"ソタコール添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"QT延長・Torsades de Pointes リスク。電解質異常（低K・低Mg）を補正してから投与",
+    verified: "confirmed",
   },
   {
     id: "dabi",
@@ -4305,6 +4992,7 @@ const DRUG_MASTER = [
     category: "直接トロンビン阻害薬（DOAC）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ダビガトラン","プラザキサ"],
     en: ["Dabigatran"],
     cls: "直接トロンビン阻害薬（DOAC）",
@@ -4321,6 +5009,7 @@ const DRUG_MASTER = [
     pi:"プラザキサ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"CCr < 30で禁忌。PPIでの消化管保護を考慮。ダビガトランの拮抗薬はイダルシズマブ",
+    verified: "confirmed",
   },
   {
     id: "riva",
@@ -4329,6 +5018,7 @@ const DRUG_MASTER = [
     category: "直接Xa因子阻害薬（DOAC）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["リバーロキサバン","イグザレルト"],
     en: ["Rivaroxaban"],
     cls: "直接Xa因子阻害薬（DOAC）",
@@ -4345,6 +5035,7 @@ const DRUG_MASTER = [
     pi:"イグザレルト添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"CCr < 15で禁忌。拮抗薬はアンデキサネットアルファ",
+    verified: "confirmed",
   },
   {
     id: "apix",
@@ -4353,6 +5044,7 @@ const DRUG_MASTER = [
     category: "直接Xa因子阻害薬（DOAC）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アピキサバン","エリキュース"],
     en: ["Apixaban"],
     cls: "直接Xa因子阻害薬（DOAC）",
@@ -4367,6 +5059,7 @@ const DRUG_MASTER = [
     pi:"エリキュース添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"【減量基準】2項目以上該当で2.5 mg BID：①年齢≥80歳 ②体重≤60 kg ③血清Cr≥1.5 mg/dL。拮抗薬はアンデキサネットアルファ",
+    verified: "confirmed",
   },
   {
     id: "edox",
@@ -4375,6 +5068,7 @@ const DRUG_MASTER = [
     category: "直接Xa因子阻害薬（DOAC）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["エドキサバン","リクシアナ"],
     en: ["Edoxaban"],
     cls: "直接Xa因子阻害薬（DOAC）",
@@ -4391,6 +5085,7 @@ const DRUG_MASTER = [
     pi:"リクシアナ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"CCr < 15で禁忌。低体重・P糖蛋白阻害薬使用でも30 mgに減量",
+    verified: "confirmed",
   },
   {
     id: "metf",
@@ -4399,6 +5094,7 @@ const DRUG_MASTER = [
     category: "ビグアナイド系経口血糖降下薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["メトホルミン","メトグルコ","グリコラン"],
     en: ["Metformin"],
     cls: "ビグアナイド系経口血糖降下薬",
@@ -4415,6 +5111,7 @@ const DRUG_MASTER = [
     pi:"メトグルコ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"ヨード造影剤使用前後48時間は休薬。アルコール多飲・手術前後・脱水に注意",
+    verified: "confirmed",
   },
   {
     id: "sita",
@@ -4423,6 +5120,7 @@ const DRUG_MASTER = [
     category: "DPP-4阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["シタグリプチン","グラクティブ","ジャヌビア"],
     en: ["Sitagliptin"],
     cls: "DPP-4阻害薬",
@@ -4439,6 +5137,7 @@ const DRUG_MASTER = [
     pi:"グラクティブ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"低血糖リスクは単剤では低い。SU薬との併用で低血糖注意",
+    verified: "confirmed",
   },
   {
     id: "alog",
@@ -4447,6 +5146,7 @@ const DRUG_MASTER = [
     category: "DPP-4阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アログリプチン","ネシーナ"],
     en: ["Alogliptin"],
     cls: "DPP-4阻害薬",
@@ -4462,7 +5162,7 @@ const DRUG_MASTER = [
     chdf:{d:"12.5 mg/日",n:""},
     pi:"ネシーナ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
-    caut:"",
+    verified: "confirmed",
   },
   {
     id: "lina",
@@ -4471,6 +5171,7 @@ const DRUG_MASTER = [
     category: "DPP-4阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["リナグリプチン","トラゼンタ"],
     en: ["Linagliptin"],
     cls: "DPP-4阻害薬",
@@ -4485,6 +5186,7 @@ const DRUG_MASTER = [
     pi:"トラゼンタ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎機能に関わらず使用可能なDPP-4阻害薬",
+    verified: "confirmed",
   },
   {
     id: "empa",
@@ -4493,6 +5195,7 @@ const DRUG_MASTER = [
     category: "SGLT2阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["エンパグリフロジン","ジャディアンス"],
     en: ["Empagliflozin"],
     cls: "SGLT2阻害薬",
@@ -4509,6 +5212,7 @@ const DRUG_MASTER = [
     pi:"ジャディアンス添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"尿路・性器感染症。ケトアシドーシス（インスリン不足状態で注意）。手術・絶食前に休薬",
+    verified: "confirmed",
   },
   {
     id: "dapa",
@@ -4517,6 +5221,7 @@ const DRUG_MASTER = [
     category: "SGLT2阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ダパグリフロジン","フォシーガ"],
     en: ["Dapagliflozin"],
     cls: "SGLT2阻害薬",
@@ -4533,6 +5238,7 @@ const DRUG_MASTER = [
     pi:"フォシーガ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"尿路・性器感染症。ケトアシドーシス。手術前休薬",
+    verified: "confirmed",
   },
   {
     id: "pregab",
@@ -4541,6 +5247,7 @@ const DRUG_MASTER = [
     category: "Ca2+チャネルα2δサブユニット阻害薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["プレガバリン","リリカ"],
     en: ["Pregabalin"],
     cls: "Ca2+チャネルα2δサブユニット阻害薬",
@@ -4558,6 +5265,7 @@ const DRUG_MASTER = [
     pi:"リリカ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"眠気・めまい。急激な中止で痙攣・不安。体重増加・浮腫",
+    verified: "confirmed",
   },
   {
     id: "gabap",
@@ -4566,6 +5274,7 @@ const DRUG_MASTER = [
     category: "抗てんかん薬・神経障害性疼痛治療薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ガバペンチン","ガバペン"],
     en: ["Gabapentin"],
     cls: "抗てんかん薬・神経障害性疼痛治療薬",
@@ -4583,6 +5292,7 @@ const DRUG_MASTER = [
     pi:"ガバペン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"眠気・ふらつき。急激な中止を避ける",
+    verified: "confirmed",
   },
   {
     id: "leve",
@@ -4591,6 +5301,7 @@ const DRUG_MASTER = [
     category: "抗てんかん薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["レベチラセタム","イーケプラ"],
     en: ["Levetiracetam"],
     cls: "抗てんかん薬",
@@ -4608,6 +5319,7 @@ const DRUG_MASTER = [
     pi:"イーケプラ添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"精神症状（易刺激性・攻撃性）。急激な中止を避ける",
+    verified: "confirmed",
   },
   {
     id: "morph",
@@ -4616,6 +5328,7 @@ const DRUG_MASTER = [
     category: "オピオイド（μ受容体作動薬）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["モルヒネ","モルヒネ塩酸塩","MSコンチン","カディアン"],
     en: ["Morphine"],
     cls: "オピオイド（μ受容体作動薬）",
@@ -4632,6 +5345,7 @@ const DRUG_MASTER = [
     pi:"モルヒネ塩酸塩添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"代謝産物モルヒネ-6-グルクロニド（M6G）が腎機能低下で蓄積→過鎮静・呼吸抑制。透析患者にはフェンタニルが推奨",
+    verified: "confirmed",
   },
   {
     id: "tram",
@@ -4640,6 +5354,7 @@ const DRUG_MASTER = [
     category: "オピオイド（弱オピオイド・SNRI様作用）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["トラマドール","トラマール","ワントラム"],
     en: ["Tramadol"],
     cls: "オピオイド（弱オピオイド・SNRI様作用）",
@@ -4655,6 +5370,7 @@ const DRUG_MASTER = [
     pi:"トラマール添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"痙攣リスク（特にSNRI・TCA併用）。セロトニン症候群。MAO阻害薬と禁忌",
+    verified: "confirmed",
   },
   {
     id: "allop",
@@ -4663,6 +5379,7 @@ const DRUG_MASTER = [
     category: "キサンチンオキシダーゼ阻害薬（尿酸生成抑制）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["アロプリノール","ザイロリック","アロシトール"],
     en: ["Allopurinol"],
     cls: "キサンチンオキシダーゼ阻害薬（尿酸生成抑制）",
@@ -4680,6 +5397,7 @@ const DRUG_MASTER = [
     pi:"ザイロリック添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"SJS/TEN（HLA-B*5801陽性者で高リスク）。初期に痛風発作悪化あり—コルヒチン予防投与を考慮",
+    verified: "confirmed",
   },
   {
     id: "febux",
@@ -4688,6 +5406,7 @@ const DRUG_MASTER = [
     category: "キサンチンオキシダーゼ阻害薬（非プリン型）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["フェブキソスタット","フェブリク"],
     en: ["Febuxostat"],
     cls: "キサンチンオキシダーゼ阻害薬（非プリン型）",
@@ -4703,6 +5422,7 @@ const DRUG_MASTER = [
     pi:"フェブリク添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"心血管イベントリスク（特に心血管疾患既往者）。初期に痛風発作悪化",
+    verified: "confirmed",
   },
   {
     id: "colch",
@@ -4711,6 +5431,7 @@ const DRUG_MASTER = [
     category: "抗痛風薬（チュービリン重合阻害）",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["コルヒチン"],
     en: ["Colchicine"],
     cls: "抗痛風薬（チュービリン重合阻害）",
@@ -4728,6 +5449,7 @@ const DRUG_MASTER = [
     pi:"コルヒチン添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"腎機能低下で蓄積→横紋筋融解症・骨髄抑制。CYP3A4・P糖蛋白阻害薬（クラリスロマイシン等）との禁忌",
+    verified: "confirmed",
   },
   {
     id: "famo",
@@ -4736,6 +5458,7 @@ const DRUG_MASTER = [
     category: "H2受容体拮抗薬",
     form: "注射",
     features: ["renal"],
+    highAlert: false,
     ja: ["ファモチジン","ガスター"],
     en: ["Famotidine"],
     cls: "H2受容体拮抗薬",
@@ -4751,6 +5474,7 @@ const DRUG_MASTER = [
     pi:"ガスター添付文書",
     jsnp:"腎機能別薬剤投与量PocketBook",
     caut:"中枢神経症状（意識障害・痙攣）—腎機能低下時に増加",
+    verified: "confirmed",
   },
 ];
 
