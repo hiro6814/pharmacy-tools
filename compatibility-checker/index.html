@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>配合変化チェッカー｜ICU注射薬</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --ng: #dc2626; --ng-dim: #fee2e2; --ng-border: #fca5a5;
+  --caut: #d97706; --caut-dim: #fef3c7; --caut-border: #fcd34d;
+  --ok: #059669; --ok-dim: #d1fae5; --ok-border: #6ee7b7;
+  --accent: #4f46e5; --accent-hover: #4338ca;
+  --surface: #ffffff; --bg: #f4f6fb;
+  --border: #e8ecf4; --text: #0f172a;
+  --text-muted: #64748b; --text-faint: #94a3b8;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,.06);
+  --shadow-md: 0 4px 16px rgba(15,23,42,.08);
+  --shadow-lg: 0 12px 40px rgba(15,23,42,.12);
+  --radius: 16px; --radius-sm: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter','Hiragino Sans','Yu Gothic UI',sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 13.5px; line-height: 1.6; min-height: 100vh;
+}
+
+/* ─── Header ───────────────────────────── */
+header {
+  background: #0c1445;
+  background-image: radial-gradient(ellipse at 20% 50%,#1e3a8a44 0%,transparent 60%),
+                    radial-gradient(ellipse at 80% 20%,#4f46e530 0%,transparent 50%);
+  color: #fff; padding: 0 32px; height: 64px;
+  display: flex; align-items: center; gap: 14px;
+  position: sticky; top: 0; z-index: 200;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.header-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg,#ec4899,#f43f5e);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; box-shadow: 0 2px 8px rgba(244,63,94,.4); flex-shrink: 0;
+}
+.header-text h1 { font-size: 16px; font-weight: 700; color: #f8fafc; }
+.header-text p  { font-size: 11px; color: rgba(255,255,255,.45); }
+.header-chip {
+  margin-left: auto; font-size: 11px; font-weight: 500;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 4px 10px; color: rgba(255,255,255,.6);
+}
+
+/* ─── Layout ────────────────────────────── */
+.layout { max-width: 900px; margin: 0 auto; padding: 28px 24px; }
+
+/* ─── Card ─────────────────────────────── */
+.card {
+  background: var(--surface); border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+}
+.card-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title {
+  font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+  display: flex; align-items: center; gap: 7px;
+}
+.card-title-icon {
+  width: 22px; height: 22px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+  background: linear-gradient(135deg,#ec4899,#f43f5e); color: white;
+}
+.card-body { padding: 20px; }
+
+/* ─── Search pair ──────────────────────── */
+.pair-grid {
+  display: grid; grid-template-columns: 1fr 48px 1fr;
+  gap: 12px; align-items: center;
+}
+.vs-label {
+  text-align: center; font-size: 13px; font-weight: 700;
+  color: var(--text-faint);
+}
+.search-wrap { position: relative; }
+.search-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 13.5px; font-family: inherit;
+  background: var(--bg); color: var(--text);
+  outline: none; transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.search-input::placeholder { color: var(--text-faint); }
+.search-input:focus {
+  border-color: var(--accent); background: #fff;
+  box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+}
+.dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-lg);
+  z-index: 300; max-height: 260px; overflow-y: auto; display: none;
+}
+.dd-item {
+  padding: 11px 14px; cursor: pointer; border-bottom: 1px solid #f8fafc;
+  font-size: 13px; transition: background .12s;
+}
+.dd-item:last-child { border-bottom: none; }
+.dd-item:hover { background: #f5f7ff; }
+.no-result { padding: 12px 14px; color: var(--text-faint); font-size: 12.5px; }
+
+/* ─── Check button ──────────────────────── */
+.btn-check {
+  width: 100%; padding: 14px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: background .15s; margin-top: 14px;
+  box-shadow: 0 2px 8px rgba(79,70,229,.3);
+}
+.btn-check:hover { background: var(--accent-hover); }
+.btn-check:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+
+/* ─── Result card ──────────────────────── */
+.result-card {
+  border-radius: var(--radius-sm); padding: 20px;
+  border-left: 4px solid; margin-top: 4px;
+}
+.result-ng   { background: var(--ng-dim);   border-color: var(--ng); }
+.result-caution { background: var(--caut-dim); border-color: var(--caut); }
+.result-ok   { background: var(--ok-dim);   border-color: var(--ok); }
+
+.result-title {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.result-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 15px; font-weight: 800; letter-spacing: .02em;
+  padding: 5px 14px; border-radius: 20px; border: 1.5px solid;
+}
+.rb-ng   { color: var(--ng);   background: #fff; border-color: var(--ng); }
+.rb-caut { color: var(--caut); background: #fff; border-color: var(--caut); }
+.rb-ok   { color: var(--ok);   background: #fff; border-color: var(--ok); }
+
+.result-drugs { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.result-note  { font-size: 13px; color: var(--text); line-height: 1.6; margin-top: 6px; }
+.result-source { font-size: 11px; color: var(--text-faint); margin-top: 8px; }
+
+/* ─── List mode ─────────────────────────── */
+.list-table { width: 100%; border-collapse: collapse; }
+.list-table th {
+  padding: 9px 12px; text-align: left;
+  font-size: 11px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--text-faint);
+  background: #f8fafc; border-bottom: 1px solid var(--border);
+}
+.list-table td {
+  padding: 12px 12px; border-bottom: 1px solid #f1f5f9;
+  vertical-align: top; font-size: 12.5px;
+}
+.list-table tr:last-child td { border-bottom: none; }
+.list-table tr:hover td { background: #fafbff; }
+.result-mini {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 700;
+  padding: 2px 9px; border-radius: 20px; white-space: nowrap;
+}
+.rm-ng   { color: var(--ng);   background: var(--ng-dim);   border: 1px solid var(--ng-border); }
+.rm-caut { color: var(--caut); background: var(--caut-dim); border: 1px solid var(--caut-border); }
+.rm-ok   { color: var(--ok);   background: var(--ok-dim);   border: 1px solid var(--ok-border); }
+
+/* ─── Tabs ──────────────────────────────── */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding: 0 20px; }
+.tab-btn {
+  padding: 12px 18px; font-size: 12.5px; font-weight: 600;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s; margin-bottom: -1px;
+}
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-btn:hover  { color: var(--accent); }
+.tab-pane { display: none; padding: 20px; }
+.tab-pane.active { display: block; }
+
+/* ─── Empty state ──────────────────────── */
+.empty-state {
+  text-align: center; padding: 40px 20px;
+  color: var(--text-faint); font-size: 13px;
+}
+.empty-icon { font-size: 36px; margin-bottom: 10px; opacity: .4; }
+
+/* ─── Legend ────────────────────────────── */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--text-muted);
+}
+
+/* ─── Stats chips ──────────────────────── */
+.stat-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.stat-chip {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px; border: 1px solid;
+}
+
+/* ─── Scrollbar ─────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+
+@media (max-width: 600px) {
+  .layout { padding: 16px 12px; }
+  header  { padding: 0 16px; }
+  .pair-grid { grid-template-columns: 1fr; }
+  .vs-label { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">⚗️</div>
+  <div class="header-text">
+    <h1>配合変化チェッカー</h1>
+    <p>ICU注射薬 配合禁忌・注意データベース</p>
+  </div>
+  <span class="header-chip" id="countChip">—</span>
+</header>
+
+<div class="layout">
+
+  <!-- Legend -->
+  <div class="card">
+    <div class="card-body" style="padding:14px 20px">
+      <div class="legend">
+        <div class="legend-item"><span class="result-mini rm-ng">配合禁忌</span> 同一ラインでの投与禁止・沈殿形成など</div>
+        <div class="legend-item"><span class="result-mini rm-caut">注意</span> 配合変化 or 薬理学的相互作用に注意が必要</div>
+        <div class="legend-item"><span class="result-mini rm-ok">問題なし</span> 通常濃度では配合変化なし</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main card -->
+  <div class="card">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('check', this)">🔍 2剤チェック</button>
+      <button class="tab-btn" onclick="switchTab('list', this)">📋 薬剤別一覧</button>
+      <button class="tab-btn" onclick="switchTab('all', this)">📊 全データ</button>
+    </div>
+
+    <!-- Tab: 2剤チェック -->
+    <div class="tab-pane active" id="tab-check">
+      <div class="pair-grid">
+        <div class="search-wrap">
+          <input class="search-input" id="inputA" placeholder="薬剤A を入力" autocomplete="off" oninput="onInput('A')">
+          <div class="dropdown" id="ddA"></div>
+        </div>
+        <div class="vs-label">VS</div>
+        <div class="search-wrap">
+          <input class="search-input" id="inputB" placeholder="薬剤B を入力" autocomplete="off" oninput="onInput('B')">
+          <div class="dropdown" id="ddB"></div>
+        </div>
+      </div>
+      <button class="btn-check" id="btnCheck" onclick="checkCompat()" disabled>配合変化を確認する</button>
+      <div id="checkResult" style="margin-top:16px"></div>
+    </div>
+
+    <!-- Tab: 薬剤別一覧 -->
+    <div class="tab-pane" id="tab-list">
+      <div class="search-wrap" style="margin-bottom:14px">
+        <input class="search-input" id="listSearch" placeholder="薬剤名で絞り込み（例：バンコマイシン）"
+          autocomplete="off" oninput="renderList()">
+      </div>
+      <div id="listResult"></div>
+    </div>
+
+    <!-- Tab: 全データ -->
+    <div class="tab-pane" id="tab-all">
+      <div class="stat-chips" id="statChips"></div>
+      <div class="result-wrap" style="overflow-x:auto">
+        <table class="list-table" id="allTable">
+          <thead><tr>
+            <th style="width:160px">薬剤A</th>
+            <th style="width:160px">薬剤B</th>
+            <th style="width:90px">判定</th>
+            <th>注記</th>
+            <th style="width:80px">根拠</th>
+          </tr></thead>
+          <tbody id="allBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="compat-master.js"></script>
+<script>
+// ── 正規化 ────────────────────────────────────
+function normQ(s) {
+  return s.toLowerCase().replace(/\s+/g,'')
+    .replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0))
+    .replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
+}
+
+// ── 薬剤名リスト ──────────────────────────────
+const drugNames = [...new Set(COMPAT_DATA.flatMap(d=>[d.drugA, d.drugB]))].sort();
+
+// 選択状態
+let selA = '', selB = '';
+
+// ── ドロップダウン表示 ───────────────────────
+function onInput(side) {
+  const inp = document.getElementById('input'+side);
+  const dd  = document.getElementById('dd'+side);
+  const q   = inp.value.trim();
+  if (side === 'A') selA = ''; else selB = '';
+  updateCheckBtn();
+  if (!q) { dd.style.display='none'; return; }
+  const nq = normQ(q);
+  const hits = drugNames.filter(n => normQ(n).includes(nq)).slice(0, 12);
+  if (!hits.length) {
+    dd.innerHTML = '<div class="no-result">該当薬剤なし</div>';
+  } else {
+    dd.innerHTML = hits.map(n =>
+      `<div class="dd-item" onmousedown="pickDrug('${side}','${esc(n)}')">${esc(n)}</div>`
+    ).join('');
+  }
+  dd.style.display = 'block';
+}
+
+function pickDrug(side, name) {
+  document.getElementById('input'+side).value = name;
+  document.getElementById('dd'+side).style.display = 'none';
+  if (side === 'A') selA = name; else selB = name;
+  updateCheckBtn();
+}
+
+function updateCheckBtn() {
+  document.getElementById('btnCheck').disabled = !(selA && selB);
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) {
+    document.getElementById('ddA').style.display = 'none';
+    document.getElementById('ddB').style.display = 'none';
+  }
+});
+
+// ── 配合変化チェック ─────────────────────────
+function findCompat(a, b) {
+  return COMPAT_DATA.filter(d =>
+    (d.drugA === a && d.drugB === b) ||
+    (d.drugA === b && d.drugB === a)
+  );
+}
+
+function checkCompat() {
+  const area = document.getElementById('checkResult');
+  if (!selA || !selB) return;
+  const hits = findCompat(selA, selB);
+  if (!hits.length) {
+    area.innerHTML = `
+      <div class="result-card" style="background:#f8fafc;border-color:#cbd5e1">
+        <div class="result-title">
+          <span class="result-mini" style="color:#64748b;background:#f1f5f9;border:1px solid #e2e8f0">データなし</span>
+          <span class="result-drugs">${esc(selA)} ＋ ${esc(selB)}</span>
+        </div>
+        <div class="result-note">この組み合わせのデータは現在収載されていません。PMDA添付文書・IF またはTrissel's Handbook等で確認してください。</div>
+      </div>`;
+    return;
+  }
+  area.innerHTML = hits.map(d => resultCard(d, selA, selB)).join('');
+}
+
+function resultCard(d, a, b) {
+  const cls = {ng:'result-ng', caution:'result-caution', ok:'result-ok'}[d.result] || 'result-ok';
+  const bcls = {ng:'rb-ng', caution:'rb-caut', ok:'rb-ok'}[d.result] || 'rb-ok';
+  const btxt = {ng:'⛔ 配合禁忌', caution:'⚠️ 注意', ok:'✅ 問題なし'}[d.result] || '—';
+  return `
+    <div class="result-card ${cls}">
+      <div class="result-title">
+        <span class="result-badge ${bcls}">${btxt}</span>
+        <span class="result-drugs">${esc(d.drugA)} ＋ ${esc(d.drugB)}</span>
+      </div>
+      <div class="result-note">${esc(d.note)}</div>
+      <div class="result-source">出典: ${esc(d.source)} ／ 確認度: ${verifiedLabel(d.verified)}</div>
+    </div>`;
+}
+
+// ── 薬剤別一覧 ───────────────────────────────
+function renderList() {
+  const q  = (document.getElementById('listSearch').value || '').trim();
+  const area = document.getElementById('listResult');
+  if (!q) {
+    area.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div>薬剤名を入力して絞り込み</div>';
+    return;
+  }
+  const nq = normQ(q);
+  const hits = COMPAT_DATA.filter(d =>
+    normQ(d.drugA).includes(nq) || normQ(d.drugB).includes(nq)
+  );
+  if (!hits.length) {
+    area.innerHTML = '<div class="empty-state"><div class="empty-icon">🔎</div>該当なし</div>';
+    return;
+  }
+  const rows = hits.map(d => {
+    const partner = normQ(d.drugA).includes(nq) ? d.drugB : d.drugA;
+    return `<tr>
+      <td style="font-weight:600">${esc(partner)}</td>
+      <td>${resultMini(d.result)}</td>
+      <td>${esc(d.note)}</td>
+      <td style="color:var(--text-faint);font-size:11px">${esc(d.source)}</td>
+    </tr>`;
+  }).join('');
+  area.innerHTML = `
+    <table class="list-table">
+      <thead><tr>
+        <th>相手方薬剤</th><th style="width:90px">判定</th><th>注記</th><th style="width:80px">根拠</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── 全データ ─────────────────────────────────
+function renderAll() {
+  const ng = COMPAT_DATA.filter(d=>d.result==='ng').length;
+  const ca = COMPAT_DATA.filter(d=>d.result==='caution').length;
+  const ok = COMPAT_DATA.filter(d=>d.result==='ok').length;
+  document.getElementById('statChips').innerHTML = `
+    <span class="stat-chip rm-ng">${ng} 件 配合禁忌</span>
+    <span class="stat-chip rm-caut">${ca} 件 注意</span>
+    <span class="stat-chip rm-ok">${ok} 件 問題なし</span>`;
+
+  const rows = COMPAT_DATA.map(d => `<tr>
+    <td style="font-weight:600">${esc(d.drugA)}</td>
+    <td>${esc(d.drugB)}</td>
+    <td>${resultMini(d.result)}</td>
+    <td style="font-size:12px;line-height:1.5">${esc(d.note)}</td>
+    <td style="color:var(--text-faint);font-size:11px">${esc(d.source)}</td>
+  </tr>`).join('');
+  document.getElementById('allBody').innerHTML = rows;
+}
+
+// ── Helpers ──────────────────────────────────
+function resultMini(r) {
+  const m = {
+    ng:      ['rm-ng',   '⛔ 配合禁忌'],
+    caution: ['rm-caut', '⚠️ 注意'],
+    ok:      ['rm-ok',   '✅ 問題なし'],
+  };
+  const [cls, txt] = m[r] || m.ok;
+  return `<span class="result-mini ${cls}">${txt}</span>`;
+}
+function verifiedLabel(v) {
+  return {confirmed:'✓ 確認済', inferred:'~ 推定', unverified:'? 要確認'}[v] || v;
+}
+function esc(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── タブ切り替え ──────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  if (tab === 'all') renderAll();
+  if (tab === 'list') renderList();
+}
+
+// ── 初期化 ───────────────────────────────────
+document.getElementById('countChip').textContent = COMPAT_DATA.length + ' ペア収載';
+document.getElementById('listResult').innerHTML =
+  '<div class="empty-state"><div class="empty-icon">🔍</div>薬剤名を入力して絞り込み</div>';
+</script>
+</body>
+</html>
