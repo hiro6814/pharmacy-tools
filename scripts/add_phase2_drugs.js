@@ -7,7 +7,7 @@
 const fs   = require('fs');
 const path = require('path');
 
-const MASTER_PATH = path.join(__dirname, '../shared/drugs-master.js');
+const MASTER_PATH = path.join(__dirname, '../web/shared/drugs-master.js');
 
 // ── Phase 2 追加薬剤 ──────────────────────────────────────────────
 const NEW_DRUGS = [

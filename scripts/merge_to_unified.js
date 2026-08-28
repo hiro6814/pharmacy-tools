@@ -7,9 +7,9 @@ const path = require('path');
 const fs   = require('fs');
 
 const root = path.join(__dirname, '..');
-const { DRUG_MASTER } = require(path.join(root, 'shared/drugs-master.js'));
-const { CRUSH_DATA }  = require(path.join(root, 'crushing-checker/crush-data.js'));
-const { RENAL_DRUGS } = require(path.join(root, 'renal/renal-data.js'));
+const { DRUG_MASTER } = require(path.join(root, 'web/shared/drugs-master.js'));
+const { CRUSH_DATA }  = require(path.join(root, 'web/crushing-checker/crush-data.js'));
+const { RENAL_DRUGS } = require(path.join(root, 'web/renal/renal-data.js'));
 
 // renal データを id → entry でインデックス
 const renalMap = Object.fromEntries(RENAL_DRUGS.map(d => [d.id, d]));
@@ -154,7 +154,7 @@ const out = [
   'if (typeof module !== "undefined") module.exports = { DRUG_MASTER, RENAL_DATA };',
 ].join('\n');
 
-const outPath = path.join(root, 'shared/drugs-master.js');
+const outPath = path.join(root, 'web/shared/drugs-master.js');
 fs.writeFileSync(outPath, out, 'utf8');
 console.log(`\nWritten: ${outPath}`);
 console.log('Line count:', out.split('\n').length);

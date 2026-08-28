@@ -34,8 +34,8 @@ from pathlib import Path
 
 DOWNLOAD_MENU_URL = "https://shinryohoshu.mhlw.go.jp/shinryohoshu/downloadMenu"
 REPO_ROOT = Path(__file__).resolve().parent.parent
-OUT_PATH = REPO_ROOT / "substitution-checker" / "zaiyaku-master.js"
-EXISTING_MASTER_PATH = REPO_ROOT / "shared" / "drugs-master.js"
+OUT_PATH = REPO_ROOT / "web" / "substitution-checker" / "zaiyaku-master.js"
+EXISTING_MASTER_PATH = REPO_ROOT / "web" / "shared" / "drugs-master.js"
 
 FORM_LABELS = {
     "1": "内服薬",

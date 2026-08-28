@@ -7,7 +7,7 @@
 const fs   = require('fs');
 const path = require('path');
 
-const MASTER_PATH = path.join(__dirname, '../shared/drugs-master.js');
+const MASTER_PATH = path.join(__dirname, '../web/shared/drugs-master.js');
 
 // ── highAlert 判定ルール ────────────────────────────────────────
 const HIGH_ALERT_CATEGORIES = new Set([

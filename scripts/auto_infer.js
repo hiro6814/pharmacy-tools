@@ -10,7 +10,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const MASTER_PATH = path.join(__dirname, '../shared/drugs-master.js');
+const MASTER_PATH = path.join(__dirname, '../web/shared/drugs-master.js');
 
 // ── 製剤学的ルール ────────────────────────────────────────────────
 // 戻り値: { crush, susp } の期待値（undefined = 不問）

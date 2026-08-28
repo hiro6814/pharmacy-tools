@@ -261,7 +261,7 @@ def main():
     base = os.path.expanduser("~")
     crush_html = f"{base}/crushing-checker/index.html"
     renal_html = f"{base}/renal-pwa/index.html"
-    out_dir = os.path.expanduser("~/pharmacy-tools")
+    out_dir = os.path.expanduser("~/pharmacy-tools/web")
 
     print("Extracting crushing-checker DB...")
     crush_entries = extract_crush_db_regex(open(crush_html, encoding='utf-8').read())
