@@ -184,7 +184,9 @@ let dialysis = 'none';
 let currentCCr = null;
 let suggestIdx = -1;
 
-// ─── localStorage 保存・復元 ─────────────────
+// ─── 患者入力の一時保存・復元（タブを閉じたら破棄） ─────
+// sessionStorageを使用：共有端末で前の患者の生理データ（年齢・身長・体重・sCr等）が
+// ブラウザを閉じた後も残らないようにするため（localStorageは永続化されるため使わない）
 const LS_KEY = 'renalCalc_v1';
 function saveState() {
   const state = {
@@ -195,11 +197,13 @@ function saveState() {
     scr: document.getElementById('scr').value,
     dialysis,
   };
-  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {}
+  try { sessionStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {}
 }
+// 旧バージョン（localStorage永続化）で残った患者データを一度だけ破棄する
+try { localStorage.removeItem(LS_KEY); } catch(e) {}
 function restoreState() {
   try {
-    const s = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    const s = JSON.parse(sessionStorage.getItem(LS_KEY) || 'null');
     if (!s) return;
     if (s.age)    document.getElementById('age').value = s.age;
     if (s.height) document.getElementById('height').value = s.height;
@@ -295,7 +299,7 @@ function clearAll(){
   document.getElementById('wNote').classList.add('hidden');
   document.getElementById('suggestList').classList.add('hidden');
   currentCCr=null;
-  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+  try { sessionStorage.removeItem(LS_KEY); } catch(e) {}
 }
 
 // ─── 薬剤検索 ───
