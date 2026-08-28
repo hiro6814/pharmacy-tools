@@ -1,6 +1,8 @@
 // compatibility-checker/compat-master.js — ICU配合変化データベース
 // Phase 5a MVP: ICU頻用薬剤 配合変化データ
 // result: "ng"(配合禁忌) / "caution"(注意) / "ok"(通常問題なし)
+// lastUpdated: このファイルの最終更新コミット日（マスタ全体のメンテ日。個別ペアの検証日ではない）
+const COMPAT_MASTER_META = { lastUpdated: "2026-08-29", entryCount: 59 };
 
 const COMPAT_DATA = [
 
@@ -405,4 +407,4 @@ const COMPAT_DATA = [
   },
 ];
 
-if (typeof module !== "undefined") module.exports = { COMPAT_DATA };
+if (typeof module !== "undefined") module.exports = { COMPAT_DATA, COMPAT_MASTER_META };

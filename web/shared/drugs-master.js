@@ -1,5 +1,7 @@
 // shared/drugs-master.js — 統合薬剤DB
 // crush・renal 両データを一括収載
+// lastUpdated: このファイルの最終更新コミット日（マスタ全体のメンテ日。個別薬剤の検証日ではない）
+const DRUG_MASTER_META = { lastUpdated: "2026-08-29", entryCount: 368 };
 const DRUG_MASTER = [
 
   {
@@ -6088,4 +6090,4 @@ const RENAL_DATA = Object.fromEntries(
   DRUG_MASTER.filter(d=>d.features.includes("renal")).map(d=>[d.id,d])
 );
 
-if (typeof module !== "undefined") module.exports = { DRUG_MASTER, RENAL_DATA };
+if (typeof module !== "undefined") module.exports = { DRUG_MASTER, RENAL_DATA, DRUG_MASTER_META };

@@ -16,6 +16,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Yu Gothic UI'
 .container{max-width:600px;margin:0 auto;padding:12px 14px}
 h1{font-size:19px;font-weight:700;color:#1e3a5f;letter-spacing:-0.3px}
 .subtitle{font-size:12px;color:#64748b;margin-bottom:14px}
+.freshness-chip{display:inline-flex;align-items:center;font-size:11px;color:#94a3b8;background:#f1f5f9;border-radius:20px;padding:3px 10px;margin-top:6px}
 .card{background:#fff;border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .card-title{font-size:13px;font-weight:700;color:#475569;margin-bottom:11px;padding-bottom:8px;border-bottom:1px solid #f1f5f9;text-transform:uppercase;letter-spacing:.5px}
 .form-row{display:flex;gap:10px;margin-bottom:11px}
@@ -92,6 +93,7 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
 <div style="padding-top:8px;margin-bottom:4px">
   <h1>腎機能・用量調整計算</h1>
   <div class="subtitle">Cockcroft-Gault 法｜オフライン対応・APIキー不要</div>
+  <span class="freshness-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
 </div>
 
 <!-- 患者情報 -->
@@ -429,6 +431,11 @@ document.addEventListener('click',e=>{
 
 // ─── 初期化：保存済み状態を復元 ───
 restoreState();
+try {
+  if (typeof DRUG_MASTER_META !== 'undefined' && DRUG_MASTER_META.lastUpdated) {
+    document.getElementById('freshnessChip').textContent = 'DB更新: ' + DRUG_MASTER_META.lastUpdated;
+  }
+} catch (e) {}
 </script>
 <script>
 if('serviceWorker' in navigator){

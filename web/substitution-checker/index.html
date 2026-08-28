@@ -65,6 +65,11 @@ header {
 }
 .header-text h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.01em; color: #f8fafc; }
 .header-text p { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.02em; }
+.header-chip {
+  margin-left: auto; font-size: 11px; font-weight: 500;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 4px 10px; color: rgba(255,255,255,.6);
+}
 
 .disclaimer {
   background: #fef3c7;
@@ -271,6 +276,7 @@ footer {
     <h1>持参薬振替候補チェッカー</h1>
     <p>薬価収載品目から機械的に候補を列挙します</p>
   </div>
+  <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
 </header>
 
 <div class="disclaimer">
@@ -313,6 +319,11 @@ const resultArea = document.getElementById('resultArea');
 const dataFooter = document.getElementById('dataFooter');
 
 dataFooter.textContent = `医薬品マスター更新日: ${typeof ZAIYAKU_MASTER_GENERATED_AT !== 'undefined' ? ZAIYAKU_MASTER_GENERATED_AT : '不明'}（出所: 社会保険診療報酬支払基金 医薬品マスター ${typeof ZAIYAKU_MASTER_SOURCE !== 'undefined' ? ZAIYAKU_MASTER_SOURCE : ''}）`;
+try {
+  if (typeof ZAIYAKU_MASTER_META !== 'undefined' && ZAIYAKU_MASTER_META.lastUpdated) {
+    document.getElementById('freshnessChip').textContent = 'DB更新: ' + ZAIYAKU_MASTER_META.lastUpdated;
+  }
+} catch (e) {}
 
 let currentCandidatesText = '';
 let selectedItem = null;

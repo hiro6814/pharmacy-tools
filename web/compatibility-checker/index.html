@@ -226,6 +226,7 @@ header {
     <h1>配合変化チェッカー</h1>
     <p>ICU注射薬 配合禁忌・注意データベース</p>
   </div>
+  <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別ペアごとの検証日ではありません">—</span>
   <span class="header-chip" id="countChip">—</span>
 </header>
 
@@ -474,6 +475,11 @@ function switchTab(tab, btn) {
 
 // ── 初期化 ───────────────────────────────────
 document.getElementById('countChip').textContent = COMPAT_DATA.length + ' ペア収載';
+try {
+  if (typeof COMPAT_MASTER_META !== 'undefined' && COMPAT_MASTER_META.lastUpdated) {
+    document.getElementById('freshnessChip').textContent = 'DB更新: ' + COMPAT_MASTER_META.lastUpdated;
+  }
+} catch (e) {}
 document.getElementById('listResult').innerHTML =
   '<div class="empty-state"><div class="empty-icon">🔍</div>薬剤名を入力して絞り込み</div>';
 </script>

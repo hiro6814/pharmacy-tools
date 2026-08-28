@@ -527,6 +527,7 @@ select { cursor: pointer; }
     <p>経管投与・嚥下困難患者 薬剤投与方法確認ツール</p>
   </div>
   <div class="header-right">
+    <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
     <span class="header-chip" id="dbCountChip">—</span>
   </div>
 </header>
@@ -668,6 +669,11 @@ function setFilter(f) {
 function updateDBChip() {
   document.getElementById('dbCountChip').textContent = drugDB.length + '剤収載';
 }
+try {
+  if (typeof DRUG_MASTER_META !== 'undefined' && DRUG_MASTER_META.lastUpdated) {
+    document.getElementById('freshnessChip').textContent = 'DB更新: ' + DRUG_MASTER_META.lastUpdated;
+  }
+} catch (e) {}
 
 // ─── Search ───────────────────────────────
 const searchInput = document.getElementById('searchInput');

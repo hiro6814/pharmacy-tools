@@ -181,8 +181,10 @@ def write_output(items: list[dict], source_name: str) -> None:
         f"// 次回更新目安: 次期薬価改定時(年1〜2回)\n"
         f"const ZAIYAKU_MASTER_GENERATED_AT = \"{generated_at}\";\n"
         f"const ZAIYAKU_MASTER_SOURCE = \"{source_name}\";\n"
+        f"// lastUpdated: このファイルの最終更新コミット日（マスタ全体のメンテ日。個別薬剤の検証日ではない）\n"
+        f"const ZAIYAKU_MASTER_META = {{ lastUpdated: ZAIYAKU_MASTER_GENERATED_AT, entryCount: {len(items)} }};\n"
         f"const ZAIYAKU_MASTER = {json.dumps(items, ensure_ascii=False, separators=(',', ':'))};\n"
-        f"if (typeof module !== \"undefined\") module.exports = {{ ZAIYAKU_MASTER, ZAIYAKU_MASTER_GENERATED_AT, ZAIYAKU_MASTER_SOURCE }};\n"
+        f"if (typeof module !== \"undefined\") module.exports = {{ ZAIYAKU_MASTER, ZAIYAKU_MASTER_GENERATED_AT, ZAIYAKU_MASTER_SOURCE, ZAIYAKU_MASTER_META }};\n"
     )
     OUT_PATH.write_text(js, encoding="utf-8")
 
