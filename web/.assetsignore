@@ -1,4 +1,5 @@
 .wrangler
 .impeccable
+.DS_Store
 wrangler.toml
 .assetsignore
