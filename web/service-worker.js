@@ -52,8 +52,14 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(() => cached);
-      // stale-while-revalidate: キャッシュがあれば即返し、裏で更新
-      return cached || networkFetch;
+      // stale-while-revalidate: キャッシュがあれば即返し、裏で更新。
+      // waitUntilで明示的に延命しないと、respondWithがcachedで解決した
+      // 直後にSWが休止し、裏のfetch/cache.putが完了しないことがある。
+      if (cached) {
+        event.waitUntil(networkFetch);
+        return cached;
+      }
+      return networkFetch;
     })
   );
 });

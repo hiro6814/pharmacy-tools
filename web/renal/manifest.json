@@ -2,7 +2,7 @@
   "name": "腎機能・用量調整計算",
   "short_name": "腎機能計算",
   "description": "Cockcroft-Gault法によるCCr計算と腎機能別用量調整",
-  "start_url": "/",
+  "start_url": "/renal/",
   "display": "standalone",
   "background_color": "#eef2f7",
   "theme_color": "#1e3a5f",

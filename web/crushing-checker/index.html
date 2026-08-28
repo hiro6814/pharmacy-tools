@@ -2,17 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<script>
-// 旧バージョン・別スコープのService Workerが残っていれば解除する
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(rs){
-    rs.forEach(function(r){
-      var active = r.active && r.active.scriptURL;
-      if (!active || active.indexOf('/service-worker.js') === -1) r.unregister();
-    });
-  });
-}
-</script>
+<script src="../shared/sw-unregister-legacy.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>粉砕・簡易懸濁法チェッカー</title>
 <style>
@@ -1063,12 +1053,11 @@ try {
   if (ctx && ctx.selectedDrug) {
     const resolved = pharmacyContextResolveDrug(ctx.selectedDrug, drugDB, ['generic', 'brand']);
     if (resolved) {
-      searchInput.value = ctx.selectedDrug;
-      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      addDrug(resolved.id);
       pharmacyContextShowBanner(
         document.querySelector('.layout'),
-        '前の画面から「' + ctx.selectedDrug + '」を引き継ぎました',
-        function () { searchInput.value = ''; }
+        '前の画面から「' + ctx.selectedDrug + '」をチェックリストに追加しました',
+        function () { removeDrug(resolved.id); }
       );
     }
   }

@@ -2,17 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<script>
-// 旧バージョン・別スコープのService Workerが残っていれば解除する
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(rs){
-    rs.forEach(function(r){
-      var active = r.active && r.active.scriptURL;
-      if (!active || active.indexOf('/service-worker.js') === -1) r.unregister();
-    });
-  });
-}
-</script>
+<script src="../shared/sw-unregister-legacy.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>持参薬振替候補チェッカー</title>
 <style>
@@ -734,7 +724,11 @@ document.addEventListener('click', (e) => {
 try {
   const ctx = typeof pharmacyContextGet === 'function' ? pharmacyContextGet() : null;
   if (ctx && ctx.selectedDrug) {
-    const resolved = ZAIYAKU_MASTER.find(item => item.name === ctx.selectedDrug);
+    // ZAIYAKU_MASTERのnameは「商品名+規格+メーカー名」で、他アプリが渡す
+    // 一般名フルネームとは完全一致しない。一般名の先頭部分で部分一致検索する
+    // （既存の検索欄と同じmatchesQueryロジックを再利用）。
+    const stem = normalizeQuery(ctx.selectedDrug.slice(0, 6));
+    const resolved = ZAIYAKU_MASTER.find(item => matchesQuery(item, stem));
     if (resolved) {
       selectItem(resolved);
       pharmacyContextShowBanner(

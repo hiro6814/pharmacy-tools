@@ -2,17 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<script>
-// 旧バージョン・別スコープのService Workerが残っていれば解除する
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(rs){
-    rs.forEach(function(r){
-      var active = r.active && r.active.scriptURL;
-      if (!active || active.indexOf('/service-worker.js') === -1) r.unregister();
-    });
-  });
-}
-</script>
+<script src="../shared/sw-unregister-legacy.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>腎機能・用量調整計算</title>
 <link rel="manifest" href="manifest.json">
