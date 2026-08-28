@@ -1,3 +1,7 @@
+// ⚠️ 非推奨・本番未使用（2026-08-01確認）
+// crushing-checker/index.html は ../shared/drugs-master.js のみを読み込んでおり、このファイルは実行時には一切参照されない。
+// scripts/merge_to_unified.js 等の統合生成スクリプトの入力としてのみ残置。
+// 薬剤マスタの追加・修正は必ず shared/drugs-master.js（features: ["crush"]）に対して行うこと。
 // crushing-checker/crush-data.js — 自動生成
 const CRUSH_DATA = {
   "ca001": {

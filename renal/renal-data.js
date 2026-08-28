@@ -1,3 +1,7 @@
+// ⚠️ 非推奨・本番未使用（2026-08-01確認）
+// renal/index.html は ../shared/drugs-master.js のみを読み込んでおり、このファイルは実行時には一切参照されない。
+// scripts/merge_to_unified.js 等の統合生成スクリプトの入力としてのみ残置。
+// 薬剤マスタの追加・修正は必ず shared/drugs-master.js（features: ["renal"]）に対して行うこと。
 // renal/renal-data.js — renal-pwa から自動生成
 // DRUGS: 元の配列（後方互換のために保持）
 // RENAL_DATA: id をキーとするオブジェクト（統合DB参照用）

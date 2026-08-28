@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>持参薬振替候補チェッカー</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --high: #059669;
+  --high-dim: #d1fae5;
+  --ref: #64748b;
+  --ref-dim: #f1f5f9;
+  --other: #d97706;
+  --other-dim: #fef3c7;
+  --surface: #ffffff;
+  --bg: #f4f6fb;
+  --border: #e8ecf4;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 4px 16px rgba(15,23,42,0.08), 0 2px 6px rgba(15,23,42,0.05);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+header {
+  background: #0c1445;
+  background-image: radial-gradient(ellipse at 20% 50%, #1e3a8a44 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 20%, #4f46e530 0%, transparent 50%);
+  color: #fff;
+  padding: 0 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.header-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.4);
+  flex-shrink: 0;
+}
+.header-text h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.01em; color: #f8fafc; }
+.header-text p { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.02em; }
+
+.disclaimer {
+  background: #fef3c7;
+  border-bottom: 1px solid #fde68a;
+  color: #78350f;
+  font-size: 12px;
+  padding: 10px 20px;
+  text-align: center;
+  position: sticky;
+  top: 64px;
+  z-index: 190;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+.search-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.search-card label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+#searchInput {
+  width: 100%;
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  outline: none;
+  transition: border-color .15s;
+}
+#searchInput:focus { border-color: var(--accent); }
+.hint { font-size: 11px; color: var(--text-faint); margin-top: 6px; }
+
+.suggest-list {
+  margin-top: 10px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  display: none;
+}
+.suggest-list.open { display: block; }
+.suggest-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.suggest-item:last-child { border-bottom: none; }
+.suggest-item:hover, .suggest-item.active { background: var(--ref-dim); }
+.suggest-item .s-name { font-weight: 600; }
+.suggest-item .s-meta { color: var(--text-faint); font-size: 11px; margin-left: 6px; }
+
+.selected-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.selected-card.open { display: flex; }
+.selected-card .sel-label { font-size: 11px; color: var(--text-faint); }
+.selected-card .sel-name { font-size: 16px; font-weight: 700; }
+.selected-card .sel-spec { color: var(--text-muted); font-size: 13px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 600; }
+.badge.form { background: var(--ref-dim); color: var(--ref); }
+
+.result-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.mode-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--ref-dim);
+  padding: 3px;
+  border-radius: 999px;
+}
+.mode-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.mode-btn.active {
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+#copyBtn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+#copyBtn:hover { background: var(--accent-hover); }
+#copyBtn:disabled { background: var(--text-faint); cursor: not-allowed; }
+#copyFeedback { font-size: 12px; color: var(--high); margin-right: 10px; align-self: center; }
+
+.group {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.group-head {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.group-head h2 { font-size: 14px; font-weight: 700; }
+.group-head .group-desc { font-size: 11px; color: var(--text-faint); font-weight: 400; }
+.group-head .count-badge {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--ref-dim);
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+.group-head .chevron { font-size: 11px; color: var(--text-faint); transition: transform .15s; }
+.group.collapsed .chevron { transform: rotate(-90deg); }
+.group.collapsed .group-body { display: none; }
+.group-body { border-top: 1px solid var(--border); }
+
+.candidate-row {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.candidate-row:last-child { border-bottom: none; }
+.candidate-row .c-name { font-weight: 600; font-size: 13.5px; }
+.candidate-row .c-spec { color: var(--text-muted); font-size: 12.5px; }
+.candidate-row .c-note { flex-basis: 100%; font-size: 11px; color: var(--text-faint); }
+.badge.confidence-high { background: var(--high-dim); color: var(--high); }
+.badge.confidence-reference { background: var(--ref-dim); color: var(--ref); }
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-faint);
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  header { padding: 0 14px; }
+  main { padding: 16px 10px 60px; }
+  .search-card, .group-head, .candidate-row { padding-left: 14px; padding-right: 14px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">🔄</div>
+  <div class="header-text">
+    <h1>持参薬振替候補チェッカー</h1>
+    <p>薬価収載品目から機械的に候補を列挙します</p>
+  </div>
+</header>
+
+<div class="disclaimer">
+  本ツールは薬効分類・成分名に基づく機械的な候補列挙であり、臨床的な代替可能性・処方変更の妥当性を保証するものではありません。最終判断は添付文書等でご確認ください。
+</div>
+
+<main>
+  <div class="search-card">
+    <label for="searchInput">持参薬名を入力（成分名・商品名どちらでも検索できます）</label>
+    <input id="searchInput" type="text" autocomplete="off" placeholder="例: ガスター、ファモチジン、アムロジピン...">
+    <div class="hint">2文字以上で候補が表示されます。ひらがなで入力しても自動的にカタカナに変換されます。候補をクリックして振替候補を表示します。</div>
+    <div id="suggestList" class="suggest-list"></div>
+  </div>
+
+  <div id="selectedCard" class="selected-card">
+    <div>
+      <div class="sel-label">選択中の持参薬</div>
+      <div class="sel-name" id="selName"></div>
+      <div class="sel-spec" id="selSpec"></div>
+    </div>
+    <span class="badge form" id="selForm"></span>
+  </div>
+
+  <div id="resultArea"></div>
+</main>
+
+<footer id="dataFooter"></footer>
+
+<script src="./zaiyaku-master.js"></script>
+<script>
+const DISCLAIMER_TEXT = "※本リストは薬効分類・成分名に基づく機械的な候補列挙であり、臨床的な代替可能性・処方変更の妥当性を保証するものではありません。最終判断は添付文書等でご確認ください。";
+
+const searchInput = document.getElementById('searchInput');
+const suggestList = document.getElementById('suggestList');
+const selectedCard = document.getElementById('selectedCard');
+const selName = document.getElementById('selName');
+const selSpec = document.getElementById('selSpec');
+const selForm = document.getElementById('selForm');
+const resultArea = document.getElementById('resultArea');
+const dataFooter = document.getElementById('dataFooter');
+
+dataFooter.textContent = `医薬品マスター更新日: ${typeof ZAIYAKU_MASTER_GENERATED_AT !== 'undefined' ? ZAIYAKU_MASTER_GENERATED_AT : '不明'}（出所: 社会保険診療報酬支払基金 医薬品マスター ${typeof ZAIYAKU_MASTER_SOURCE !== 'undefined' ? ZAIYAKU_MASTER_SOURCE : ''}）`;
+
+let currentCandidatesText = '';
+let selectedItem = null;
+
+function normalizeQuery(s) {
+  return s.trim().toLowerCase();
+}
+
+function matchesQuery(item, q) {
+  return (item.name && item.name.toLowerCase().includes(q)) ||
+         (item.generic && item.generic.toLowerCase().includes(q)) ||
+         (item.spec && item.spec.toLowerCase().includes(q));
+}
+
+function hiraganaToKatakana(s) {
+  return s.replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60));
+}
+
+searchInput.addEventListener('input', () => {
+  // 入力はカタカナに固定する（ひらがな入力も自動変換。文字数は変わらないためカーソル位置を保つ）
+  const caret = searchInput.selectionStart;
+  const converted = hiraganaToKatakana(searchInput.value);
+  if (converted !== searchInput.value) {
+    searchInput.value = converted;
+    searchInput.setSelectionRange(caret, caret);
+  }
+  const q = normalizeQuery(searchInput.value);
+  if (q.length < 2) {
+    suggestList.classList.remove('open');
+    suggestList.innerHTML = '';
+    return;
+  }
+  const hits = [];
+  for (const item of ZAIYAKU_MASTER) {
+    if (matchesQuery(item, q)) {
+      hits.push(item);
+      if (hits.length >= 30) break;
+    }
+  }
+  renderSuggestions(hits, q);
+});
+
+function renderSuggestions(hits) {
+  suggestList.innerHTML = '';
+  if (hits.length === 0) {
+    suggestList.classList.remove('open');
+    return;
+  }
+  for (const item of hits) {
+    const div = document.createElement('div');
+    div.className = 'suggest-item';
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 's-name';
+    nameSpan.textContent = item.name;
+    const metaSpan = document.createElement('span');
+    metaSpan.className = 's-meta';
+    metaSpan.textContent = `${item.spec || ''} ／ ${item.form}${item.generic ? ' ／ ' + item.generic : ''}`;
+    div.appendChild(nameSpan);
+    div.appendChild(metaSpan);
+    div.addEventListener('click', () => selectItem(item));
+    suggestList.appendChild(div);
+  }
+  suggestList.classList.add('open');
+}
+
+function selectItem(item) {
+  selectedItem = item;
+  suggestList.classList.remove('open');
+  searchInput.value = item.name;
+  selName.textContent = item.name;
+  selSpec.textContent = item.spec || '';
+  selForm.textContent = item.form;
+  selectedCard.classList.add('open');
+  renderResults(item);
+}
+
+function baseIngredientKey(item) {
+  // グルーピング用の代表成分名(既存build_zaiyaku_master.pyの正規化に準じた簡易版)
+  const src = item.generic || item.name;
+  let s = src.replace(/[（(].*?[）)]/g, '').replace(/[「『][^」』]*[」』]/g, '').trim();
+  const FORM_WORDS = ["ＯＤ錠","Ｄ錠","口腔内崩壊錠","分散錠","チュアブル錠","徐放錠","徐放カプセル","カプセル","錠","散","顆粒","細粒",
+    "ドライシロップ","シロップ用","シロップ","注射液","注射用","静注液","静注用","静注","筋注用","点滴静注用","点滴静注",
+    "注","軟膏","クリーム","ローション","外用液","貼付剤","テープ","パップ剤","坐剤","坐薬","点眼液","点鼻液","点耳液",
+    "吸入液","吸入用","エアゾール","ゼリー","ドライパウダー","液"];
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const w of FORM_WORDS) {
+      if (s.endsWith(w)) { s = s.slice(0, -w.length).trim(); changed = true; }
+    }
+    const m = s.match(/[0-9０-９．.]+\s*(mg|ｍｇ|g|ｇ|mL|ｍＬ|%|％|μg|μＧ|mcg|単位|万単位|億単位)?$/);
+    if (m && m.index > 0) { s = s.slice(0, m.index).trim(); changed = true; }
+  }
+  return s;
+}
+
+let resultMode = 'all'; // 'all' | 'pharmacology'
+
+function yakkoBunruiMajor(code) {
+  return code && code.length >= 2 ? code.slice(0, 2) : '';
+}
+
+function renderResults(item) {
+  const sameForm = ZAIYAKU_MASTER.filter(d => d.form === item.form);
+  const major = yakkoBunruiMajor(item.yakkoBunrui);
+
+  const sameIngredient = sameForm.filter(d => d.id !== item.id && d.ingredientKey && d.ingredientKey === item.ingredientKey);
+  const sameIngredientDedup = dedupeByRegimen(sameIngredient);
+
+  const excludeIngredientKeys = new Set([item.ingredientKey]);
+
+  // 同種同効薬候補: 薬効分類コード(4桁)が完全一致
+  const sameClassSameForm = sameForm.filter(d =>
+    d.yakkoBunrui && d.yakkoBunrui === item.yakkoBunrui &&
+    !excludeIngredientKeys.has(d.ingredientKey)
+  );
+  const sameClassDedup = dedupeByBaseIngredient(sameClassSameForm, item);
+
+  // 薬効薬理が同一の候補: 薬効分類コードの大分類(先頭2桁)は一致するが、4桁までは一致しない(=同種同効薬候補とは別枠で追加)
+  const pharmacologySameForm = sameForm.filter(d =>
+    d.yakkoBunrui && yakkoBunruiMajor(d.yakkoBunrui) === major &&
+    d.yakkoBunrui !== item.yakkoBunrui &&
+    !excludeIngredientKeys.has(d.ingredientKey)
+  );
+  const pharmacologyDedup = dedupeByBaseIngredient(pharmacologySameForm, item);
+
+  // 薬効薬理が同一のみ表示モード用: 大分類が一致する全候補(4桁一致・不一致を問わず統合)
+  const pharmacologyOnlySameForm = sameForm.filter(d =>
+    d.yakkoBunrui && yakkoBunruiMajor(d.yakkoBunrui) === major &&
+    !excludeIngredientKeys.has(d.ingredientKey)
+  );
+  const pharmacologyOnlyDedup = dedupeByBaseIngredient(pharmacologyOnlySameForm, item);
+
+  const sameClassOtherForm = ZAIYAKU_MASTER.filter(d =>
+    d.form !== item.form &&
+    d.yakkoBunrui && d.yakkoBunrui === item.yakkoBunrui
+  );
+  const otherFormDedup = dedupeByBaseIngredient(sameClassOtherForm, item);
+
+  resultArea.innerHTML = '';
+
+  const hasAnyCandidate = sameIngredientDedup.length > 0 || sameClassDedup.length > 0 ||
+    pharmacologyDedup.length > 0 || otherFormDedup.length > 0;
+  if (!hasAnyCandidate) {
+    resultArea.innerHTML = '<div class="empty-state">該当する候補が見つかりませんでした。成分名や薬効分類の情報が薬価基準マスターに存在しない可能性があります。</div>';
+    currentCandidatesText = '';
+    return;
+  }
+
+  const actions = document.createElement('div');
+  actions.className = 'result-actions';
+  actions.innerHTML = `
+    <div class="mode-toggle" id="modeToggle">
+      <button class="mode-btn ${resultMode === 'all' ? 'active' : ''}" data-mode="all">全候補</button>
+      <button class="mode-btn ${resultMode === 'pharmacology' ? 'active' : ''}" data-mode="pharmacology">薬効薬理が同一のみ</button>
+    </div>
+    <span id="copyFeedback"></span><button id="copyBtn">候補一覧をコピー</button>
+  `;
+  resultArea.appendChild(actions);
+
+  actions.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      resultMode = btn.dataset.mode;
+      renderResults(item);
+    });
+  });
+
+  if (resultMode === 'pharmacology') {
+    resultArea.appendChild(renderGroup(
+      '薬効薬理が同一の候補', `薬効分類の大分類（先頭2桁）が同じ・同じ剤形区分（${item.form}）の医薬品（同種同効薬候補を含む）`,
+      pharmacologyOnlyDedup, false
+    ));
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      copyResultsPharmacologyOnly(item, pharmacologyOnlyDedup);
+    });
+    currentCandidatesText = buildCopyTextPharmacologyOnly(item, pharmacologyOnlyDedup);
+    return;
+  }
+
+  resultArea.appendChild(renderGroup(
+    '同一成分', '同一成分・規格違い（メーカー違いは代表のみ表示）',
+    sameIngredientDedup, false
+  ));
+  resultArea.appendChild(renderGroup(
+    '同種同効薬候補', `同じ薬効分類・同じ剤形区分（${item.form}）の別成分`,
+    sameClassDedup, false
+  ));
+  resultArea.appendChild(renderGroup(
+    '薬効薬理が同一の候補', `薬効分類の大分類（先頭2桁）は同じだが、細分類までは一致しない別成分（同種同効薬候補とは別枠）`,
+    pharmacologyDedup, false
+  ));
+  resultArea.appendChild(renderGroup(
+    '他剤形の候補（参考）', '同じ薬効分類だが剤形区分が異なる候補',
+    otherFormDedup, true
+  ));
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    copyResults(item, sameIngredientDedup, sameClassDedup, pharmacologyDedup, otherFormDedup);
+  });
+
+  currentCandidatesText = buildCopyText(item, sameIngredientDedup, sameClassDedup, pharmacologyDedup, otherFormDedup);
+}
+
+function dedupeByRegimen(items) {
+  // 同一成分・同一規格(薬価基準収載医薬品コード先頭9桁が同じ)はメーカー違いとみなし代表1件に集約
+  const seen = new Map();
+  for (const d of items) {
+    const key = d.regimenKey || d.spec || d.name;
+    if (!seen.has(key)) seen.set(key, { ...d, count: 1 });
+    else seen.get(key).count++;
+  }
+  return Array.from(seen.values());
+}
+
+function dedupeByBaseIngredient(items, selected) {
+  const seen = new Map();
+  for (const d of items) {
+    const key = baseIngredientKey(d);
+    if (!seen.has(key)) seen.set(key, { ...d, count: 1, baseKey: key });
+    else seen.get(key).count++;
+  }
+  return Array.from(seen.values());
+}
+
+function renderGroup(title, desc, items, collapsedByDefault) {
+  const group = document.createElement('div');
+  group.className = 'group' + (collapsedByDefault || items.length === 0 ? ' collapsed' : '');
+  const head = document.createElement('div');
+  head.className = 'group-head';
+  head.innerHTML = `<h2>${title} <span class="group-desc">— ${desc}</span></h2><span class="count-badge">${items.length}件</span><span class="chevron">▼</span>`;
+  head.addEventListener('click', () => group.classList.toggle('collapsed'));
+  group.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'group-body';
+  if (items.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'candidate-row';
+    empty.innerHTML = '<span class="c-note">該当なし</span>';
+    body.appendChild(empty);
+  } else {
+    for (const d of items) {
+      const row = document.createElement('div');
+      row.className = 'candidate-row';
+      const confBadgeClass = d.confidence === 'high' ? 'confidence-high' : 'confidence-reference';
+      const confLabel = d.confidence === 'high' ? '確信度：高' : '確信度：参考';
+      row.innerHTML = `
+        <span class="badge ${confBadgeClass}">${confLabel}</span>
+        <span class="c-name">${escapeHtml(d.generic || d.name)}</span>
+        <span class="c-spec">${escapeHtml(d.spec || '')}</span>
+        <span class="badge form">${escapeHtml(d.form)}</span>
+        ${d.count > 1 ? `<span class="c-note">他 ${d.count - 1} 品目（メーカー違い等）省略</span>` : ''}
+      `;
+      body.appendChild(row);
+    }
+  }
+  group.appendChild(body);
+  return group;
+}
+
+function escapeHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s == null ? '' : String(s);
+  return div.innerHTML;
+}
+
+function buildCopyText(item, sameIngredient, sameClass, pharmacology, otherForm) {
+  const lines = [];
+  lines.push(`【持参薬振替候補】検索薬: ${item.name}（${item.spec || ''} / ${item.form}）`);
+  lines.push('');
+  lines.push('■ 同一成分（規格違い）(機械的候補・要確認)');
+  if (sameIngredient.length === 0) lines.push('  該当なし');
+  for (const d of sameIngredient) {
+    lines.push(`  ・${d.generic || d.name} ${d.spec || ''}（${d.form}）`);
+  }
+  lines.push('');
+  lines.push('■ 同種同効薬候補 (機械的候補・要確認)');
+  if (sameClass.length === 0) lines.push('  該当なし');
+  for (const d of sameClass) {
+    lines.push(`  ・${d.generic || d.name} ${d.spec || ''}（${d.form}）`);
+  }
+  lines.push('');
+  lines.push('■ 薬効薬理が同一の候補 (機械的候補・要確認)');
+  if (pharmacology.length === 0) lines.push('  該当なし');
+  for (const d of pharmacology) {
+    lines.push(`  ・${d.generic || d.name} ${d.spec || ''}（${d.form}）`);
+  }
+  if (otherForm.length > 0) {
+    lines.push('');
+    lines.push('■ 他剤形の候補（参考） (機械的候補・要確認)');
+    for (const d of otherForm) {
+      lines.push(`  ・${d.generic || d.name} ${d.spec || ''}（${d.form}）`);
+    }
+  }
+  lines.push('');
+  lines.push(DISCLAIMER_TEXT);
+  return lines.join('\n');
+}
+
+function buildCopyTextPharmacologyOnly(item, pharmacologyOnly) {
+  const lines = [];
+  lines.push(`【持参薬振替候補：薬効薬理が同一のみ】検索薬: ${item.name}（${item.spec || ''} / ${item.form}）`);
+  lines.push('');
+  lines.push('■ 薬効薬理が同一の候補 (機械的候補・要確認)');
+  if (pharmacologyOnly.length === 0) lines.push('  該当なし');
+  for (const d of pharmacologyOnly) {
+    lines.push(`  ・${d.generic || d.name} ${d.spec || ''}（${d.form}）`);
+  }
+  lines.push('');
+  lines.push(DISCLAIMER_TEXT);
+  return lines.join('\n');
+}
+
+function copyToClipboard(text) {
+  const feedback = document.getElementById('copyFeedback');
+  const showOk = () => { feedback.textContent = 'コピーしました'; setTimeout(() => feedback.textContent = '', 2500); };
+  const showFallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.width = '1px';
+    ta.style.height = '1px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showOk();
+    } catch (e) {
+      feedback.textContent = 'コピーに失敗しました。下のテキストを手動で選択してください。';
+      const pre = document.createElement('pre');
+      pre.style.whiteSpace = 'pre-wrap';
+      pre.style.userSelect = 'text';
+      pre.style.fontSize = '11px';
+      pre.style.padding = '10px';
+      pre.style.background = '#f8fafc';
+      pre.style.borderRadius = '8px';
+      pre.textContent = text;
+      resultArea.insertBefore(pre, resultArea.firstChild.nextSibling);
+    }
+    document.body.removeChild(ta);
+  };
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(showOk).catch(showFallback);
+  } else {
+    showFallback();
+  }
+}
+
+function copyResults(item, sameIngredient, sameClass, pharmacology, otherForm) {
+  copyToClipboard(buildCopyText(item, sameIngredient, sameClass, pharmacology, otherForm));
+}
+
+function copyResultsPharmacologyOnly(item, pharmacologyOnly) {
+  copyToClipboard(buildCopyTextPharmacologyOnly(item, pharmacologyOnly));
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-card')) {
+    suggestList.classList.remove('open');
+  }
+});
+</script>
+
+</body>
+</html>
