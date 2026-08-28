@@ -105,6 +105,30 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
   <h1>腎機能・用量調整計算</h1>
   <div class="subtitle">Cockcroft-Gault 法｜オフライン対応・APIキー不要</div>
   <span class="freshness-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
+  <!-- BEGIN SHARED-NAV v1 -->
+  <nav class="pharmacy-app-nav" style="display:flex;gap:6px;overflow-x:auto;margin-top:6px;">
+    <a href="/" data-app="top" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">一覧</a>
+    <a href="/renal/" data-app="renal" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">🧪 腎機能</a>
+    <a href="/crushing-checker/" data-app="crushing-checker" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">💊 粉砕</a>
+    <a href="/compatibility-checker/" data-app="compatibility-checker" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">⚗️ 配合変化</a>
+    <a href="/substitution-checker/" data-app="substitution-checker" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">🔄 振替</a>
+  </nav>
+  <script>
+  (function () {
+    var CURRENT_APP = 'renal';
+    var nav = document.currentScript.previousElementSibling;
+    if (!nav || !nav.classList.contains('pharmacy-app-nav')) return;
+    var links = nav.querySelectorAll('a[data-app]');
+    links.forEach(function (a) {
+      if (a.getAttribute('data-app') === CURRENT_APP) {
+        a.style.opacity = '0.4';
+        a.style.pointerEvents = 'none';
+        a.removeAttribute('href');
+      }
+    });
+  })();
+  </script>
+  <!-- END SHARED-NAV v1 -->
 </div>
 
 <!-- 患者情報 -->
@@ -186,6 +210,7 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
 </div>
 
 <script src="../shared/drugs-master.js"></script>
+<script src="../shared/context.js"></script>
 <script>
 // 統合マスターから腎機能データを直接参照
 const DRUGS = DRUG_MASTER.filter(d => d.features.includes('renal'));
@@ -300,6 +325,7 @@ function calculate(){
   document.getElementById('resultSection').classList.remove('hidden');
   document.getElementById('searchSection').classList.remove('hidden');
   document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'nearest'});
+  if (typeof pharmacyContextSet === 'function') pharmacyContextSet({ ccr: currentCCr });
 }
 
 // ─── クリア ───
@@ -356,6 +382,7 @@ function pickDrug(id){
   document.getElementById('drugInput').value=d.ja[0];
   document.getElementById('suggestList').classList.add('hidden');
   renderDrug(d);
+  if (typeof pharmacyContextSet === 'function') pharmacyContextSet({ selectedDrug: d.ja[0] });
 }
 
 // ─── 薬剤表示 ───
@@ -445,6 +472,22 @@ restoreState();
 try {
   if (typeof DRUG_MASTER_META !== 'undefined' && DRUG_MASTER_META.lastUpdated) {
     document.getElementById('freshnessChip').textContent = 'DB更新: ' + DRUG_MASTER_META.lastUpdated;
+  }
+} catch (e) {}
+
+// 前のアプリから引き継いだ薬剤名があれば検索欄に反映する
+try {
+  const ctx = typeof pharmacyContextGet === 'function' ? pharmacyContextGet() : null;
+  if (ctx && ctx.selectedDrug) {
+    const resolved = DRUGS.find(d => d.ja && d.ja.includes(ctx.selectedDrug));
+    if (resolved) {
+      pickDrug(resolved.id);
+      pharmacyContextShowBanner(
+        document.querySelector('.container'),
+        '前の画面から「' + ctx.selectedDrug + '」を引き継ぎました',
+        function () { document.getElementById('drugInput').value = ''; document.getElementById('drugResult').innerHTML = ''; }
+      );
+    }
   }
 } catch (e) {}
 </script>

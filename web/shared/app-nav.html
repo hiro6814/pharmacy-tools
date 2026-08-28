@@ -1,0 +1,36 @@
+<!--
+  web/shared/app-nav.html — 正典ナビゲーションスニペット（コピー元）
+
+  ビルドステップがないため、各アプリのindex.htmlに手動でこのHTML片を
+  貼り付けて使う。貼り付け箇所は必ず下記のマーカーコメントで囲むこと。
+  4アプリ程度の規模なので自動同期ツールは作らず、nav変更時は4ファイルを
+  開いて目視比較する運用とする。
+
+  data-app の値でどのアプリのページかを判定し、自分自身へのリンクは
+  非活性化する。挿入先のCSS変数命名は各アプリでやや異なるため、
+  color/backgroundは直接指定している（継承に頼らない）。
+-->
+<!-- BEGIN SHARED-NAV v1 -->
+<nav class="pharmacy-app-nav" style="display:flex;gap:6px;overflow-x:auto;flex-shrink:0;">
+  <a href="/" data-app="top" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">一覧</a>
+  <a href="/renal/" data-app="renal" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🧪 腎機能</a>
+  <a href="/crushing-checker/" data-app="crushing-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">💊 粉砕</a>
+  <a href="/compatibility-checker/" data-app="compatibility-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">⚗️ 配合変化</a>
+  <a href="/substitution-checker/" data-app="substitution-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🔄 振替</a>
+</nav>
+<script>
+(function () {
+  var CURRENT_APP = 'crushing-checker'; // ← 各アプリで自身のdata-app値に書き換える
+  var nav = document.currentScript.previousElementSibling;
+  if (!nav || !nav.classList.contains('pharmacy-app-nav')) return;
+  var links = nav.querySelectorAll('a[data-app]');
+  links.forEach(function (a) {
+    if (a.getAttribute('data-app') === CURRENT_APP) {
+      a.style.opacity = '0.4';
+      a.style.pointerEvents = 'none';
+      a.removeAttribute('href');
+    }
+  });
+})();
+</script>
+<!-- END SHARED-NAV v1 -->

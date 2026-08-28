@@ -239,6 +239,30 @@ header {
   </div>
   <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別ペアごとの検証日ではありません">—</span>
   <span class="header-chip" id="countChip">—</span>
+  <!-- BEGIN SHARED-NAV v1 -->
+  <nav class="pharmacy-app-nav" style="display:flex;gap:6px;overflow-x:auto;flex-shrink:0;">
+    <a href="/" data-app="top" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">一覧</a>
+    <a href="/renal/" data-app="renal" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🧪 腎機能</a>
+    <a href="/crushing-checker/" data-app="crushing-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">💊 粉砕</a>
+    <a href="/compatibility-checker/" data-app="compatibility-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">⚗️ 配合変化</a>
+    <a href="/substitution-checker/" data-app="substitution-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🔄 振替</a>
+  </nav>
+  <script>
+  (function () {
+    var CURRENT_APP = 'compatibility-checker';
+    var nav = document.currentScript.previousElementSibling;
+    if (!nav || !nav.classList.contains('pharmacy-app-nav')) return;
+    var links = nav.querySelectorAll('a[data-app]');
+    links.forEach(function (a) {
+      if (a.getAttribute('data-app') === CURRENT_APP) {
+        a.style.opacity = '0.4';
+        a.style.pointerEvents = 'none';
+        a.removeAttribute('href');
+      }
+    });
+  })();
+  </script>
+  <!-- END SHARED-NAV v1 -->
 </header>
 
 <div class="layout">
@@ -309,6 +333,7 @@ header {
 </div>
 
 <script src="compat-master.js"></script>
+<script src="../shared/context.js"></script>
 <script>
 // ── 正規化 ────────────────────────────────────
 function normQ(s) {
@@ -348,6 +373,9 @@ function pickDrug(side, name) {
   document.getElementById('dd'+side).style.display = 'none';
   if (side === 'A') selA = name; else selB = name;
   updateCheckBtn();
+  if (side === 'A' && typeof pharmacyContextSet === 'function') {
+    pharmacyContextSet({ selectedDrug: name });
+  }
 }
 
 function updateCheckBtn() {
@@ -493,6 +521,19 @@ try {
 } catch (e) {}
 document.getElementById('listResult').innerHTML =
   '<div class="empty-state"><div class="empty-icon">🔍</div>薬剤名を入力して絞り込み</div>';
+
+// 前のアプリから引き継いだ薬剤名があれば薬剤A欄に反映する
+try {
+  const ctx = typeof pharmacyContextGet === 'function' ? pharmacyContextGet() : null;
+  if (ctx && ctx.selectedDrug && drugNames.includes(ctx.selectedDrug)) {
+    pickDrug('A', ctx.selectedDrug);
+    pharmacyContextShowBanner(
+      document.querySelector('.layout'),
+      '前の画面から「' + ctx.selectedDrug + '」を薬剤Aに引き継ぎました',
+      function () { document.getElementById('inputA').value = ''; selA = null; updateCheckBtn(); }
+    );
+  }
+} catch (e) {}
 </script>
 <script>
 if ('serviceWorker' in navigator) {

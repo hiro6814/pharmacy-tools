@@ -288,6 +288,30 @@ footer {
     <p>薬価収載品目から機械的に候補を列挙します</p>
   </div>
   <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
+  <!-- BEGIN SHARED-NAV v1 -->
+  <nav class="pharmacy-app-nav" style="display:flex;gap:6px;overflow-x:auto;flex-shrink:0;">
+    <a href="/" data-app="top" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">一覧</a>
+    <a href="/renal/" data-app="renal" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🧪 腎機能</a>
+    <a href="/crushing-checker/" data-app="crushing-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">💊 粉砕</a>
+    <a href="/compatibility-checker/" data-app="compatibility-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">⚗️ 配合変化</a>
+    <a href="/substitution-checker/" data-app="substitution-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🔄 振替</a>
+  </nav>
+  <script>
+  (function () {
+    var CURRENT_APP = 'substitution-checker';
+    var nav = document.currentScript.previousElementSibling;
+    if (!nav || !nav.classList.contains('pharmacy-app-nav')) return;
+    var links = nav.querySelectorAll('a[data-app]');
+    links.forEach(function (a) {
+      if (a.getAttribute('data-app') === CURRENT_APP) {
+        a.style.opacity = '0.4';
+        a.style.pointerEvents = 'none';
+        a.removeAttribute('href');
+      }
+    });
+  })();
+  </script>
+  <!-- END SHARED-NAV v1 -->
 </header>
 
 <div class="disclaimer">
@@ -317,6 +341,7 @@ footer {
 <footer id="dataFooter"></footer>
 
 <script src="./zaiyaku-master.js"></script>
+<script src="../shared/context.js"></script>
 <script>
 const DISCLAIMER_TEXT = "※本リストは薬効分類・成分名に基づく機械的な候補列挙であり、臨床的な代替可能性・処方変更の妥当性を保証するものではありません。最終判断は添付文書等でご確認ください。";
 
@@ -409,6 +434,9 @@ function selectItem(item) {
   selForm.textContent = item.form;
   selectedCard.classList.add('open');
   renderResults(item);
+  if (typeof pharmacyContextSet === 'function') {
+    pharmacyContextSet({ selectedDrug: item.name });
+  }
 }
 
 function baseIngredientKey(item) {
@@ -701,6 +729,22 @@ document.addEventListener('click', (e) => {
     suggestList.classList.remove('open');
   }
 });
+
+// 前のアプリから引き継いだ薬剤名があれば検索・選択する
+try {
+  const ctx = typeof pharmacyContextGet === 'function' ? pharmacyContextGet() : null;
+  if (ctx && ctx.selectedDrug) {
+    const resolved = ZAIYAKU_MASTER.find(item => item.name === ctx.selectedDrug);
+    if (resolved) {
+      selectItem(resolved);
+      pharmacyContextShowBanner(
+        document.querySelector('main') || document.body,
+        '前の画面から「' + ctx.selectedDrug + '」を引き継ぎました',
+        function () { searchInput.value = ''; selectedCard.classList.remove('open'); selectedItem = null; }
+      );
+    }
+  }
+} catch (e) {}
 </script>
 <script>
 if ('serviceWorker' in navigator) {
