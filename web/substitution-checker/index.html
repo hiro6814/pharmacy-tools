@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="../shared/sw-unregister-legacy.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>持参薬振替候補チェッカー</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -88,7 +88,7 @@ header {
 main {
   max-width: 860px;
   margin: 0 auto;
-  padding: 24px 16px 80px;
+  padding: 24px 16px calc(64px + env(safe-area-inset-bottom, 0px));
 }
 
 .search-card {
@@ -265,8 +265,7 @@ footer {
 @media (max-width: 600px) {
   header { padding: 10px 14px; height: auto; flex-wrap: wrap; row-gap: 8px; }
   .header-text p { display: none; }
-  .pharmacy-app-nav { width: 100%; }
-  main { padding: 16px 10px 60px; }
+  main { padding: 16px 10px calc(64px + env(safe-area-inset-bottom, 0px)); }
   .search-card, .group-head, .candidate-row { padding-left: 14px; padding-right: 14px; }
 }
 </style>
@@ -280,33 +279,6 @@ footer {
     <p>薬価収載品目から機械的に候補を列挙します</p>
   </div>
   <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
-  <!-- BEGIN SHARED-NAV v1 -->
-  <nav class="pharmacy-app-nav" aria-label="他のツールへ移動" style="display:flex;gap:8px;overflow-x:auto;flex-shrink:0;">
-    <a href="/" data-app="top" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">一覧</a>
-    <a href="/renal/" data-app="renal" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">🧪 腎機能</a>
-    <a href="/crushing-checker/" data-app="crushing-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">💊 粉砕</a>
-    <a href="/compatibility-checker/" data-app="compatibility-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">⚗️ 配合変化</a>
-    <a href="/substitution-checker/" data-app="substitution-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">🔄 振替</a>
-  </nav>
-  <script>
-  (function () {
-    var CURRENT_APP = 'substitution-checker';
-    var nav = document.currentScript.previousElementSibling;
-    if (!nav || !nav.classList.contains('pharmacy-app-nav')) return;
-    var links = nav.querySelectorAll('a[data-app]');
-    links.forEach(function (a) {
-      if (a.getAttribute('data-app') === CURRENT_APP) {
-        a.style.background = '#ffffff';
-        a.style.borderColor = '#ffffff';
-        a.style.color = '#0c1445';
-        a.style.pointerEvents = 'none';
-        a.setAttribute('aria-current', 'page');
-        a.removeAttribute('href');
-      }
-    });
-  })();
-  </script>
-  <!-- END SHARED-NAV v1 -->
 </header>
 
 <div class="disclaimer">
@@ -753,5 +725,69 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+<!-- BEGIN SHARED-TABBAR v1 -->
+<nav class="pharmacy-tab-bar" aria-label="アプリ切り替え">
+  <a href="/" data-tab="top" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">🏠</span>
+    <span class="pharmacy-tab-label">ホーム</span>
+  </a>
+  <a href="/renal/" data-tab="renal" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">🧪</span>
+    <span class="pharmacy-tab-label">腎機能</span>
+  </a>
+  <a href="/crushing-checker/" data-tab="crushing-checker" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">💊</span>
+    <span class="pharmacy-tab-label">粉砕</span>
+  </a>
+  <a href="/compatibility-checker/" data-tab="compatibility-checker" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">⚗️</span>
+    <span class="pharmacy-tab-label">配合変化</span>
+  </a>
+  <a href="/substitution-checker/" data-tab="substitution-checker" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">🔄</span>
+    <span class="pharmacy-tab-label">振替</span>
+  </a>
+</nav>
+<style>
+.pharmacy-tab-bar{
+  position:fixed; left:0; right:0; bottom:0; display:flex;
+  background:#ffffff; border-top:1px solid #e2e8f0;
+  box-shadow:0 -2px 10px rgba(15,23,42,.06);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  z-index:400;
+}
+.pharmacy-tab-item{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2px; padding:6px 2px 4px; text-decoration:none;
+  color:#64748b; font-size:10.5px; font-weight:600; -webkit-tap-highlight-color:transparent;
+}
+.pharmacy-tab-icon{font-size:19px; line-height:1}
+.pharmacy-tab-item[aria-current="page"]{color:#4338ca}
+@media print{
+  .pharmacy-tab-bar{display:none !important}
+}
+</style>
+<script>
+(function () {
+  var nav = document.querySelector('.pharmacy-tab-bar');
+  if (!nav) return;
+  var prefixes = {
+    renal: '/renal/',
+    'crushing-checker': '/crushing-checker/',
+    'compatibility-checker': '/compatibility-checker/',
+    'substitution-checker': '/substitution-checker/'
+  };
+  var current = 'top';
+  for (var key in prefixes) {
+    if (location.pathname.indexOf(prefixes[key]) === 0) { current = key; break; }
+  }
+  var link = nav.querySelector('a[data-tab="' + current + '"]');
+  if (link) {
+    link.setAttribute('aria-current', 'page');
+    link.style.pointerEvents = 'none';
+  }
+})();
+</script>
+<!-- END SHARED-TABBAR v1 -->
 </body>
 </html>

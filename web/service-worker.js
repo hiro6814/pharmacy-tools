@@ -8,19 +8,29 @@
 //   （fetchハンドラのstale-while-revalidateが兼ねる）。
 // - cache-firstではなくstale-while-revalidate：キャッシュがあれば即座に
 //   返しつつ裏でネットワーク取得し、次回アクセス時に新しい内容へ更新する。
-// - データ更新時はCACHE_VERSIONをインクリメントする運用ルール。
-//   （バージョンを上げないと、stale-while-revalidateにより次回アクセス時に
-//   バックグラウンド更新はされるが、更新反映までに1回のタイムラグが生じる。
-//   即時反映したい大きめの更新はバージョンを上げてactivateで全キャッシュ破棄する）
-const CACHE_VERSION = 'v1';
-const CACHE = 'pharmacy-tools-' + CACHE_VERSION;
+//
+// キャッシュはシェル用・データ用の2系統に分離している（タブバー追加時に導入）。
+// UI/ナビゲーションだけの変更でSHELL_CACHE_VERSIONを上げても、
+// zaiyaku-master.js・drugs-master.js等の大容量データキャッシュは巻き添えで
+// 破棄されない。データ本体の更新時のみDATA_CACHEのバージョンを独立して上げる。
+// ロールバック時もSHELL_CACHE_VERSIONは常に単調増加させ、古い値を再利用しない。
+const SHELL_CACHE_VERSION = 'v2';
+const SHELL_CACHE = 'pharmacy-tools-shell-' + SHELL_CACHE_VERSION;
+const DATA_CACHE_VERSION = 'v1';
+const DATA_CACHE = 'pharmacy-tools-data-' + DATA_CACHE_VERSION;
+
+// zaiyaku-master.js, drugs-master.js等の「-master.js」命名規則で大容量データを判定する
+const DATA_FILE_PATTERN = /-master\.js$/;
+function cacheNameFor(url) {
+  return DATA_FILE_PATTERN.test(url.pathname) ? DATA_CACHE : SHELL_CACHE;
+}
 
 // installでキャッシュする最小限の共通シェルのみ（各アプリの重量データは含めない）
 const CORE_ASSETS = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) =>
+    caches.open(SHELL_CACHE).then((cache) =>
       Promise.allSettled(CORE_ASSETS.map((url) => cache.add(url)))
     )
   );
@@ -30,7 +40,11 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+      Promise.all(
+        keys
+          .filter((k) => k !== SHELL_CACHE && k !== DATA_CACHE)
+          .map((k) => caches.delete(k))
+      )
     )
   );
   self.clients.claim();
@@ -42,7 +56,7 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== location.origin) return;
 
   event.respondWith(
-    caches.open(CACHE).then(async (cache) => {
+    caches.open(cacheNameFor(url)).then(async (cache) => {
       const cached = await cache.match(event.request);
       const networkFetch = fetch(event.request)
         .then((res) => {

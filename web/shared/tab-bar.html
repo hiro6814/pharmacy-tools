@@ -1,0 +1,89 @@
+<!--
+  web/shared/tab-bar.html — 正典ボトムタブバー スニペット (コピー元, SHARED-TABBAR v1)
+
+  ビルドステップがないため、各アプリのindex.htmlに手動でこのHTML片を貼り付ける。
+  貼り付け箇所は必ず下記マーカーで囲むこと。旧 web/shared/app-nav.html
+  (SHARED-NAV v1, 上部チップ行) はこの下部タブバーに完全に置き換えられ、
+  5ファイルすべてから削除済み — 移行期間は設けず一括置換とする。
+
+  data-tab の値と現在地判定は location.pathname を実行時に見て自動判定する
+  (CURRENT_APP のような手書き変数は使わない。4ファイルでの手動同期ミスの
+  原因だったため廃止)。
+
+  z-index: 400。このプロジェクトの既存z-indexのはしご
+  (100=renal .suggest-list / 190=substitution-checker .disclaimer /
+  200=各アプリのsticky header / 300=dropdown・suggest-list / 500=
+  crushing-checkerの管理モーダル.overlay) の間に収まる値として選んだ。
+  ドロップダウン(300)より前面に出しつつ、モーダル(500)より背面にとどめ、
+  モーダル表示中にタブバーが操作を妨げないようにしている。
+
+  【重要・設計意図 (A7)】
+  このナビゲーションは意図的に通常のフルページ <a href> 遷移である。
+  fetchベース/SPA的な部分遷移に「改善」しないこと。もし将来SPA化を検討する
+  場合は、shared/context.js の sessionStorage TTLハンドオフのタイミング
+  （フルページ遷移前提で成立している）を先に再設計すること。
+-->
+<!-- BEGIN SHARED-TABBAR v1 -->
+<nav class="pharmacy-tab-bar" aria-label="アプリ切り替え">
+  <a href="/" data-tab="top" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">🏠</span>
+    <span class="pharmacy-tab-label">ホーム</span>
+  </a>
+  <a href="/renal/" data-tab="renal" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">🧪</span>
+    <span class="pharmacy-tab-label">腎機能</span>
+  </a>
+  <a href="/crushing-checker/" data-tab="crushing-checker" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">💊</span>
+    <span class="pharmacy-tab-label">粉砕</span>
+  </a>
+  <a href="/compatibility-checker/" data-tab="compatibility-checker" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">⚗️</span>
+    <span class="pharmacy-tab-label">配合変化</span>
+  </a>
+  <a href="/substitution-checker/" data-tab="substitution-checker" class="pharmacy-tab-item">
+    <span class="pharmacy-tab-icon" aria-hidden="true">🔄</span>
+    <span class="pharmacy-tab-label">振替</span>
+  </a>
+</nav>
+<style>
+.pharmacy-tab-bar{
+  position:fixed; left:0; right:0; bottom:0; display:flex;
+  background:#ffffff; border-top:1px solid #e2e8f0;
+  box-shadow:0 -2px 10px rgba(15,23,42,.06);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  z-index:400;
+}
+.pharmacy-tab-item{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:2px; padding:6px 2px 4px; text-decoration:none;
+  color:#64748b; font-size:10.5px; font-weight:600; -webkit-tap-highlight-color:transparent;
+}
+.pharmacy-tab-icon{font-size:19px; line-height:1}
+.pharmacy-tab-item[aria-current="page"]{color:#4338ca}
+@media print{
+  .pharmacy-tab-bar{display:none !important}
+}
+</style>
+<script>
+(function () {
+  var nav = document.querySelector('.pharmacy-tab-bar');
+  if (!nav) return;
+  var prefixes = {
+    renal: '/renal/',
+    'crushing-checker': '/crushing-checker/',
+    'compatibility-checker': '/compatibility-checker/',
+    'substitution-checker': '/substitution-checker/'
+  };
+  var current = 'top';
+  for (var key in prefixes) {
+    if (location.pathname.indexOf(prefixes[key]) === 0) { current = key; break; }
+  }
+  var link = nav.querySelector('a[data-tab="' + current + '"]');
+  if (link) {
+    link.setAttribute('aria-current', 'page');
+    link.style.pointerEvents = 'none';
+  }
+})();
+</script>
+<!-- END SHARED-TABBAR v1 -->
