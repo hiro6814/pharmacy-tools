@@ -133,7 +133,7 @@ main {
   font-size: 13px;
 }
 .suggest-item:last-child { border-bottom: none; }
-.suggest-item:hover, .suggest-item.active { background: var(--ref-dim); }
+.suggest-item:hover, .suggest-item.active, .suggest-item.focused { background: var(--ref-dim); }
 .suggest-item .s-name { font-weight: 600; }
 .suggest-item .s-meta { color: var(--text-faint); font-size: 11px; margin-left: 6px; }
 
@@ -309,6 +309,7 @@ footer {
 
 <script src="./zaiyaku-master.js"></script>
 <script src="../shared/context.js"></script>
+<script src="../shared/drug-search.js"></script>
 <script>
 const DISCLAIMER_TEXT = "※本リストは薬効分類・成分名に基づく機械的な候補列挙であり、臨床的な代替可能性・処方変更の妥当性を保証するものではありません。最終判断は添付文書等でご確認ください。";
 
@@ -341,56 +342,34 @@ function matchesQuery(item, q) {
          (item.spec && item.spec.toLowerCase().includes(q));
 }
 
-function hiraganaToKatakana(s) {
-  return s.replace(/[ぁ-ゖ]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60));
+// ── 薬品検索（drug-search.js共通モジュール） ──
+// ZAIYAKU_MASTER 18,501件は初回に一度だけ正規化済みsearchTextをキャッシュする
+// （毎キー入力での全件再正規化を避けるため。substitution-checkerのみの対応）
+function zaiyakuCandidates() {
+  if (!zaiyakuCandidates._cache) {
+    zaiyakuCandidates._cache = ZAIYAKU_MASTER.map(item => ({
+      id: item.id, label: item.name,
+      sublabel: `${item.spec || ''} ／ ${item.form}${item.generic ? ' ／ ' + item.generic : ''}`,
+      meta: item,
+      _nsearch: drugSearchNormalize([item.name, item.generic, item.spec].filter(Boolean).join(' ')),
+    }));
+  }
+  return zaiyakuCandidates._cache;
 }
 
-searchInput.addEventListener('input', () => {
-  // 入力はカタカナに固定する（ひらがな入力も自動変換。文字数は変わらないためカーソル位置を保つ）
-  const caret = searchInput.selectionStart;
-  const converted = hiraganaToKatakana(searchInput.value);
-  if (converted !== searchInput.value) {
-    searchInput.value = converted;
-    searchInput.setSelectionRange(caret, caret);
-  }
-  const q = normalizeQuery(searchInput.value);
-  if (q.length < 2) {
-    suggestList.classList.remove('open');
-    suggestList.innerHTML = '';
-    return;
-  }
-  const hits = [];
-  for (const item of ZAIYAKU_MASTER) {
-    if (matchesQuery(item, q)) {
-      hits.push(item);
-      if (hits.length >= 30) break;
-    }
-  }
-  renderSuggestions(hits, q);
+createDrugSearch({
+  input: '#searchInput', dropdown: '#suggestList',
+  getCandidates: zaiyakuCandidates,
+  minChars: 2, maxResults: 30, debounceMs: 120,
+  mutateInputToKatakana: true, // IME変換中(compositionstart~compositionend)は書き換え・検索とも一時停止（drug-search.js内蔵ガード）
+  onShow: dd => dd.classList.add('open'),
+  onHide: dd => dd.classList.remove('open'),
+  renderItem: (c, q) => `<div class="suggest-item" data-index="${c._idx}">
+      <span class="s-name">${drugSearchHighlight(c.meta.name, q)}</span>
+      <span class="s-meta">${drugSearchEscapeHtml(c.sublabel)}</span>
+    </div>`,
+  onSelect: c => selectItem(c.meta),
 });
-
-function renderSuggestions(hits) {
-  suggestList.innerHTML = '';
-  if (hits.length === 0) {
-    suggestList.classList.remove('open');
-    return;
-  }
-  for (const item of hits) {
-    const div = document.createElement('div');
-    div.className = 'suggest-item';
-    const nameSpan = document.createElement('span');
-    nameSpan.className = 's-name';
-    nameSpan.textContent = item.name;
-    const metaSpan = document.createElement('span');
-    metaSpan.className = 's-meta';
-    metaSpan.textContent = `${item.spec || ''} ／ ${item.form}${item.generic ? ' ／ ' + item.generic : ''}`;
-    div.appendChild(nameSpan);
-    div.appendChild(metaSpan);
-    div.addEventListener('click', () => selectItem(item));
-    suggestList.appendChild(div);
-  }
-  suggestList.classList.add('open');
-}
 
 function selectItem(item) {
   selectedItem = item;
@@ -690,12 +669,6 @@ function copyResults(item, sameIngredient, sameClass, pharmacology, otherForm) {
 function copyResultsPharmacologyOnly(item, pharmacologyOnly) {
   copyToClipboard(buildCopyTextPharmacologyOnly(item, pharmacologyOnly));
 }
-
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.search-card')) {
-    suggestList.classList.remove('open');
-  }
-});
 
 // 前のアプリから引き継いだ薬剤名があれば検索・選択する
 try {
