@@ -213,7 +213,9 @@ header {
 
 @media (max-width: 600px) {
   .layout { padding: 16px 12px; }
-  header  { padding: 0 16px; }
+  header  { padding: 10px 16px; height: auto; flex-wrap: wrap; row-gap: 8px; }
+  .header-text p { display: none; }
+  .pharmacy-app-nav { width: 100%; }
   .pair-grid { grid-template-columns: 1fr; }
   .vs-label { display: none; }
 }
@@ -230,12 +232,12 @@ header {
   <span class="header-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別ペアごとの検証日ではありません">—</span>
   <span class="header-chip" id="countChip">—</span>
   <!-- BEGIN SHARED-NAV v1 -->
-  <nav class="pharmacy-app-nav" style="display:flex;gap:6px;overflow-x:auto;flex-shrink:0;">
-    <a href="/" data-app="top" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">一覧</a>
-    <a href="/renal/" data-app="renal" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🧪 腎機能</a>
-    <a href="/crushing-checker/" data-app="crushing-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">💊 粉砕</a>
-    <a href="/compatibility-checker/" data-app="compatibility-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">⚗️ 配合変化</a>
-    <a href="/substitution-checker/" data-app="substitution-checker" style="white-space:nowrap;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px;text-decoration:none;">🔄 振替</a>
+  <nav class="pharmacy-app-nav" aria-label="他のツールへ移動" style="display:flex;gap:8px;overflow-x:auto;flex-shrink:0;">
+    <a href="/" data-app="top" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">一覧</a>
+    <a href="/renal/" data-app="renal" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">🧪 腎機能</a>
+    <a href="/crushing-checker/" data-app="crushing-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">💊 粉砕</a>
+    <a href="/compatibility-checker/" data-app="compatibility-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">⚗️ 配合変化</a>
+    <a href="/substitution-checker/" data-app="substitution-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 16px;text-decoration:none;transition:background .15s;">🔄 振替</a>
   </nav>
   <script>
   (function () {
@@ -245,8 +247,11 @@ header {
     var links = nav.querySelectorAll('a[data-app]');
     links.forEach(function (a) {
       if (a.getAttribute('data-app') === CURRENT_APP) {
-        a.style.opacity = '0.4';
+        a.style.background = '#ffffff';
+        a.style.borderColor = '#ffffff';
+        a.style.color = '#0c1445';
         a.style.pointerEvents = 'none';
+        a.setAttribute('aria-current', 'page');
         a.removeAttribute('href');
       }
     });

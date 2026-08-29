@@ -96,12 +96,12 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
   <div class="subtitle">Cockcroft-Gault 法｜オフライン対応・APIキー不要</div>
   <span class="freshness-chip" id="freshnessChip" title="収載薬剤マスタの最終更新日。個別薬剤ごとの検証日ではありません">—</span>
   <!-- BEGIN SHARED-NAV v1 -->
-  <nav class="pharmacy-app-nav" style="display:flex;gap:6px;overflow-x:auto;margin-top:6px;">
-    <a href="/" data-app="top" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">一覧</a>
-    <a href="/renal/" data-app="renal" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">🧪 腎機能</a>
-    <a href="/crushing-checker/" data-app="crushing-checker" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">💊 粉砕</a>
-    <a href="/compatibility-checker/" data-app="compatibility-checker" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">⚗️ 配合変化</a>
-    <a href="/substitution-checker/" data-app="substitution-checker" style="white-space:nowrap;font-size:11px;color:#64748b;background:#f1f5f9;border-radius:20px;padding:4px 10px;text-decoration:none;">🔄 振替</a>
+  <nav class="pharmacy-app-nav" aria-label="他のツールへ移動" style="display:flex;gap:8px;overflow-x:auto;margin-top:10px;padding-bottom:2px;">
+    <a href="/" data-app="top" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:#475569;background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:8px 16px;text-decoration:none;transition:border-color .15s,background .15s;">一覧</a>
+    <a href="/renal/" data-app="renal" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:#475569;background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:8px 16px;text-decoration:none;transition:border-color .15s,background .15s;">🧪 腎機能</a>
+    <a href="/crushing-checker/" data-app="crushing-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:#475569;background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:8px 16px;text-decoration:none;transition:border-color .15s,background .15s;">💊 粉砕</a>
+    <a href="/compatibility-checker/" data-app="compatibility-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:#475569;background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:8px 16px;text-decoration:none;transition:border-color .15s,background .15s;">⚗️ 配合変化</a>
+    <a href="/substitution-checker/" data-app="substitution-checker" class="pharmacy-nav-chip" style="white-space:nowrap;font-size:13px;font-weight:600;color:#475569;background:#fff;border:1.5px solid #e2e8f0;border-radius:20px;padding:8px 16px;text-decoration:none;transition:border-color .15s,background .15s;">🔄 振替</a>
   </nav>
   <script>
   (function () {
@@ -111,8 +111,11 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
     var links = nav.querySelectorAll('a[data-app]');
     links.forEach(function (a) {
       if (a.getAttribute('data-app') === CURRENT_APP) {
-        a.style.opacity = '0.4';
+        a.style.borderColor = '#6366f1';
+        a.style.background = '#eef2ff';
+        a.style.color = '#4338ca';
         a.style.pointerEvents = 'none';
+        a.setAttribute('aria-current', 'page');
         a.removeAttribute('href');
       }
     });
