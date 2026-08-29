@@ -164,9 +164,7 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
   <div class="search-wrap">
     <div class="search-row">
       <input type="text" id="drugInput" placeholder="薬剤名（日本語・英語可）"
-        autocomplete="off"
-        oninput="onDrugInput()"
-        onkeydown="onDrugKey(event)">
+        autocomplete="off">
     </div>
     <div id="suggestList" class="suggest-list hidden"></div>
   </div>
@@ -177,6 +175,7 @@ table.adj tr.hl td:first-child{border-left:3px solid #3b82f6}
 
 <script src="../shared/drugs-master.js"></script>
 <script src="../shared/context.js"></script>
+<script src="../shared/drug-search.js"></script>
 <script>
 // 統合マスターから腎機能データを直接参照
 const DRUGS = DRUG_MASTER.filter(d => d.features.includes('renal'));
@@ -302,51 +301,36 @@ function clearAll(){
   ['resultSection','searchSection'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   document.getElementById('drugResult').innerHTML='';
   document.getElementById('wNote').classList.add('hidden');
-  document.getElementById('suggestList').classList.add('hidden');
+  drugSearch.close();
   currentCCr=null;
   try { sessionStorage.removeItem(LS_KEY); } catch(e) {}
 }
 
 // ─── 薬剤検索 ───
-function normQ(s){return s.toLowerCase().replace(/\s+/g,'').replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));}
-function matchDrug(d,q){
-  const nq=normQ(q);
-  return d.ja.some(n=>normQ(n).includes(nq))||d.en.some(n=>normQ(n).includes(nq));
+function renalCandidates() {
+  return DRUGS.map(d => ({
+    id: d.id, label: d.ja[0], sublabel: d.en[0], meta: d,
+    searchText: [...d.ja, ...d.en],
+  }));
 }
-function onDrugInput(){
-  const q=document.getElementById('drugInput').value.trim();
-  const sl=document.getElementById('suggestList');
-  suggestIdx=-1;
-  if(q.length<1){sl.classList.add('hidden');return;}
-  const hits=DRUGS.filter(d=>matchDrug(d,q)).slice(0,15);
-  if(!hits.length){sl.innerHTML='<div class="no-result">該当薬剤なし</div>';sl.classList.remove('hidden');return;}
-  sl.innerHTML=hits.map((d,i)=>`<div class="suggest-item" data-id="${d.id}" onmousedown="pickDrug('${d.id}')">
-    <div><span style="font-weight:600">${d.ja[0]}</span><span class="suggest-en"> ${d.en[0]}</span></div>
-    <span class="suggest-cls">${d.cls}</span>
-  </div>`).join('');
-  sl.classList.remove('hidden');
-}
-function onDrugKey(e){
-  const sl=document.getElementById('suggestList');
-  const items=sl.querySelectorAll('.suggest-item');
-  if(e.key==='ArrowDown'){e.preventDefault();suggestIdx=Math.min(suggestIdx+1,items.length-1);highlight(items);}
-  else if(e.key==='ArrowUp'){e.preventDefault();suggestIdx=Math.max(suggestIdx-1,0);highlight(items);}
-  else if(e.key==='Enter'){
-    e.preventDefault();
-    if(suggestIdx>=0&&items[suggestIdx]){pickDrug(items[suggestIdx].dataset.id);}
-    else{const q=document.getElementById('drugInput').value.trim();const h=DRUGS.filter(d=>matchDrug(d,q));if(h.length)pickDrug(h[0].id);}
-  }
-  else if(e.key==='Escape'){sl.classList.add('hidden');}
-}
-function highlight(items){
-  items.forEach((it,i)=>{it.classList.toggle('focused',i===suggestIdx);});
-  if(suggestIdx>=0&&items[suggestIdx])items[suggestIdx].scrollIntoView({block:'nearest'});
-}
+const drugSearch = createDrugSearch({
+  input: '#drugInput', dropdown: '#suggestList',
+  getCandidates: renalCandidates, maxResults: 15,
+  onShow: dd => dd.classList.remove('hidden'),
+  onHide: dd => dd.classList.add('hidden'),
+  emptyMessage: '<div class="no-result">該当薬剤なし</div>',
+  renderItem: c => `<div class="suggest-item" data-index="${c._idx}">
+    <div><span style="font-weight:600">${esc(c.meta.ja[0])}</span><span class="suggest-en"> ${esc(c.meta.en[0])}</span></div>
+    <span class="suggest-cls">${esc(c.meta.cls)}</span>
+  </div>`,
+  onSelect: c => pickDrug(c.id),
+});
+function esc(s) { return drugSearchEscapeHtml(s); }
 function pickDrug(id){
   const d=DRUGS.find(x=>x.id===id);
   if(!d)return;
   document.getElementById('drugInput').value=d.ja[0];
-  document.getElementById('suggestList').classList.add('hidden');
+  drugSearch.close();
   renderDrug(d);
   if (typeof pharmacyContextSet === 'function') pharmacyContextSet({ selectedDrug: d.ja[0] });
 }
@@ -426,12 +410,6 @@ function renderDrug(d){
 
   document.getElementById('drugResult').innerHTML=h;
 }
-
-// サジェスト外クリックで閉じる
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.search-wrap'))
-    document.getElementById('suggestList').classList.add('hidden');
-});
 
 // ─── 初期化：保存済み状態を復元 ───
 restoreState();
