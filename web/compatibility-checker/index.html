@@ -111,7 +111,7 @@ header {
   font-size: 13px; transition: background .12s;
 }
 .dd-item:last-child { border-bottom: none; }
-.dd-item:hover { background: #f5f7ff; }
+.dd-item:hover, .dd-item.focused { background: #f5f7ff; }
 .no-result { padding: 12px 14px; color: var(--text-faint); font-size: 12.5px; }
 
 /* ─── Check button ──────────────────────── */
@@ -258,12 +258,12 @@ header {
     <div class="tab-pane active" id="tab-check">
       <div class="pair-grid">
         <div class="search-wrap">
-          <input class="search-input" id="inputA" placeholder="薬剤A を入力" autocomplete="off" oninput="onInput('A')">
+          <input class="search-input" id="inputA" placeholder="薬剤A を入力" autocomplete="off">
           <div class="dropdown" id="ddA"></div>
         </div>
         <div class="vs-label">VS</div>
         <div class="search-wrap">
-          <input class="search-input" id="inputB" placeholder="薬剤B を入力" autocomplete="off" oninput="onInput('B')">
+          <input class="search-input" id="inputB" placeholder="薬剤B を入力" autocomplete="off">
           <div class="dropdown" id="ddB"></div>
         </div>
       </div>
@@ -275,7 +275,7 @@ header {
     <div class="tab-pane" id="tab-list">
       <div class="search-wrap" style="margin-bottom:14px">
         <input class="search-input" id="listSearch" placeholder="薬剤名で絞り込み（例：バンコマイシン）"
-          autocomplete="off" oninput="renderList()">
+          autocomplete="off">
       </div>
       <div id="listResult"></div>
     </div>
@@ -302,60 +302,56 @@ header {
 
 <script src="compat-master.js"></script>
 <script src="../shared/context.js"></script>
+<script src="../shared/drug-search.js"></script>
 <script>
 // ── 正規化 ────────────────────────────────────
-function normQ(s) {
-  return s.toLowerCase().replace(/\s+/g,'')
-    .replace(/[ａ-ｚＡ-Ｚ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0))
-    .replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
-}
+function normQ(s) { return drugSearchNormalize(s); }
 
-// ── 薬剤名リスト ──────────────────────────────
+// ── 薬剤名リスト（A/B共通・1回だけキャッシュ）───
 const drugNames = [...new Set(COMPAT_DATA.flatMap(d=>[d.drugA, d.drugB]))].sort();
+function compatCandidates() {
+  if (!compatCandidates._cache) {
+    compatCandidates._cache = drugNames.map(n => ({ id: n, label: n }));
+  }
+  return compatCandidates._cache;
+}
 
 // 選択状態
 let selA = '', selB = '';
-
-// ── ドロップダウン表示 ───────────────────────
-function onInput(side) {
-  const inp = document.getElementById('input'+side);
-  const dd  = document.getElementById('dd'+side);
-  const q   = inp.value.trim();
-  if (side === 'A') selA = ''; else selB = '';
-  updateCheckBtn();
-  if (!q) { dd.style.display='none'; return; }
-  const nq = normQ(q);
-  const hits = drugNames.filter(n => normQ(n).includes(nq)).slice(0, 12);
-  if (!hits.length) {
-    dd.innerHTML = '<div class="no-result">該当薬剤なし</div>';
-  } else {
-    dd.innerHTML = hits.map(n =>
-      `<div class="dd-item" onmousedown="pickDrug('${side}','${esc(n)}')">${esc(n)}</div>`
-    ).join('');
-  }
-  dd.style.display = 'block';
-}
-
-function pickDrug(side, name) {
-  document.getElementById('input'+side).value = name;
-  document.getElementById('dd'+side).style.display = 'none';
-  if (side === 'A') selA = name; else selB = name;
-  updateCheckBtn();
-  if (side === 'A' && typeof pharmacyContextSet === 'function') {
-    pharmacyContextSet({ selectedDrug: name });
-  }
-}
 
 function updateCheckBtn() {
   document.getElementById('btnCheck').disabled = !(selA && selB);
 }
 
-document.addEventListener('click', e => {
-  if (!e.target.closest('.search-wrap')) {
-    document.getElementById('ddA').style.display = 'none';
-    document.getElementById('ddB').style.display = 'none';
-  }
+function compatRenderItem(c, q) {
+  return `<div class="dd-item" data-index="${c._idx}">${drugSearchHighlight(c.label, q)}</div>`;
+}
+
+// A/B独立した2つのcreateDrugSearchインスタンス（選択状態はselA/selBで別管理、競合しない）
+const searchA = createDrugSearch({
+  input: '#inputA', dropdown: '#ddA', getCandidates: compatCandidates, maxResults: 12,
+  renderItem: compatRenderItem,
+  emptyMessage: '<div class="no-result">該当薬剤なし</div>',
+  onSelect: c => {
+    document.getElementById('inputA').value = c.label;
+    selA = c.label;
+    updateCheckBtn();
+    // 既存の非対称仕様を維持：A側選択時のみpharmacyContextSetを呼ぶ
+    if (typeof pharmacyContextSet === 'function') pharmacyContextSet({ selectedDrug: c.label });
+  },
 });
+const searchB = createDrugSearch({
+  input: '#inputB', dropdown: '#ddB', getCandidates: compatCandidates, maxResults: 12,
+  renderItem: compatRenderItem,
+  emptyMessage: '<div class="no-result">該当薬剤なし</div>',
+  onSelect: c => {
+    document.getElementById('inputB').value = c.label;
+    selB = c.label;
+    updateCheckBtn();
+  },
+});
+document.getElementById('inputA').addEventListener('input', () => { selA = ''; updateCheckBtn(); });
+document.getElementById('inputB').addEventListener('input', () => { selB = ''; updateCheckBtn(); });
 
 // ── 配合変化チェック ─────────────────────────
 function findCompat(a, b) {
@@ -399,6 +395,7 @@ function resultCard(d, a, b) {
 }
 
 // ── 薬剤別一覧 ───────────────────────────────
+document.getElementById('listSearch').addEventListener('input', renderList);
 function renderList() {
   const q  = (document.getElementById('listSearch').value || '').trim();
   const area = document.getElementById('listResult');
@@ -465,10 +462,7 @@ function resultMini(r) {
 function verifiedLabel(v) {
   return {confirmed:'✓ 確認済', inferred:'~ 推定', unverified:'? 要確認'}[v] || v;
 }
-function esc(s) {
-  if (!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s) { return drugSearchEscapeHtml(s); }
 
 // ── タブ切り替え ──────────────────────────────
 function switchTab(tab, btn) {
@@ -494,7 +488,9 @@ document.getElementById('listResult').innerHTML =
 try {
   const ctx = typeof pharmacyContextGet === 'function' ? pharmacyContextGet() : null;
   if (ctx && ctx.selectedDrug && drugNames.includes(ctx.selectedDrug)) {
-    pickDrug('A', ctx.selectedDrug);
+    document.getElementById('inputA').value = ctx.selectedDrug;
+    selA = ctx.selectedDrug;
+    updateCheckBtn();
     pharmacyContextShowBanner(
       document.querySelector('.layout'),
       '前の画面から「' + ctx.selectedDrug + '」を薬剤Aに引き継ぎました',
