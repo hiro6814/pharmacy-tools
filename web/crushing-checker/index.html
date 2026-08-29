@@ -211,7 +211,7 @@ header {
   display: flex; flex-direction: column; gap: 3px;
 }
 .dd-item:last-child { border-bottom: none; }
-.dd-item:hover { background: #f5f7ff; }
+.dd-item:hover, .dd-item.focused { background: #f5f7ff; }
 .dd-item .dd-main { font-weight: 600; color: var(--text); font-size: 13px; }
 .dd-item .dd-sub  { font-size: 11px; color: var(--text-muted); }
 .dd-item .dd-badges { display: flex; gap: 4px; margin-top: 4px; }
@@ -634,6 +634,7 @@ select { cursor: pointer; }
 
 <script src="../shared/drugs-master.js"></script>
 <script src="../shared/context.js"></script>
+<script src="../shared/drug-search.js"></script>
 <script>
 // =============================================
 // 薬剤データベース（統合マスターから直接参照）
@@ -681,37 +682,28 @@ try {
 } catch (e) {}
 
 // ─── Search ───────────────────────────────
-const searchInput = document.getElementById('searchInput');
-const dropdown = document.getElementById('dropdown');
-
-searchInput.addEventListener('input', function() {
-  const q = this.value.trim();
-  if (!q) { hideDD(); return; }
-  const nq = normQ(q);
-  const hits = drugDB.filter(d =>
-    normQ(d.generic).includes(nq) || normQ(d.brand).includes(nq) || normQ(d.category).includes(nq)
-  ).slice(0, 10);
-  renderDD(hits, q);
-});
-
-searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') hideDD(); });
-document.addEventListener('click', e => { if (!e.target.closest('.search-wrap')) hideDD(); });
-
-function renderDD(hits, q) {
-  if (!hits.length) {
-    dropdown.innerHTML = `<div class="no-result">「${esc(q)}」は見つかりません。「＋ 薬剤登録」から追加できます。</div>`;
-  } else {
-    dropdown.innerHTML = hits.map(d => `
-      <div class="dd-item" onclick="addDrug('${d.id}')">
-        <div class="dd-main">${hl(d.generic, q)}</div>
-        <div class="dd-sub">${hl(d.brand, q)} &nbsp;·&nbsp; ${esc(d.category)} &nbsp;·&nbsp; ${esc(d.form)}</div>
-        <div class="dd-badges">${miniBadge(d.crush,'粉砕')} ${miniBadge(d.susp,'懸濁')}</div>
-      </div>
-    `).join('');
-  }
-  dropdown.style.display = 'block';
+function crushCandidates() {
+  // getCandidatesは呼び出しのたびにdrugDBを参照する（薬剤登録モーダルでの追加・削除に対応するためキャッシュしない）
+  return drugDB.map(d => ({
+    id: d.id, label: d.generic, sublabel: d.brand, meta: d,
+    searchText: [d.generic, d.brand, d.category].join(' '),
+  }));
 }
-function hideDD() { dropdown.style.display = 'none'; }
+
+const drugSearch = createDrugSearch({
+  input: '#searchInput', dropdown: '#dropdown',
+  getCandidates: crushCandidates, maxResults: 10,
+  emptyMessage: q => `<div class="no-result">「${drugSearchEscapeHtml(q)}」は見つかりません。「＋ 薬剤登録」から追加できます。</div>`,
+  renderItem: (c, q) => `
+      <div class="dd-item" data-index="${c._idx}">
+        <div class="dd-main">${hl(c.meta.generic, q)}</div>
+        <div class="dd-sub">${hl(c.meta.brand, q)} &nbsp;·&nbsp; ${esc(c.meta.category)} &nbsp;·&nbsp; ${esc(c.meta.form)}</div>
+        <div class="dd-badges">${miniBadge(c.meta.crush,'粉砕')} ${miniBadge(c.meta.susp,'懸濁')}</div>
+      </div>
+    `,
+  onSelect: c => addDrug(c.id),
+});
+function hideDD() { drugSearch.close(); }
 
 function miniBadge(val, label) {
   const cls = { ok:'ok', ng:'ng', cond:'cond', unknown:'unknown' }[val] || 'unknown';
@@ -1010,16 +1002,8 @@ function deleteCustomDrug(id) {
 }
 
 // ─── Helpers ──────────────────────────────
-function esc(s) {
-  if (!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function hl(text, q) {
-  if (!q) return esc(text);
-  const i = normQ(text).indexOf(normQ(q));
-  if (i === -1) return esc(text);
-  return esc(text.slice(0,i)) + '<mark style="background:#e0e7ff;color:#3730a3;border-radius:2px;padding:0 1px">' + esc(text.slice(i,i+q.length)) + '</mark>' + esc(text.slice(i+q.length));
-}
+function esc(s) { return drugSearchEscapeHtml(s); }
+function hl(text, q) { return drugSearchHighlight(text, q); }
 
 // ─── Init ─────────────────────────────────
 loadCustomDrugs();
